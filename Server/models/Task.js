@@ -18,19 +18,19 @@ const TaskSchema = new mongoose.Schema({
         {
           title: {
             type: String,
-            required: [true, 'must provide title'],
+            // required: [true, 'must provide title'],
             trim: true,
           },
           dscription: {
             type: String,
-            required: [true, 'must provide title'],
+            // required: [true, 'must provide title'],
             trim: true,
           },
           subtasks: [
             {
               title: {
                 type: String,
-                required: [true, 'must provide title'],
+                // required: [true, 'must provide title'],
                 trim: true,
               },
               isCompleted: {

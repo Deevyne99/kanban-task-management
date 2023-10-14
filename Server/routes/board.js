@@ -1,6 +1,6 @@
 const express = require('express')
 const {
-  getBoard,
+  getAllBoard,
   getSingleBoard,
   deleteBoard,
   updateBoard,
@@ -9,7 +9,7 @@ const {
 
 const router = express.Router()
 
-router.route('/').get(getBoard).post(createBoard)
+router.route('/').get(getAllBoard).post(createBoard)
 router.route('/:id').get(getSingleBoard).patch(updateBoard).delete(deleteBoard)
 
 module.exports = router
