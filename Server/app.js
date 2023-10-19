@@ -1,12 +1,17 @@
 const express = require('express')
 const connectDB = require('./db/connect')
+require('express-async-errors')
 require('dotenv').config()
 const board = require('./routes/board')
 const app = express()
+const notFound = require('./middlewares/notfound')
+const errorHandlerMiddleware = require('./middlewares/errorHandler')
 
 //MIDDLEWARES
 app.use(express.json())
 app.use('/api/v1/kanban/board', board)
+app.use(errorHandlerMiddleware)
+app.use(notFound)
 //ROUTES
 //board
 // app.get('/api/v1/kanban/board', (req, res) => {
