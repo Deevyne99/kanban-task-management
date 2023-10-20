@@ -6,10 +6,12 @@ const board = require('./routes/board')
 const app = express()
 const notFound = require('./middlewares/notfound')
 const errorHandlerMiddleware = require('./middlewares/errorHandler')
-
+const authRouter = require('./routes/auth')
+const authMiddleware = require('./middlewares/authMiddleware')
 //MIDDLEWARES
 app.use(express.json())
-app.use('/api/v1/kanban/board', board)
+app.use('/api/v1/kanban/auth', authRouter)
+app.use('/api/v1/kanban/board', authMiddleware, board)
 app.use(errorHandlerMiddleware)
 app.use(notFound)
 //ROUTES
