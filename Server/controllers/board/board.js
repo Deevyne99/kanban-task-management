@@ -27,44 +27,50 @@ const getSingleBoard = async (req, res) => {
     user: { userId },
     params: { id: boardId },
   } = req
-  const board = await Board.findOne({ _id: boardId })
+  const board = await Board.findOne({ _id: boardId, createdBy: userId })
   if (!board) {
     throw new NotFoundError(`no board with id ${boardId}`)
   }
   res.status(StatusCodes.OK).json({ board })
 }
-const updateBoard = async (req, res) => {
-  try {
-    const { id: boardID } = req.params
-    const board = await Board.findOneAndUpdate({ _id: boardID }, req.body, {
-      new: true,
-      runValidators: true,
-    })
-    if (!board) {
-      return res.status(404).json({ msg: `Board with id ${boardID} not found` })
-    }
-    res.status(200).json({ board })
-  } catch (error) {
-    throw new Error(error)
+const createBoardColumns = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: boardId },
+    body: { name },
+  } = req
+
+  const board = await Board.findOne({ _id: boardId, createdBy: userId })
+
+  if (!board) {
+    throw new NotFoundError(`no board with id ${boardId}`)
   }
+
+  board.columns.push({ name: name })
+  await board.save()
+  res.status(StatusCodes.OK).json({ board })
 }
 const deleteBoard = async (req, res) => {
-  try {
-    const { id: boardID } = req.params
-    const board = await Board.findOneAndDelete({ _id: boardID })
-    if (!board) {
-      return res.status(404).json({ msg: `Board with id ${boardID} not found` })
-    }
-    res.status(200).json({ board })
-  } catch (error) {
-    console.log(error)
+  const {
+    user: { userId },
+    params: { id: boardId },
+  } = req
+  const board = await Board.findOneAndDelete({
+    _id: boardId,
+    createdBy: userId,
+  })
+  if (!board) {
+    throw new NotFoundError(`no board with id ${boardId}`)
   }
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: `board with id ${boardId} was deleted successful` })
 }
 
 module.exports = {
   createBoard,
   getAllBoard,
   getSingleBoard,
-  updateBoard,
+  createBoardColumns,
   deleteBoard,
 }

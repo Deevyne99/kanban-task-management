@@ -3,13 +3,17 @@ const {
   getAllBoard,
   getSingleBoard,
   deleteBoard,
-  updateBoard,
+  createBoardColumns,
   createBoard,
 } = require('../controllers/board/board')
 
 const router = express.Router()
 
 router.route('/').get(getAllBoard).post(createBoard)
-router.route('/:id').get(getSingleBoard).patch(updateBoard).delete(deleteBoard)
+router
+  .route('/:id')
+  .get(getSingleBoard)
+  .patch(createBoardColumns)
+  .delete(deleteBoard)
 
 module.exports = router

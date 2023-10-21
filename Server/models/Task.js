@@ -15,7 +15,7 @@ const TaskSchema = new mongoose.Schema(
           trim: true,
         },
 
-        task: [
+        tasks: [
           {
             title: {
               type: String,
