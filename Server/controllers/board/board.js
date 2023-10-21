@@ -1,38 +1,37 @@
-const { BadRequestError, CustomAPiError } = require('../../errors')
+const { StatusCodes } = require('http-status-codes')
+const {
+  BadRequestError,
+  CustomAPiError,
+  NotFoundError,
+} = require('../../errors')
 const Board = require('../../models/Task')
+const User = require('../../models/User')
 
 const createBoard = async (req, res) => {
-  try {
-    const { boardName } = req.body
-    const findBoard = await Board.findOne({ boardName: boardName })
-    if (findBoard) {
-      return res.status(404).json('Board already exist')
-    }
-    const board = await Board.create(req.body)
-    res.status(201).json({ board })
-  } catch (error) {
-    throw new Error(error)
+  const { boardName } = req.body
+  const findBoard = await Board.findOne({ boardName: boardName })
+  if (findBoard) {
+    return res.status(404).json('Board already exist')
   }
+  req.body.createdBy = req.user.userId
+  const board = await Board.create(req.body)
+  res.status(StatusCodes.CREATED).json({ board })
 }
 const getAllBoard = async (req, res) => {
-  try {
-    const boards = await Board.find({})
-    res.status(200).json({ boards, nbHits: boards.length })
-  } catch (error) {
-    console.log(error)
-  }
+  const boards = await Board.find({ createdBy: req.user.userId })
+  res.status(200).json({ boards, nbHits: boards.length })
 }
+
 const getSingleBoard = async (req, res) => {
-  try {
-    const { id: boardID } = req.params
-    const board = await Board.findOne({ _id: boardID })
-    if (!board) {
-      throw new BadRequestError({ msg: `Board with id ${boardID} not found` })
-    }
-    res.status(200).json({ board })
-  } catch (error) {
-    throw new Error(error)
+  const {
+    user: { userId },
+    params: { id: boardId },
+  } = req
+  const board = await Board.findOne({ _id: boardId })
+  if (!board) {
+    throw new NotFoundError(`no board with id ${boardId}`)
   }
+  res.status(StatusCodes.OK).json({ board })
 }
 const updateBoard = async (req, res) => {
   try {
