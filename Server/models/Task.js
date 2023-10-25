@@ -40,6 +40,10 @@ const TaskSchema = new mongoose.Schema(
                 },
               },
             ],
+            status: {
+              type: String,
+              required: [true, 'please enter a status'],
+            },
           },
         ],
       },

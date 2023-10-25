@@ -3,6 +3,7 @@ const connectDB = require('./db/connect')
 require('express-async-errors')
 require('dotenv').config()
 const board = require('./routes/board')
+const task = require('./routes/task')
 const app = express()
 const notFound = require('./middlewares/notfound')
 const errorHandlerMiddleware = require('./middlewares/errorHandler')
@@ -10,8 +11,10 @@ const authRouter = require('./routes/auth')
 const authMiddleware = require('./middlewares/authMiddleware')
 //MIDDLEWARES
 app.use(express.json())
+
 app.use('/api/v1/kanban/auth', authRouter)
 app.use('/api/v1/kanban/board', authMiddleware, board)
+app.use('/api/v1/kanban/board/task', authMiddleware, task)
 app.use(errorHandlerMiddleware)
 app.use(notFound)
 //ROUTES
@@ -58,10 +61,11 @@ const start = async () => {
   try {
     await connectDB(process.env.MONGODB_URI)
     app.listen(port, () => {
-      console.log(`app is listening on port ${port}`)
+      console.log(`server is listening on port ${port}`)
     })
   } catch (error) {
     console.log(error)
   }
 }
+
 start()

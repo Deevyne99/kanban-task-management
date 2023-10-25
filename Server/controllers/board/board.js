@@ -11,7 +11,7 @@ const createBoard = async (req, res) => {
   const { boardName } = req.body
   const findBoard = await Board.findOne({ boardName: boardName })
   if (findBoard) {
-    return res.status(404).json('Board already exist')
+    throw new BadRequestError('Board already exist')
   }
   req.body.createdBy = req.user.userId
   const board = await Board.create(req.body)
