@@ -1,4 +1,5 @@
 const { StatusCodes } = require('http-status-codes')
+const mongoose = require('mongoose')
 const Board = require('../../models/Task')
 const {
   BadRequestError,
@@ -13,7 +14,10 @@ const createTask = async (req, res) => {
     body: { title, description, subtasks, status },
   } = req
 
-  const board = await Board.findOne({ _id: boardId, createdBy: userId })
+  const board = await Board.findOne({
+    _id: boardId,
+    createdBy: userId,
+  })
   if (!board) {
     throw new NotFoundError(`no board with id ${boardId}`)
   }
@@ -26,9 +30,55 @@ const createTask = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ board })
 }
 const updateTask = async (req, res) => {
-  res.send('Update Task')
+  const {
+    params: { boardId, columnId, taskId },
+    user: { userId },
+    body: { title, description, subtasks, status },
+  } = req
+  const board = await Board.findOneAndUpdate(
+    {
+      _id: boardId,
+      createdBy: userId,
+      'columns._id': new mongoose.Types.ObjectId(columnId),
+      'columns.tasks._id': new mongoose.Types.ObjectId(taskId),
+    },
+    {
+      $set: {
+        'columns.$[].tasks.$[].title': title,
+        'columns.$[].tasks.$[].description': description,
+        'columns.$[].tasks.$[].status': status,
+        'columns.$[].tasks.$[].subtasks': subtasks,
+      },
+    },
+    { upsert: true, new: true }
+  )
+  if (!board) {
+    throw new NotFoundError(`no board with the id ${board}`)
+  }
+
+  res.status(StatusCodes.OK).json({ board })
 }
 const deleteTask = async (req, res) => {
-  res.send('Delete Task')
+  // const {
+  //   user: { userId },
+  //   params: { boardId, columnId, taskId },
+  // } = req
+  // const board = await Board.findOne({
+  //   _id: boardId,
+  //   createdBy: userId,
+  // })
+  // if (!board) {
+  //   throw new NotFoundError(`no board with the id ${board}`)
+  // }
+
+  // const [name] = board.columns.filter((col) => String(col._id) === columnId)
+  // if (!name) {
+  //   throw new NotFoundError(`no column with the name ${columnId}`)
+  // }
+
+  // name.tasks.filter((item) => String(item._id) !== taskId)
+  // await board.save()
+
+  res.status(StatusCodes.OK).json({ msg: 'Deleted successfully' })
 }
 module.exports = { createTask, updateTask, deleteTask }

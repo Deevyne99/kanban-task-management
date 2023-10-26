@@ -6,6 +6,7 @@ const {
   deleteTask,
 } = require('../controllers/Task/Task')
 
-router.route('/:boardId').post(createTask).patch(updateTask)
-router.route('/:boardId/:taskId').delete(deleteTask)
+router.route('/:boardId').post(createTask)
+router.route('/:boardId/:columnId/:taskId').patch(updateTask).delete(deleteTask)
+
 module.exports = router

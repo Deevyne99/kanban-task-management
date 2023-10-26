@@ -22,7 +22,7 @@ const TaskSchema = new mongoose.Schema(
               // required: [true, 'must provide title'],
               trim: true,
             },
-            dscription: {
+            description: {
               type: String,
               // required: [true, 'must provide title'],
               trim: true,
