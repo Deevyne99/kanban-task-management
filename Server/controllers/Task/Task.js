@@ -35,6 +35,11 @@ const updateTask = async (req, res) => {
     user: { userId },
     body: { title, description, subtasks, status },
   } = req
+  if (title === '' || description === '' || status === '' || !subtasks) {
+    throw new BadRequestError(
+      'Please enter a valid title,descriptin,status,subtasks'
+    )
+  }
   const board = await Board.findOneAndUpdate(
     {
       _id: boardId,

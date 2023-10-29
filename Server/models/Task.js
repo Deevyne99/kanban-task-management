@@ -4,7 +4,7 @@ const TaskSchema = new mongoose.Schema(
   {
     boardName: {
       type: String,
-      required: [true, 'must provide name'],
+      required: [true, 'please provide board name'],
       trim: true,
     },
     columns: [

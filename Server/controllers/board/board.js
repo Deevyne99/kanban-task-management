@@ -45,6 +45,9 @@ const createBoardColumns = async (req, res) => {
   if (!board) {
     throw new NotFoundError(`no board with id ${boardId}`)
   }
+  if (!name) {
+    throw new BadRequestError('Please provide a column name')
+  }
 
   board.columns.push({ name: name })
   await board.save()
