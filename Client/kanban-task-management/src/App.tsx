@@ -1,7 +1,15 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Board, Register } from './pages'
+
 function App() {
   return (
     <>
-      <div className='bg-red-400'>kanban task mangement project</div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Register />} />
+          <Route path='/board' element={<Board />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
