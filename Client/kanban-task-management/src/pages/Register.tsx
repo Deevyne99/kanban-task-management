@@ -1,6 +1,7 @@
 import InputComponent from '../components/Input'
 import { useState, ChangeEvent } from 'react'
 import { UserProps } from '../interface/interface'
+import logo from '../assets/logo.png'
 // import React from 'react'
 const initialState = {
   name: '',
@@ -16,8 +17,9 @@ const Register = () => {
     setValues({ ...values, [name]: value })
   }
   return (
-    <main>
-      <form className='bg-red-500'>
+    <main className='bg-[#F4F7FD] h-screen mx-auto flex justify-center items-center flex-col gap-4'>
+      <img src={logo} alt='kanban' />
+      <form className='flex flex-col gap-4'>
         <InputComponent
           type='text'
           name='name'
