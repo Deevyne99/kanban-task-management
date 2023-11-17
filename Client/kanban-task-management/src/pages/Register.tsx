@@ -2,6 +2,7 @@ import InputComponent from '../components/Input'
 import { useState, ChangeEvent } from 'react'
 import { UserProps } from '../interface/interface'
 import logo from '../assets/logo.png'
+import ButtonComponent from '../components/Button'
 // import React from 'react'
 const initialState = {
   name: '',
@@ -38,6 +39,9 @@ const Register = () => {
           value={values.password}
           handleChange={handleChange}
         />
+        <div className='mt-4'>
+          <ButtonComponent type='button' title={`submit`} />
+        </div>
       </form>
     </main>
   )

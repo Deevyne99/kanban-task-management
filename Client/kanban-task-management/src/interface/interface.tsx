@@ -14,3 +14,7 @@ export interface UserProps {
   password: string | number
   isMember: boolean
 }
+export interface ButtonProps {
+  title: string
+  type: 'button' | 'submit'
+}
