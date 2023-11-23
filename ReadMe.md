@@ -9,23 +9,24 @@
 <ul>
 <li>FRONTEND (CLIENT SIDE)
 <ul>
-<li>React JS<li>
-<li>Typescript<li>
-<li>Tailwindcss<li>
-<li>Redux<li>
-<li>Redux Toolkit<li>
+<li>React JS</li>
+<li>Typescript</li>
+<li>Tailwindcss</li>
+<li>Redux</li>
+<li>Redux Toolkit</li>
 </ul>
-<li>
+</li>
+
 <li> BACKEND (SERVER SIDE)
 <ul>
-<li>Node Js<li>
-<li>Express JS <li>
-<li>MongoDB<li>
-<li>JsonWebToken<li>
-<li>PostMan<li>
-<li><li>
+<li>Node Js</li>
+<li>Express JS </li>
+<li>MongoDB</li>
+<li>JsonWebToken</li>
+<li>PostMan</li>
+<!-- <li><li> -->
 </ul>
-<li>
+</li>
 </ul>
 
 <h3>PROJECT FEATURES</h3>
@@ -34,10 +35,9 @@
 <li>
 User Authentication
 </li>
-<li>User can Perform CRUD Operation<li>
+<li>User can Perform CRUD Operation</li>
 <li>User can Drag and Drop task to differnrt status in the board e.g(Completed,todo,doing)</li>
-
 <li>User can toggle light and dark mode</li>
-<li></li>
-<li></li>
+<li>User can use across different browsers</li>
+<li>The application is fully Responsive</li>
 </ul>
