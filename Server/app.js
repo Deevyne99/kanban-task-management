@@ -9,6 +9,10 @@ const notFound = require('./middlewares/notfound')
 const errorHandlerMiddleware = require('./middlewares/errorHandler')
 const authRouter = require('./routes/auth')
 const authMiddleware = require('./middlewares/authMiddleware')
+const helmet = require('helmet')
+const cors = require('cors')
+const xss = require('xss-clean')
+const rateLimiter = require('express-rate-limit')
 //MIDDLEWARES
 app.use(express.json())
 
@@ -17,45 +21,20 @@ app.use('/api/v1/kanban/board', authMiddleware, board)
 app.use('/api/v1/kanban/board/task', authMiddleware, task)
 app.use(errorHandlerMiddleware)
 app.use(notFound)
-//ROUTES
-//board
-// app.get('/api/v1/kanban/board', (req, res) => {
-//   res.send('get all boards')
-// })
-// app.post('/api/v1/kanban/board', (req, res) => {
-//   res.send('create a board')
-// })
-// app.get('/api/v1/kanban/board/:boardID', (req, res) => {
-//   res.send('single board')
-// })
-// app.patch('/api/v1/kanban/board/:boardID', (req, res) => {
-//   res.send('update board')
-// })
 
-// app.delete('/api/v1/kanban/board/:boardID', (req, res) => {
-//   res.send('delete board')
-// })
-
-// Task
-
-// app.post('/api/v1/kanban/task/:boardID', (req, res) => {
-//   res.send('create task ')
-// })
-// app.patch('/api/v1/kanban/task/:taskID', (req, res) => {
-//   res.send('update task')
-// })
-// app.delete('/api/v1/kanban/task/:taskID', (req, res) => {
-//   res.send('delete task')
-// })
-// //subtask
-// app.patch('/api/v1/kanban/task/subtask/:boardID/:taskID/', (req, res) => {
-//   res.send('update task')
-// })
-
-// app.get('/', (req, res) => {
-//   res.send('hello world')
-// })
 const port = process.env.PORT || 3000
+
+app.use(helmet())
+app.use(cors())
+app.use(xss())
+
+app.set('trust proxy', 1)
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+  })
+)
 
 const start = async () => {
   try {
