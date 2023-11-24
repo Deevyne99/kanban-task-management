@@ -6,7 +6,7 @@ const InputComponent: FC<InputProps> = ({
   value,
   handleChange,
   name,
-  // disabled,
+  error,
 }) => {
   return (
     <div className='flex flex-col gap-1'>
@@ -14,7 +14,12 @@ const InputComponent: FC<InputProps> = ({
         {name}
       </label>
       <input
-        className=' md:w-[380px] sm:w-[350px]  w-[280px]  p-[8px] border rounded-md border-solid border-[#828FA340] '
+        placeholder={error ? `can't be empty` : `Please enter your ${name}`}
+        className={`md:w-[380px] sm:w-[350px]  w-[280px]  p-[8px] border rounded-md border-solid border-[#828FA340] ${
+          error
+            ? 'placeholder:text-error font-semibold placeholder:text-right'
+            : 'text-normal border-[#828FA340] '
+        } ${error && !value ? 'border-error' : 'border-normal'}`}
         type={type}
         value={value}
         name={name}
