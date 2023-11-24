@@ -15,9 +15,9 @@ const InputComponent: FC<InputProps> = ({
       </label>
       <input
         placeholder={error ? `can't be empty` : `Please enter your ${name}`}
-        className={`md:w-[380px] sm:w-[350px]  w-[280px]  p-[8px] border rounded-md border-solid border-[#828FA340] ${
+        className={`md:w-[380px] sm:w-[350px]  w-[280px]  p-[8px] border rounded-md border-solid border-[#828FA340] font-normal focus:border-[#635FC7] focus:outline-none ${
           error
-            ? 'placeholder:text-error font-semibold placeholder:text-right'
+            ? 'placeholder:text-error placeholder:font-semibold placeholder:text-right'
             : 'text-normal border-[#828FA340] '
         } ${error && !value ? 'border-error' : 'border-normal'}`}
         type={type}

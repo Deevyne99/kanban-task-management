@@ -7,7 +7,7 @@ interface UserState {
 }
 
 interface RegisterUser {
-  name: string
+  username: string
   email: string
   password: string
 }

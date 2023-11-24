@@ -11,6 +11,9 @@ export default {
         error: '#EA5555',
         normal: '#828FA340',
       },
+      colors: {
+        purple: '#635FC7',
+      },
     },
   },
   plugins: [],

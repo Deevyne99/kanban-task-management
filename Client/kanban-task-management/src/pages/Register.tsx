@@ -9,7 +9,7 @@ import { loginUser, registerUser } from '../features/user/userSlice'
 
 // import React from 'react'
 const initialState = {
-  name: '',
+  username: '',
   email: '',
   password: '',
   isMember: false,
@@ -21,17 +21,17 @@ const Register = () => {
   const dispatch = useAppDispatch()
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { name, email, password, isMember } = values
-    if (!name || !email || !password) {
+    const { username, email, password, isMember } = values
+    if (!username || !email || !password) {
       setValues({ ...values, isError: true })
-      toast.error('please enter all')
+      toast.error('Please enter all fields')
       return
     }
     if (isMember) {
       dispatch(loginUser({ email, password }))
       return
     }
-    dispatch(registerUser({ name, email, password }))
+    dispatch(registerUser({ username, email, password }))
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,8 +49,8 @@ const Register = () => {
         {!values.isMember && (
           <InputComponent
             type='text'
-            name='name'
-            value={values.name}
+            name='username'
+            value={values.username}
             handleChange={handleChange}
             error={values.isError}
           />

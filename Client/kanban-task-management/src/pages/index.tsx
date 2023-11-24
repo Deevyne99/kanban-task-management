@@ -1,4 +1,5 @@
 import Board from './Board'
+import Error from './Error'
 import Register from './Register'
 
-export { Register, Board }
+export { Register, Board, Error }
