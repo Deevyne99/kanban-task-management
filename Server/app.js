@@ -16,14 +16,6 @@ const rateLimiter = require('express-rate-limit')
 //MIDDLEWARES
 app.use(express.json())
 
-app.use('/api/v1/kanban/auth', authRouter)
-app.use('/api/v1/kanban/board', authMiddleware, board)
-app.use('/api/v1/kanban/board/task', authMiddleware, task)
-app.use(errorHandlerMiddleware)
-app.use(notFound)
-
-const port = process.env.PORT || 3000
-
 app.use(helmet())
 app.use(cors())
 app.use(xss())
@@ -35,6 +27,13 @@ app.use(
     max: 100, // limit each IP to 100 requests per windowMs
   })
 )
+app.use('/api/v1/kanban/auth', authRouter)
+app.use('/api/v1/kanban/board', authMiddleware, board)
+app.use('/api/v1/kanban/board/task', authMiddleware, task)
+app.use(errorHandlerMiddleware)
+app.use(notFound)
+
+const port = process.env.PORT || 3000
 
 const start = async () => {
   try {
