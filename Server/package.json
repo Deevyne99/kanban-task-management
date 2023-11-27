@@ -4,7 +4,8 @@
   "description": "task management system",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "proxy": "http://localhost:"
   },
   "author": "",
   "license": "ISC",

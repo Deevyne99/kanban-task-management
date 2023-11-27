@@ -1,11 +1,12 @@
 import InputComponent from '../components/Input'
-import { useState, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { UserProps } from '../interface/interface'
 import logo from '../assets/logo.png'
 import ButtonComponent from '../components/Button'
 import { toast } from 'react-toastify'
-import { useAppDispatch } from '../hooks/hook'
+import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { loginUser, registerUser } from '../features/user/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 // import React from 'react'
 const initialState = {
@@ -19,12 +20,14 @@ const initialState = {
 const Register = () => {
   const [values, setValues] = useState<UserProps>(initialState)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const { user } = useAppSelector((state) => state.user)
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { username, email, password, isMember } = values
-    if (!username || !email || !password) {
+    if (!email || !password || (!isMember && !username)) {
       setValues({ ...values, isError: true })
-      toast.error('Please enter all fields')
+      // toast.error('Please enter all fields')
       return
     }
     if (isMember) {
@@ -42,6 +45,12 @@ const Register = () => {
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember })
   }
+  useEffect(() => {
+    if (user) {
+      navigate('/board')
+    }
+  }, [user, navigate])
+
   return (
     <main className='bg-[#F4F7FD] h-screen mx-auto flex justify-center items-center flex-col gap-4'>
       <img src={logo} alt='kanban' />
