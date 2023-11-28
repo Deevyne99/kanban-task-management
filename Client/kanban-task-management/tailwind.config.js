@@ -6,6 +6,7 @@ export default {
       textColor: {
         error: '#EA5555',
         normal: '#000112',
+        textLabel: '#828FA3',
       },
       borderColor: {
         error: '#EA5555',
@@ -13,6 +14,13 @@ export default {
       },
       colors: {
         purple: '#635FC7',
+        text: '#828FA3',
+      },
+      backgroundColor: {
+        white: '#fff',
+      },
+      fontFamily: {
+        Plus: ['Plus Jakarta Sans', 'sans-serif'],
       },
     },
   },
