@@ -18,6 +18,6 @@ export interface UserProps {
 export interface ButtonProps {
   title: string
   type: 'button' | 'submit'
-  handleClick: () => void
+  onClick: () => void
   img?: string
 }

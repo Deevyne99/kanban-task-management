@@ -14,12 +14,12 @@ const Sidebar = () => {
       </div>
       <div className='flex flex-col gap-2'>
         <BoardButton
-          handleClick={() => console.log('hello world')}
+          onClick={() => console.log('hello world')}
           title={'Ecommerce'}
           type='button'
         />
         <BoardButton
-          handleClick={() => console.log('hello world')}
+          onClick={() => console.log('hello world')}
           title={'+ create new board'}
           type='button'
         />
