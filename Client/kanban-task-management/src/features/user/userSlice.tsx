@@ -62,7 +62,8 @@ const userSlice = createSlice({
     })
     builder.addCase(registerUser.rejected, (state, { payload }) => {
       state.isLoading = false
-      toast.error(payload)
+
+      toast.error(`${payload}`)
     })
     builder.addCase(registerUser.fulfilled, (state, { payload }) => {
       const { user } = payload
@@ -75,7 +76,7 @@ const userSlice = createSlice({
     })
     builder.addCase(loginUser.rejected, (state, { payload }) => {
       state.isLoading = false
-      toast.error(payload)
+      toast.error(`${payload}`)
     })
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
       const { user } = payload

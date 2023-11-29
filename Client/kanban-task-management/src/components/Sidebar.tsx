@@ -2,7 +2,7 @@
 import { BsBrightnessHigh, BsMoonStars } from 'react-icons/bs'
 import logo from '../assets/logo.png'
 import BoardButton from './BoardButton'
-import image from '../assets/button-image.png'
+// import image from '../assets/button-image.png'
 const Sidebar = () => {
   return (
     <aside className='bg-white relative'>
@@ -14,19 +14,19 @@ const Sidebar = () => {
       </div>
       <div className='flex flex-col gap-2'>
         <BoardButton
-          onClick={console.log('hello world')}
+          handleClick={() => console.log('hello world')}
           title={'Ecommerce'}
           type='button'
-          img={image}
         />
         <BoardButton
-          onClick={console.log('hello world')}
+          handleClick={() => console.log('hello world')}
           title={'+ create new board'}
           type='button'
         />
       </div>
       <div>
         <BsBrightnessHigh />
+
         <BsMoonStars />
       </div>
     </aside>
