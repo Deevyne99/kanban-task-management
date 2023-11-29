@@ -4,9 +4,7 @@ import { toast } from 'react-toastify'
 import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
-  removeUserFromLocalStorage,
 } from '../../utils/localStorage'
-// removeUserFromLocalStorage
 
 interface UserState {
   user: boolean
