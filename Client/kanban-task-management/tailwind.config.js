@@ -18,6 +18,7 @@ export default {
       },
       backgroundColor: {
         white: '#fff',
+        screen: '#F4F7FD',
       },
       fontFamily: {
         Plus: ['Plus Jakarta Sans', 'sans-serif'],

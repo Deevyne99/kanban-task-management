@@ -1,12 +1,20 @@
-// import React from 'react'
 import { BsBrightnessHigh, BsMoonStars } from 'react-icons/bs'
-// import logo from '../assets/logo.png'
+
 import BoardButton from './BoardButton'
+import { toggleSidebar } from '../features/modal/modalSlice'
+import { useAppDispatch, useAppSelector } from '../hooks/hook'
+
 // import { Switch } from '@headlessui/react'
-// import image from '../assets/button-image.png'
+
 const Sidebar = () => {
+  const { isSidebarOpen } = useAppSelector((state) => state.modal)
+  const dispatch = useAppDispatch()
   return (
-    <aside className='bg-white sticky min-h-screen flex flex-col gap-4 '>
+    <aside
+      className={`transition-all w-[300px] duration-500 bg-white sticky min-h-screen flex flex-col gap-4 ${
+        isSidebarOpen ? 'flex' : 'hidden'
+      } `}
+    >
       {/* <img src={logo} alt='' /> */}
       <p className='text-textLabel flex  mt-4 ml-6 tracking-[2.4px] leading-6 font-Plus'>
         All Boards (3)
@@ -43,7 +51,7 @@ const Sidebar = () => {
       </div>
       <div className='absolute bottom-16'>
         <BoardButton
-          onClick={() => console.log('hello world')}
+          onClick={() => dispatch(toggleSidebar())}
           title={'hide sidebar'}
           type='button'
         />
