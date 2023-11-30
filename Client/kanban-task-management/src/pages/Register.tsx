@@ -52,7 +52,7 @@ const Register = () => {
   }, [user, navigate])
 
   return (
-    <main className='bg-[#F4F7FD] h-screen mx-auto flex justify-center items-center flex-col gap-6'>
+    <main className='bg-[#F4F7FD] h-screen   mx-auto h- flex justify-center items-center flex-col gap-6'>
       <img src={logo} alt='kanban' />
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         {!values.isMember && (
