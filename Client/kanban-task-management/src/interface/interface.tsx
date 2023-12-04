@@ -21,3 +21,7 @@ export interface ButtonProps {
   onClick?: () => void
   img?: string
 }
+
+export interface ColumnProps {
+  name: string
+}

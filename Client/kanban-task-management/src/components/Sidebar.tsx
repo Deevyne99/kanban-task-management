@@ -9,10 +9,11 @@ import { useAppDispatch, useAppSelector } from '../hooks/hook'
 const Sidebar = () => {
   const { isSidebarOpen } = useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
+
   return (
     <aside
-      className={`transition-all w-[300px] duration-500 bg-white sticky min-h-screen flex flex-col gap-4 ${
-        isSidebarOpen ? 'flex' : 'hidden'
+      className={`transition-all hidden md:flex w-[350px] duration-500 bg-white sticky min-h-screen h-full  flex-col gap-4  ${
+        isSidebarOpen ? 'ml-[0px] ' : 'ml-[-300px]'
       } `}
     >
       {/* <img src={logo} alt='' /> */}

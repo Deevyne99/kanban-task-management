@@ -11,7 +11,7 @@ const Navbar = () => {
         </div>
       </div>
       <nav className='flex   px-4  items-center w-[75%] justify-between bg-white '>
-        <h1 className='capitalize text-4xl font-Plus font-bold'>
+        <h1 className='capitalize md:text-2xl lg:text-4xl font-Plus font-bold'>
           platform launch
         </h1>
         <div className='flex gap-4 items-center'>
