@@ -15,6 +15,7 @@ export default {
       colors: {
         purple: '#635FC7',
         text: '#828FA3',
+        hover: '#A8A4FF',
       },
       backgroundColor: {
         white: '#fff',

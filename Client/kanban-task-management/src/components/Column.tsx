@@ -21,15 +21,13 @@ const Column: FC<ColumnProps> = ({ name }) => {
   return (
     <section className='flex flex-col gap-4'>
       <div
-        className={`text-[#828FA3] flex items-center gap-2 font-Plus capitalize`}
+        className={`text-[#828FA3] flex items-center gap-2 font-Plus capitalize w-[300px]`}
       >
         <div className={`h-[15px] w-[15px] rounded-full bg-${color}`}></div>
         <p className='flex gap-2 tracking-[2.4px]'>
           {name} <span>(14)</span>
         </p>
       </div>
-      <Task />
-      {/* <Task /> */}
       <Task />
       <Task />
     </section>

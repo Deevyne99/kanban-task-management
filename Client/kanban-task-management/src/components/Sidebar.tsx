@@ -11,31 +11,32 @@ const Sidebar = () => {
   const dispatch = useAppDispatch()
 
   return (
-    <aside
-      className={`transition-all hidden md:flex w-[350px] duration-500 bg-white sticky min-h-screen h-full  flex-col gap-4  ${
-        isSidebarOpen ? 'ml-[0px] ' : 'ml-[-300px]'
-      } `}
-    >
-      {/* <img src={logo} alt='' /> */}
-      <p className='text-textLabel flex  mt-4 ml-6 tracking-[2.4px] leading-6 font-Plus'>
-        All Boards (3)
-      </p>
+    <section className=''>
+      <aside
+        className={`transition-all hidden md:flex lg:w-[300px] pr-4 md:w-[260px] duration-500 bg-white  h-screen fixed  left-0 top-18   flex-col gap-4  ${
+          isSidebarOpen ? 'left-[0px] ' : 'left-[-300px]'
+        } `}
+      >
+        {/* <img src={logo} alt='' /> */}
+        <p className='text-textLabel flex  mt-4 ml-6 tracking-[2.4px] leading-6 font-Plus'>
+          All Boards (3)
+        </p>
 
-      <div className='flex flex-col gap-2'>
-        <BoardButton
-          onClick={() => console.log('hello world')}
-          title={'Ecommerce'}
-          type='button'
-        />
-        <BoardButton
-          onClick={() => console.log('hello world')}
-          title={'+ create new board'}
-          type='button'
-        />
-      </div>
-      <div className='w-[220px] absolute bottom-32 flex justify-between p-4 px-6 ml-6 bg-[#F4F7FD] rounded-md'>
-        <BsBrightnessHigh />
-        {/* <Switch
+        <div className='flex flex-col gap-2'>
+          <BoardButton
+            onClick={() => console.log('hello world')}
+            title={'Ecommerce'}
+            type='button'
+          />
+          <BoardButton
+            onClick={() => console.log('hello world')}
+            title={'+ create new board'}
+            type='button'
+          />
+        </div>
+        <div className='w-[220px] absolute bottom-48 flex justify-between p-4 px-6 ml-6 bg-[#F4F7FD] rounded-md'>
+          <BsBrightnessHigh />
+          {/* <Switch
           checked={darkSide}
           onChange={toggleDarkMode}
           className={`${
@@ -48,16 +49,17 @@ const Sidebar = () => {
             } inline-block h-4 w-4 transform rounded-full bg-white transition`}
           />
         </Switch> */}
-        <BsMoonStars />
-      </div>
-      <div className='absolute bottom-16'>
-        <BoardButton
-          onClick={() => dispatch(toggleSidebar())}
-          title={'hide sidebar'}
-          type='button'
-        />
-      </div>
-    </aside>
+          <BsMoonStars />
+        </div>
+        <div className='absolute bottom-28'>
+          <BoardButton
+            onClick={() => dispatch(toggleSidebar())}
+            title={'hide sidebar'}
+            type='button'
+          />
+        </div>
+      </aside>
+    </section>
   )
 }
 

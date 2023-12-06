@@ -12,18 +12,24 @@ const Board = () => {
   const dispatch = useAppDispatch()
   const { isSidebarOpen } = useAppSelector((state) => state.modal)
   return (
-    <main className='flex flex-col bg-screen min-h-screen '>
+    <main className='flex flex-col bg-screen h-screen relative overflow-x-hidden'>
       {/* <div className=' justify-center items-center border border-[#F4F7FD] border-l-[1px]'>
         <div className='px-4 py-6 '>
           <img src={logo} alt='' />
         </div> */}
       {/* </div> */}
       <Navbar />
-      <div className={`flex  justify-between w-full  `}>
+      <div
+        className={`${
+          isSidebarOpen
+            ? 'grid lg:grid-cols-[300px_minmax(900px,_1fr)_0px] md:grid-cols-[260px_minmax(900px,_1fr)_0px] grid-cols-[0px_minmax(900px,_1fr)_0px]  '
+            : 'grid grid-cols-[100%_minmax(900px,_1fr)_0px]'
+        }   justify-between   `}
+      >
         {isSidebarOpen && <Sidebar />}
         <div
-          className={`bg-screen p-4 flex gap-4  w-full ${
-            isSidebarOpen ? ' overflow-x-scroll h-full  ' : ' overflow-x-hidden'
+          className={`bg-screen p-4 flex gap-4 w-full  min-h-screen  ${
+            isSidebarOpen ? ' overflow-x-scroll   ' : ' overflow-x-scroll '
           } `}
         >
           <Column name={'todo'} />
@@ -34,7 +40,7 @@ const Board = () => {
         {!isSidebarOpen && (
           <button
             onClick={() => dispatch(toggleSidebar())}
-            className='flex fixed left-0 top-[500px] bg-[#635FC7] p-3 rounded-tr-[24px] rounded-br-[24px] hover:bg-[#A8A4FF]'
+            className='flex fixed left-0 bottom-12 bg-[#635FC7] p-3 rounded-tr-[24px] rounded-br-[24px] hover:bg-[#A8A4FF]'
           >
             <FaEye className='text-[#fff]' />
           </button>
