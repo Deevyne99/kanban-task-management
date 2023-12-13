@@ -22,7 +22,7 @@ const Board = () => {
       <div
         className={`${
           isSidebarOpen
-            ? 'grid lg:grid-cols-[300px_minmax(900px,_1fr)_0px] md:grid-cols-[260px_minmax(900px,_1fr)_0px] grid-cols-[0px_minmax(900px,_1fr)_0px]  '
+            ? 'grid lg:grid-cols-[300px_minmax(100%,_1fr)_0px] md:grid-cols-[260px_minmax(900px,_1fr)_0px] grid-cols-[0px_minmax(100%,_1fr)_0px]  '
             : 'grid grid-cols-[100%_minmax(900px,_1fr)_0px]'
         }   justify-between   `}
       >
@@ -40,7 +40,7 @@ const Board = () => {
         {!isSidebarOpen && (
           <button
             onClick={() => dispatch(toggleSidebar())}
-            className='flex fixed left-0 bottom-12 bg-[#635FC7] p-3 rounded-tr-[24px] rounded-br-[24px] hover:bg-[#A8A4FF]'
+            className='md:flex hidden fixed left-0 bottom-12 bg-[#635FC7] p-3 rounded-tr-[24px] rounded-br-[24px] hover:bg-[#A8A4FF]'
           >
             <FaEye className='text-[#fff]' />
           </button>

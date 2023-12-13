@@ -7,6 +7,7 @@ import ButtonComponent from '../components/FormButton'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { loginUser, registerUser } from '../features/user/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { HashLoader } from 'react-spinners'
 
 // import React from 'react'
 const initialState = {
@@ -21,7 +22,7 @@ const Register = () => {
   const [values, setValues] = useState<UserProps>(initialState)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { user } = useAppSelector((state) => state.user)
+  const { user, isLoading } = useAppSelector((state) => state.user)
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { username, email, password, isMember } = values
@@ -79,7 +80,14 @@ const Register = () => {
           error={values.isError}
         />
         <div className='mt-4'>
-          <ButtonComponent type='submit' title={`submit`} />
+          {isLoading ? (
+            <HashLoader
+              color='#635FC7'
+              className='justify-center items-center mx-auto'
+            />
+          ) : (
+            <ButtonComponent type='submit' title={`submit`} />
+          )}
         </div>
         <div className='flex justify-center items-center '>
           <p className='text-sm text-[#828FA3] font-semibold'>
