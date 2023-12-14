@@ -6,6 +6,7 @@ export interface InputProps {
   name: string
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void
   error?: boolean
+  title?: string
   // disabled?: boolean
 }
 export interface UserProps {
@@ -22,6 +23,24 @@ export interface ButtonProps {
   img?: string
 }
 
+export interface subtasksProps {
+  title: string
+  isCompleted: boolean
+}
+
+export interface TasksProps {
+  title: string
+  description: string
+  subtasks: subtasksProps[]
+  status: string
+}
+
 export interface ColumnProps {
   name: string
+  tasks: TasksProps[]
+}
+
+export interface BoardsProps {
+  boardName: string
+  columns: ColumnProps[]
 }

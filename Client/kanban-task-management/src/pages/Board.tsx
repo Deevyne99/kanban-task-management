@@ -1,4 +1,4 @@
-// import React from 'react'
+import { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 // import Dropdown from '../components/Dropdown'
 // import logo from '../assets/logo.png'
@@ -7,17 +7,30 @@ import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import Column from '../components/Column'
 import { FaEye } from 'react-icons/fa6'
 import { toggleSidebar } from '../features/modal/modalSlice'
+import { AddBoardModal } from '../components/AddBoardModal'
 
 const Board = () => {
   const dispatch = useAppDispatch()
-  const { isSidebarOpen } = useAppSelector((state) => state.modal)
+  const { isSidebarOpen, createBoardModal } = useAppSelector(
+    (state) => state.modal
+  )
+  const [createInput, setCreateInput] = useState(false)
+
   return (
-    <main className='flex flex-col bg-screen h-screen relative overflow-x-hidden'>
+    <main className='flex flex-col bg-screen h-full relative overflow-hidden'>
       {/* <div className=' justify-center items-center border border-[#F4F7FD] border-l-[1px]'>
         <div className='px-4 py-6 '>
           <img src={logo} alt='' />
         </div> */}
       {/* </div> */}
+      <div
+        className={`${
+          createBoardModal
+            ? 'bg-[#000] absolute left-0 top-0 h-full z-20 flex w-full opacity-50'
+            : 'hidden'
+        }`}
+      ></div>
+      {createBoardModal && <AddBoardModal />}
       <Navbar />
       <div
         className={`${
@@ -28,7 +41,7 @@ const Board = () => {
       >
         {isSidebarOpen && <Sidebar />}
         <div
-          className={`bg-screen p-4 flex gap-4 w-full  min-h-screen  ${
+          className={`bg-screen p-4 flex gap-4 w-full h-full min-h-screen  ${
             isSidebarOpen ? ' overflow-x-scroll   ' : ' overflow-x-scroll '
           } `}
         >

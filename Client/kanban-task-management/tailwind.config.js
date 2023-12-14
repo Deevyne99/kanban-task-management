@@ -24,7 +24,12 @@ export default {
       fontFamily: {
         Plus: ['Plus Jakarta Sans', 'sans-serif'],
       },
+      width: {
+        xs: '300px',
+        sm: '375px',
+      },
     },
   },
+
   plugins: [],
 }

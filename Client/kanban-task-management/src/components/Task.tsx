@@ -2,6 +2,7 @@ const Task = () => {
   return (
     <div
       className={`bg-white w-[300px] p-4 flex flex-col gap-2 shadow-lg rounded-md`}
+      onClick={() => console.log('hello world')}
     >
       <h4 className='font-bold font-Plus text-normal'>
         Build UI for onboarding flow
