@@ -17,7 +17,7 @@ const Board = () => {
   const [createInput, setCreateInput] = useState(false)
 
   return (
-    <main className='flex flex-col bg-screen h-full relative overflow-hidden'>
+    <main className={`flex flex-col bg-screen h-full relative  `}>
       {/* <div className=' justify-center items-center border border-[#F4F7FD] border-l-[1px]'>
         <div className='px-4 py-6 '>
           <img src={logo} alt='' />
@@ -41,8 +41,10 @@ const Board = () => {
       >
         {isSidebarOpen && <Sidebar />}
         <div
-          className={`bg-screen p-4 flex gap-4 w-full h-full min-h-screen  ${
-            isSidebarOpen ? ' overflow-x-scroll   ' : ' overflow-x-scroll '
+          className={`bg-screen mt-16 px-4 md:py-8 py-4   flex gap-4 min-h-screen w-full h-full    ${
+            isSidebarOpen
+              ? "overflow-x-scroll [-ms-overflow-style:'none'] [scrollbar-width:'none']"
+              : ' overflow-x-scroll '
           } `}
         >
           <Column name={'todo'} />

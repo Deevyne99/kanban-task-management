@@ -30,6 +30,9 @@ const Column: FC<ColumnProps> = ({ name }) => {
       </div>
       <Task />
       <Task />
+      <Task />
+
+      <Task />
     </section>
   )
 }

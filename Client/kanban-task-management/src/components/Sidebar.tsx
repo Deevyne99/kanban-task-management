@@ -11,9 +11,9 @@ const Sidebar = () => {
   const dispatch = useAppDispatch()
 
   return (
-    <section className=''>
+    <section className='relative'>
       <aside
-        className={`transition-all hidden md:flex lg:w-[300px] pr-4 md:w-[260px] duration-500 bg-white  h-screen fixed  left-0 top-18   flex-col gap-4  ${
+        className={`transition-all hidden md:flex lg:w-[300px] pr-4 md:w-[260px] duration-500 bg-white  h-screen fixed  left-0 mt-[70px]  flex-col gap-4  ${
           isSidebarOpen ? 'left-[0px] ' : 'left-[-300px]'
         } `}
       >

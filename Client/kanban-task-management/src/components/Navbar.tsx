@@ -6,7 +6,7 @@ import { FaAngleDown } from 'react-icons/fa6'
 
 const Navbar = () => {
   return (
-    <header className='flex shadow-sm z-10 sticky  bg-white  top-0 left items-center   border-b-[1px]   border-[#F4F7FD]  w-full  '>
+    <header className='flex shadow-sm z-10 fixed  bg-white  top-0 left-0 items-center   border-b-[1px]   border-[#F4F7FD]  w-full  '>
       <div className='flex   md:border-r-[1px] border-r-[0pc] border-[#F4F7FD] items-center md:w-[300px] '>
         <div className=' md:px-4 px-2 py-6'>
           <img className='hidden md:flex' src={logo} alt='' />

@@ -5,7 +5,9 @@ const BoardButton: FC<ButtonProps> = ({ title, type, onClick }) => {
     <button
       onClick={onClick}
       className={`lg:w-[270px] md:w-[250px]   text-textLabel    p-[10px]  capitalize flex  items-center font-bold font-Plus hover:bg-[#F4F7FD]  gap-2 rounded-tr-[24px] rounded-br-[24px] ${
-        title === '+ create new board' ? 'text-purple' : 'text-textLabel'
+        title === '+ create new board'
+          ? 'text-purple w-[270px]'
+          : 'text-textLabel'
       }`}
       type={type}
     >
