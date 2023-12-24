@@ -31,6 +31,11 @@ const Column: FC<ColumnProps> = ({ name }) => {
       <Task />
       <Task />
       <Task />
+      <Task />
+      <Task />
+      <Task />
+
+      <Task />
 
       <Task />
     </section>

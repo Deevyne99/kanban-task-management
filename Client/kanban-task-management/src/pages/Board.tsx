@@ -8,6 +8,7 @@ import Column from '../components/Column'
 import { FaEye } from 'react-icons/fa6'
 import { toggleSidebar } from '../features/modal/modalSlice'
 import { AddBoardModal } from '../components/AddBoardModal'
+import AddColumn from '../components/AddColumn'
 
 const Board = () => {
   const dispatch = useAppDispatch()
@@ -17,7 +18,7 @@ const Board = () => {
   const [createInput, setCreateInput] = useState(false)
 
   return (
-    <main className={`flex flex-col bg-screen h-full relative  `}>
+    <main className={`flex flex-col bg-screen h-full relative w-full `}>
       {/* <div className=' justify-center items-center border border-[#F4F7FD] border-l-[1px]'>
         <div className='px-4 py-6 '>
           <img src={logo} alt='' />
@@ -32,25 +33,19 @@ const Board = () => {
       ></div>
       {createBoardModal && <AddBoardModal />}
       <Navbar />
-      <div
-        className={`${
-          isSidebarOpen
-            ? 'grid lg:grid-cols-[300px_minmax(100%,_1fr)_0px] md:grid-cols-[260px_minmax(900px,_1fr)_0px] grid-cols-[0px_minmax(100%,_1fr)_0px]  '
-            : 'grid grid-cols-[100%_minmax(900px,_1fr)_0px]'
-        }   justify-between   `}
-      >
+      <div className={`flex `}>
         {isSidebarOpen && <Sidebar />}
         <div
           className={`bg-screen mt-16 px-4 md:py-8 py-4   flex gap-4 min-h-screen w-full h-full    ${
-            isSidebarOpen
-              ? "overflow-x-scroll [-ms-overflow-style:'none'] [scrollbar-width:'none']"
-              : ' overflow-x-scroll '
+            isSidebarOpen ? 'overflow-x-scroll' : 'overflow-x-scroll  '
           } `}
         >
           <Column name={'todo'} />
           <Column name={'todo'} />
           <Column name={'todo'} />
           <Column name={'todo'} />
+          {/* <Column name={'todo'} /> */}
+          <AddColumn />
         </div>
         {!isSidebarOpen && (
           <button
