@@ -9,12 +9,14 @@ import { FaEye } from 'react-icons/fa6'
 import { toggleSidebar } from '../features/modal/modalSlice'
 import { AddBoardModal } from '../components/AddBoardModal'
 import AddColumn from '../components/AddColumn'
+import DropDownModal from '../components/dropDownModal'
 
 const Board = () => {
-  const dispatch = useAppDispatch()
-  const { isSidebarOpen, createBoardModal } = useAppSelector(
+  const { createBoardModal, isSidebarOpen } = useAppSelector(
     (state) => state.modal
   )
+  const dispatch = useAppDispatch()
+
   const [createInput, setCreateInput] = useState(false)
 
   return (
@@ -31,8 +33,13 @@ const Board = () => {
             : 'hidden'
         }`}
       ></div>
-      {createBoardModal && <AddBoardModal />}
+      <AddBoardModal />
       <Navbar />
+
+      <div className={`flex`}>
+        <DropDownModal />
+      </div>
+
       <div className={`flex overflow-x-scroll `}>
         <div className='flex   '>
           <Sidebar />

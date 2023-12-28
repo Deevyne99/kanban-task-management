@@ -2,9 +2,12 @@ import Button from './Button'
 import logo from '../assets/logo.png'
 import logoMobile from '../assets/mobile-logo.png'
 import { FaAngleDown } from 'react-icons/fa6'
+import { toggleDropDown } from '../features/modal/modalSlice'
+import { useAppDispatch } from '../hooks/hook'
 // import React from 'react'
 
 const Navbar = () => {
+  const dispatch = useAppDispatch()
   return (
     <header className='flex shadow-sm z-10 fixed  bg-white  top-0 left-0 items-center   border-b-[1px]   border-[#F4F7FD]  w-full  '>
       <div className='flex   md:border-r-[1px] border-r-[0pc] border-[#F4F7FD] items-center md:w-[300px] '>
@@ -31,7 +34,7 @@ const Navbar = () => {
           <button className='md:hidden w-[50px] hover:bg-hover h-[30px] bg-purple rounded-2xl font-bold text-xl justify-center items-center text-white '>
             +
           </button>
-          <button>
+          <button onClick={() => dispatch(toggleDropDown())}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='5'

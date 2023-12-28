@@ -1,7 +1,7 @@
 // import React from 'reac
 // import { useState } from "react"
 import { useState } from 'react'
-// import { useAppSelector } from '../hooks/hook'
+import { useAppSelector } from '../hooks/hook'
 // import InputComponent from './Input'
 import ButtonComponent from './FormButton'
 import BoardInput from './BoardInput'
@@ -23,6 +23,7 @@ const initialState = {
 export const AddBoardModal = () => {
   // const { boardName, ...columns } = useAppSelector((state) => state.board)
 
+  const { createBoardModal } = useAppSelector((state) => state.modal)
   const [addboard, setAddBoard] = useState(initialState)
   const addColumn = () => {
     setAddBoard((prev) => ({
@@ -41,9 +42,11 @@ export const AddBoardModal = () => {
 
   return (
     <div
-      className={` bg-white  w-[320px] sm:w-[400px] md:w-[450px] gap-4 flex flex-col absolute z-30 ${
+      className={` bg-white transition-all duration-500 ${
+        createBoardModal ? 'top-32' : ' top-[-500px]'
+      }  w-[320px] sm:w-[400px]  md:w-[450px] gap-4 flex flex-col fixed z-30 ${
         addboard.columns.length > 3 ? 'top-8' : 'top-24'
-      } top-32 left-0 right-0 mx-auto p-6 my-auto rounded-md overflow-hidden`}
+      }  left-0 right-0 mx-auto p-6 my-auto rounded-md overflow-hidden`}
     >
       <p className='capitalize text-[#828FA3]'>board name</p>
       <BoardInput
