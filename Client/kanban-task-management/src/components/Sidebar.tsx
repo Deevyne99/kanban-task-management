@@ -1,19 +1,20 @@
 import { BsBrightnessHigh, BsMoonStars } from 'react-icons/bs'
 
 import BoardButton from './BoardButton'
-import { toggleSidebar } from '../features/modal/modalSlice'
+import { toggleSidebar, toggleCreateBoard } from '../features/modal/modalSlice'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 
 // import { Switch } from '@headlessui/react'
 
 const Sidebar = () => {
   const { isSidebarOpen } = useAppSelector((state) => state.modal)
+
   const dispatch = useAppDispatch()
 
   return (
-    <section className='relative flex flex-col'>
+    <section className='relative flex flex-col bg-green-400'>
       <aside
-        className={`transition-all sticky hidden md:flex lg:w-[300px] pr-4 md:w-[260px] duration-500 bg-white  h-full  left-0 mt-[70px]  flex-col gap-4  ${
+        className={`transition-all fixed   hidden xl:w-[290px] md:flex lg:w-[275px] pr-4 md:w-[260px] duration-500 bg-white  h-full  left-0 mt-[70px]  flex-col gap-4  ${
           isSidebarOpen ? 'left-[0px] ' : 'left-[-300px]'
         } `}
       >
@@ -29,7 +30,7 @@ const Sidebar = () => {
             type='button'
           />
           <BoardButton
-            onClick={() => console.log('hello world')}
+            onClick={() => dispatch(toggleCreateBoard())}
             title={'+ create new board'}
             type='button'
           />

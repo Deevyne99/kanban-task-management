@@ -33,17 +33,22 @@ const Board = () => {
       ></div>
       {createBoardModal && <AddBoardModal />}
       <Navbar />
-      <div className={`flex `}>
-        {isSidebarOpen && <Sidebar />}
+      <div className={`flex overflow-x-scroll `}>
+        <div className='flex   '>
+          <Sidebar />
+        </div>
         <div
-          className={`bg-screen mt-16 px-4 md:py-8 py-4   flex gap-4 min-h-screen w-full h-full    ${
-            isSidebarOpen ? 'overflow-x-scroll' : 'overflow-x-scroll  '
+          className={`bg-screen   mt-16 px-4 md:py-8 py-4   flex gap-4 min-h-screen w-full h-full  max-w-[2000px] mr-[4px] ${
+            isSidebarOpen ? 'overflow-x-scroll ' : 'mr-[4px]'
           } `}
         >
           <Column name={'todo'} />
           <Column name={'todo'} />
           <Column name={'todo'} />
           <Column name={'todo'} />
+          <Column name={'todo'} />
+          <Column name={'todo'} />
+
           {/* <Column name={'todo'} /> */}
           <AddColumn />
         </div>

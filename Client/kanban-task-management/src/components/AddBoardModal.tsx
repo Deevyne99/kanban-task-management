@@ -1,8 +1,8 @@
 // import React from 'reac
 // import { useState } from "react"
 import { useState } from 'react'
-import { useAppSelector } from '../hooks/hook'
-import InputComponent from './Input'
+// import { useAppSelector } from '../hooks/hook'
+// import InputComponent from './Input'
 import ButtonComponent from './FormButton'
 import BoardInput from './BoardInput'
 
@@ -18,18 +18,27 @@ const initialState = {
     {
       name: '',
     },
-    {
-      name: '',
-    },
-    {
-      name: '',
-    },
   ],
 }
 export const AddBoardModal = () => {
   // const { boardName, ...columns } = useAppSelector((state) => state.board)
 
   const [addboard, setAddBoard] = useState(initialState)
+  const addColumn = () => {
+    setAddBoard((prev) => ({
+      ...prev,
+      columns: [...prev.columns, { name: '', id: Date.now() }],
+    }))
+  }
+
+  const deleteColumn = (index: number) => {
+    setAddBoard((prev) => {
+      const updatedColumns = [...prev.columns]
+      updatedColumns.splice(index, 1)
+      return { ...prev, columns: updatedColumns }
+    })
+  }
+
   return (
     <div
       className={` bg-white  w-[320px] sm:w-[400px] md:w-[450px] gap-4 flex flex-col absolute z-30 ${
@@ -46,7 +55,7 @@ export const AddBoardModal = () => {
       <div>
         <p className='capitalize text-[#828FA3]'>board columns</p>
         <div className={`flex flex-col gap-4 mt-2`}>
-          {addboard.columns.map((item) => {
+          {addboard.columns.map((item, index) => {
             const { name } = item
             return (
               <div className='flex gap-y-2 items-center justify-between  gap-4 '>
@@ -58,8 +67,8 @@ export const AddBoardModal = () => {
                   handleChange={() => console.log('helloe')}
                 />
                 <button
-                  className='flex items-center mt-5'
-                  onClick={() => console.log('delete input')}
+                  className='flex items-center mt-1'
+                  onClick={() => deleteColumn(index)}
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -89,7 +98,11 @@ export const AddBoardModal = () => {
           })}
         </div>
         <div className='mt-4 flex justify-center'>
-          <ButtonComponent type='button' title='+ add new column' />
+          <ButtonComponent
+            onClick={addColumn}
+            type='button'
+            title='+ add new column'
+          />
         </div>
         <div className='mt-4 flex justify-center'>
           <ButtonComponent type='button' title='create new board' />

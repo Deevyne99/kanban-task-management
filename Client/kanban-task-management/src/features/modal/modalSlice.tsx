@@ -22,4 +22,4 @@ const modalSlice = createSlice({
 })
 
 export default modalSlice.reducer
-export const { toggleSidebar } = modalSlice.actions
+export const { toggleSidebar, toggleCreateBoard } = modalSlice.actions
