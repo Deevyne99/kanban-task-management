@@ -43,7 +43,7 @@ export const AddBoardModal = () => {
   return (
     <div
       className={` bg-white transition-all duration-500 ${
-        createBoardModal ? 'top-32' : ' top-[-500px]'
+        createBoardModal ? 'md:top-20 top-4' : ' top-[-500px]'
       }  w-[320px] sm:w-[400px]  md:w-[450px] gap-4 flex flex-col fixed z-30 ${
         addboard.columns.length > 3 ? 'top-8' : 'top-24'
       }  left-0 right-0 mx-auto p-6 my-auto rounded-md overflow-hidden`}

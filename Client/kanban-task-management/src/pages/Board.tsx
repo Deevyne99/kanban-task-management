@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import Sidebar from '../components/Sidebar'
-// import Dropdown from '../components/Dropdown'
-// import logo from '../assets/logo.png'
-import Navbar from '../components/Navbar'
+import {
+  Sidebar,
+  Navbar,
+  DropDownModal,
+  AddColumn,
+  AddBoardModal,
+  Column,
+} from '../components'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
-import Column from '../components/Column'
 import { FaEye } from 'react-icons/fa6'
 import { toggleSidebar } from '../features/modal/modalSlice'
-import { AddBoardModal } from '../components/AddBoardModal'
-import AddColumn from '../components/AddColumn'
-import DropDownModal from '../components/dropDownModal'
 
 const Board = () => {
   const { createBoardModal, isSidebarOpen } = useAppSelector(
@@ -17,7 +17,7 @@ const Board = () => {
   )
   const dispatch = useAppDispatch()
 
-  const [createInput, setCreateInput] = useState(false)
+  // const [createInput, setCreateInput] = useState(false)
 
   return (
     <main className={`flex flex-col bg-screen h-full relative w-full `}>

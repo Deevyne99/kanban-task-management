@@ -19,6 +19,7 @@ const modalSlice = createSlice({
     },
     toggleCreateBoard: (state) => {
       state.createBoardModal = !state.createBoardModal
+      state.dropDown = false
     },
     toggleDropDown: (state) => {
       state.dropDown = !state.dropDown

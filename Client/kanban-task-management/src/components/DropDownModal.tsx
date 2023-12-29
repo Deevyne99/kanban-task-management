@@ -6,7 +6,7 @@ const DropDownModal = () => {
     <div
       className={`${
         dropDown ? 'top-24' : 'top-[-300px] '
-      }  flex transition-all duration-500 h-[150px]   fixed right-4 w-[200px] bg-white p-4 rounded-md shadow-md`}
+      }  flex transition-all duration-500 h-[150px]   fixed right-4 w-[180px] bg-white p-4 rounded-xl shadow-md`}
     >
       <div className={`flex flex-col items-start   gap-4 font-Plus`}>
         <button className='capitalize font-Plus text-textLabel text-sm font-medium'>
