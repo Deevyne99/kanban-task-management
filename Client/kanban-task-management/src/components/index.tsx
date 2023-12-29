@@ -9,6 +9,7 @@ import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import Task from './Task'
 import DropDownModal from './DropDownModal'
+import SmallSidebar from './SmallSidebar'
 
 export {
   InputComponent,
@@ -22,4 +23,5 @@ export {
   ButtonComponent,
   DropDownModal,
   AddColumn,
+  SmallSidebar,
 }

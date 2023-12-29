@@ -1,4 +1,4 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import {
   Sidebar,
   Navbar,
@@ -6,13 +6,14 @@ import {
   AddColumn,
   AddBoardModal,
   Column,
+  SmallSidebar,
 } from '../components'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { FaEye } from 'react-icons/fa6'
 import { toggleSidebar } from '../features/modal/modalSlice'
 
 const Board = () => {
-  const { createBoardModal, isSidebarOpen } = useAppSelector(
+  const { createBoardModal, isSidebarOpen, smallSidebar } = useAppSelector(
     (state) => state.modal
   )
   const dispatch = useAppDispatch()
@@ -27,15 +28,24 @@ const Board = () => {
         </div> */}
       {/* </div> */}
       <div
-        className={`${
+        className={`flex ${
           createBoardModal
-            ? 'bg-[#000] absolute left-0 top-0 h-full z-20 flex w-full opacity-50'
-            : 'hidden'
+            ? 'bg-[#000]  absolute left-0 top-0 h-full z-20  w-full opacity-50'
+            : 'h-[0px] transition-all duration-500'
+        } `}
+      ></div>
+      <div
+        className={`flex md:hidden ${
+          smallSidebar
+            ? 'bg-[#000]  transition-all duration-500  absolute left-0 top-0 h-full z-20  w-full opacity-50'
+            : 'h-[0px] transition-all duration-500'
         }`}
       ></div>
       <AddBoardModal />
       <Navbar />
-
+      <div>
+        <SmallSidebar />
+      </div>
       <div className={`flex`}>
         <DropDownModal />
       </div>

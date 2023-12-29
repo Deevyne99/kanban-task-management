@@ -1,15 +1,23 @@
 import Button from './Button'
 import logo from '../assets/logo.png'
 import logoMobile from '../assets/mobile-logo.png'
-import { FaAngleDown } from 'react-icons/fa6'
-import { toggleDropDown } from '../features/modal/modalSlice'
-import { useAppDispatch } from '../hooks/hook'
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa6'
+import {
+  toggleDropDown,
+  toggleSmallSidebar,
+} from '../features/modal/modalSlice'
+import { useAppDispatch, useAppSelector } from '../hooks/hook'
 // import React from 'react'
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
+  const { smallSidebar } = useAppSelector((store) => store.modal)
   return (
-    <header className='flex shadow-sm z-10 fixed  bg-white  top-0 left-0 items-center   border-b-[1px]   border-[#F4F7FD]  w-full  '>
+    <header
+      className={`${
+        smallSidebar ? 'z-40' : ''
+      } flex shadow-sm z-10 fixed  bg-white  top-0 left-0 items-center   border-b-[1px]   border-[#F4F7FD]  w-full  `}
+    >
       <div className='flex   md:border-r-[1px] border-r-[0pc] border-[#F4F7FD] items-center md:w-[300px] '>
         <div className=' md:px-4 px-2 py-6'>
           <img className='hidden md:flex' src={logo} alt='' />
@@ -20,8 +28,16 @@ const Navbar = () => {
         <h1 className='capitalize md:flex hidden md:text-2xl lg:text-4xl font-Plus font-bold'>
           platform launch
         </h1>
-        <button className='md:hidden flex justify-center items-center gap-2 capitalize font-Plus font-bold'>
-          platform launch <FaAngleDown />
+        <button
+          onClick={() => dispatch(toggleSmallSidebar())}
+          className='md:hidden flex justify-center items-center gap-2 capitalize font-Plus font-bold'
+        >
+          platform launch{' '}
+          {smallSidebar ? (
+            <FaAngleUp className='text-purple' />
+          ) : (
+            <FaAngleDown className='text-purple' />
+          )}
         </button>
         <div className='flex gap-4 items-center'>
           <div className='md:flex hidden '>
