@@ -10,6 +10,7 @@ import Sidebar from './Sidebar'
 import Task from './Task'
 import DropDownModal from './DropDownModal'
 import SmallSidebar from './SmallSidebar'
+import AddTask from './AddTask'
 
 export {
   InputComponent,
@@ -24,4 +25,5 @@ export {
   DropDownModal,
   AddColumn,
   SmallSidebar,
+  AddTask,
 }

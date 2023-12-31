@@ -7,6 +7,7 @@ import {
   AddBoardModal,
   Column,
   SmallSidebar,
+  AddTask,
 } from '../components'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { FaEye } from 'react-icons/fa6'
@@ -41,8 +42,15 @@ const Board = () => {
             : 'h-[0px] transition-all duration-500'
         }`}
       ></div>
-      <AddBoardModal />
-      <Navbar />
+      <div>
+        <AddBoardModal />
+      </div>
+      <div>
+        <Navbar />
+      </div>
+      <div>
+        <AddTask />
+      </div>
       <div>
         <SmallSidebar />
       </div>
@@ -55,7 +63,7 @@ const Board = () => {
           <Sidebar />
         </div>
         <div
-          className={`bg-screen   mt-16 px-4 md:py-8 py-4   flex gap-4 min-h-screen w-full h-full  max-w-[2000px] mr-[4px] ${
+          className={`bg-screen   mt-16 px-4 md:py-8 py-4   flex gap-4 min-h-screen w-full h-full  mr-[4px] ${
             isSidebarOpen ? 'overflow-x-scroll ' : 'mr-[4px]'
           } `}
         >
