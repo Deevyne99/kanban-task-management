@@ -37,6 +37,12 @@ const modalSlice = createSlice({
       state.smallSidebar = !state.smallSidebar
       state.dropDown = false
     },
+    toggleAddTask: (state) => {
+      state.addTask = !state.addTask
+      state.smallSidebar = false
+      state.dropDown = false
+      state.createBoardModal = false
+    },
   },
 })
 
@@ -46,4 +52,5 @@ export const {
   toggleCreateBoard,
   toggleDropDown,
   toggleSmallSidebar,
+  toggleAddTask,
 } = modalSlice.actions

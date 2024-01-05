@@ -5,6 +5,7 @@ import { FaAngleDown, FaAngleUp } from 'react-icons/fa6'
 import {
   toggleDropDown,
   toggleSmallSidebar,
+  toggleAddTask,
 } from '../features/modal/modalSlice'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 // import React from 'react'
@@ -43,7 +44,7 @@ const Navbar = () => {
           <div className='md:flex hidden '>
             <Button
               title='+ add task'
-              onClick={() => console.log('add task')}
+              onClick={() => dispatch(toggleAddTask())}
               type='button'
             />
           </div>

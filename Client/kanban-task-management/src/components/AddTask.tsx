@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { BoardInput } from '.'
+import { BoardInput, ButtonComponent } from '.'
 import { subtasksProps } from '../interface/interface'
+import { useAppSelector, useAppDispatch } from '../hooks/hook'
+import { toggleAddTask } from '../features/modal/modalSlice'
 
 const initialState = {
   title: '',
@@ -24,12 +26,15 @@ type taskProps = {
 }
 
 const AddTask = () => {
+  const { addTask } = useAppSelector((state) => state.modal)
   const [task, setTask] = useState<taskProps>(initialState)
-
+  const dispatch = useAppDispatch()
   return (
     <aside className='relative'>
       <div
-        className={`fixed bg-white rounded-md top-20 right-0 mx-auto w-[300px] sm:w-[350px] md:w-[450px] left-0 p-4  flex flex-col`}
+        className={`transition-all duration-500 ${
+          addTask ? 'top-20 z-30 ' : 'top-[-500px]'
+        } fixed bg-white rounded-md  right-0 mx-auto w-[300px] sm:w-[350px] md:w-[450px] left-0 p-4  flex flex-col`}
       >
         <h3>Add New Task</h3>
         <div className='flex flex-col  gap-4 mt-2'>
@@ -49,7 +54,7 @@ const AddTask = () => {
               name='description'
               id=''
               cols={30}
-              rows={4}
+              rows={2}
               onChange={() => console.log('hello world')}
               value={task.description}
             ></textarea>
@@ -127,6 +132,27 @@ const AddTask = () => {
               </svg>
             </button>
           </div>
+          <ButtonComponent
+            onClick={() => console.log('hello world')}
+            type='button'
+            title='+ add new task'
+          />
+          <div className=''>
+            <select
+              className='md:w-[380px] p-2 sm:w-[300px] w-[270px] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md '
+              name='status'
+              id='status'
+            >
+              <option value='todo'>todo</option>
+              <option value='doing'>doing</option>
+              <option value='done'>done</option>
+            </select>
+          </div>
+          <ButtonComponent
+            onClick={() => dispatch(toggleAddTask())}
+            type='button'
+            title='create task'
+          />
         </div>
       </div>
     </aside>

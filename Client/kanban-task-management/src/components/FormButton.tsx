@@ -5,7 +5,7 @@ const ButtonComponent: FC<ButtonProps> = ({ title, type, onClick }) => {
     <button
       onClick={onClick}
       className={`md:w-[380px] ${
-        title === '+ add new column'
+        title === '+ add new column' || title === '+ add new task'
           ? 'bg-opacity-10 text-purple text-opacity-100 w-[220px]'
           : ''
       } 

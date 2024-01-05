@@ -14,9 +14,8 @@ import { FaEye } from 'react-icons/fa6'
 import { toggleSidebar } from '../features/modal/modalSlice'
 
 const Board = () => {
-  const { createBoardModal, isSidebarOpen, smallSidebar } = useAppSelector(
-    (state) => state.modal
-  )
+  const { createBoardModal, isSidebarOpen, smallSidebar, addTask } =
+    useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
 
   // const [createInput, setCreateInput] = useState(false)
@@ -41,6 +40,13 @@ const Board = () => {
             ? 'bg-[#000]  transition-all duration-500  absolute left-0 top-0 h-full z-20  w-full opacity-50'
             : 'h-[0px] transition-all duration-500'
         }`}
+      ></div>
+      <div
+        className={`flex ${
+          addTask
+            ? 'bg-[#000]  absolute left-0 top-0 h-full z-20  w-full opacity-50'
+            : 'h-[0px] transition-all duration-500'
+        } `}
       ></div>
       <div>
         <AddBoardModal />
