@@ -1,6 +1,8 @@
-import { useAppSelector } from '../hooks/hook'
+import { toggleDeleteBoard } from '../features/modal/modalSlice'
+import { useAppSelector, useAppDispatch } from '../hooks/hook'
 
 const DropDownModal = () => {
+  const dispatch = useAppDispatch()
   const { dropDown } = useAppSelector((store) => store.modal)
   return (
     <div
@@ -12,7 +14,11 @@ const DropDownModal = () => {
         <button className='capitalize font-Plus text-textLabel text-sm font-medium'>
           edit board
         </button>
-        <button className='capitalize text-[#EA5555] text-sm font-Plus font-medium'>
+        <button
+          type='button'
+          onClick={() => dispatch(toggleDeleteBoard())}
+          className='capitalize text-[#EA5555] text-sm font-Plus font-medium'
+        >
           delete board
         </button>
         <button className='capitalize font-Plus text-sm text-textLabel font-medium'>

@@ -12,10 +12,16 @@ import {
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { FaEye } from 'react-icons/fa6'
 import { toggleSidebar } from '../features/modal/modalSlice'
+import DeleteModal from '../components/DeleteModal'
 
 const Board = () => {
-  const { createBoardModal, isSidebarOpen, smallSidebar, addTask } =
-    useAppSelector((state) => state.modal)
+  const {
+    createBoardModal,
+    isSidebarOpen,
+    smallSidebar,
+    addTask,
+    deleteBoard,
+  } = useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
 
   // const [createInput, setCreateInput] = useState(false)
@@ -30,21 +36,28 @@ const Board = () => {
       <div
         className={`flex ${
           createBoardModal
-            ? 'bg-[#000]  absolute left-0 top-0 h-full z-20  w-full opacity-50'
+            ? 'bg-[#000] backdrop-blur-[1px]  fixed left-0 top-0 h-full z-20  w-full opacity-50'
             : 'h-[0px] transition-all duration-500'
         } `}
       ></div>
       <div
         className={`flex md:hidden ${
           smallSidebar
-            ? 'bg-[#000]  transition-all duration-500  absolute left-0 top-0 h-full z-20  w-full opacity-50'
+            ? 'bg-[#000] backdrop-blur-[1px] transition-all duration-500  fixed left-0 top-0 h-full z-20  w-full opacity-50'
             : 'h-[0px] transition-all duration-500'
         }`}
       ></div>
       <div
-        className={`flex ${
+        className={`flex  ${
           addTask
-            ? 'bg-[#000]  absolute left-0 top-0 h-full z-20  w-full opacity-50'
+            ? 'bg-[#000] backdrop-blur-[1px]  fixed left-0 top-0 h-full z-20  w-full opacity-50'
+            : 'h-[0px] transition-all duration-500'
+        } `}
+      ></div>
+      <div
+        className={`flex  ${
+          deleteBoard
+            ? 'bg-[#000] backdrop-blur-[1px]  fixed left-0 top-0 h-full z-20  w-full opacity-50'
             : 'h-[0px] transition-all duration-500'
         } `}
       ></div>
@@ -63,7 +76,9 @@ const Board = () => {
       <div className={`flex`}>
         <DropDownModal />
       </div>
-
+      <div>
+        <DeleteModal />
+      </div>
       <div className={`flex overflow-x-scroll `}>
         <div className='flex   '>
           <Sidebar />

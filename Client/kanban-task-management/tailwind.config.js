@@ -20,6 +20,7 @@ export default {
       backgroundColor: {
         white: '#fff',
         screen: '#F4F7FD',
+        cancleBtn: 'rgba(99, 95, 199, 0.10)',
       },
       fontFamily: {
         Plus: ['Plus Jakarta Sans', 'sans-serif'],
