@@ -9,6 +9,7 @@ interface ModalProps {
   deleteTask: boolean
   deleteBoard: boolean
   taskModal: boolean
+  taskOptions: boolean
 }
 const initialState: ModalProps = {
   isSidebarOpen: true,
@@ -19,6 +20,7 @@ const initialState: ModalProps = {
   deleteTask: false,
   deleteBoard: false,
   taskModal: false,
+  taskOptions: false,
 }
 const modalSlice = createSlice({
   name: 'modals',
@@ -73,6 +75,9 @@ const modalSlice = createSlice({
       state.deleteBoard = false
       state.taskModal = !state.taskModal
     },
+    toggleOptions: (state) => {
+      state.taskOptions = !state.taskOptions
+    },
   },
 })
 
@@ -86,4 +91,5 @@ export const {
   toggleDeleteTask,
   toggleDeleteBoard,
   toggleTask,
+  toggleOptions,
 } = modalSlice.actions

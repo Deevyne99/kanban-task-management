@@ -1,30 +1,43 @@
 import { SetStateAction, useState } from 'react'
-import { useAppSelector } from '../hooks/hook'
+import { useAppSelector, useAppDispatch } from '../hooks/hook'
+import { toggleOptions } from '../features/modal/modalSlice'
 
 const TaskModal = () => {
-  const { taskModal } = useAppSelector((store) => store.modal)
+  const { taskModal, taskOptions } = useAppSelector((store) => store.modal)
+  const options = ['todo', 'doing', 'done']
+  const [selectedOption, setSelectedOption] = useState('Select Status')
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
-  const [selectedStatus, setSelectedStatus] = useState('todo')
+  const dispatch = useAppDispatch()
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen)
+  }
 
-  const handleStatusChange = (event: {
-    target: { value: SetStateAction<string> }
-  }) => {
-    setSelectedStatus(event.target.value)
+  const selectOption = (option: string) => {
+    setSelectedOption(option)
+    setDropdownOpen(false)
   }
   return (
     <div className='relative'>
       <div
         className={`transition-all duration-500 ${
-          taskModal ? 'top-32 z-30 ' : 'top-[-500px]'
+          taskModal ? 'top-8 sm:top-32 z-30 ' : 'top-[-500px]'
         } fixed bg-white rounded-md  right-0 mx-auto w-[300px] sm:w-[350px] md:w-[450px] left-0 px-4 py-6 flex flex-col`}
       >
         <div className='flex flex-col gap-4'>
-          <div className='flex items-center font-Plus font-medium text-[#000112]'>
+          {taskOptions && (
+            <div className='flex flex-col w-[150px] rounded-md shadow- absolute top-20 bg-white p-4 gap-3 items-start sm:right-[-50px] right-0'>
+              <button>Edit task</button>
+              <button className='text-[#EA5555]'>Delete task</button>
+            </div>
+          )}
+
+          <div className='flex items-center font-Plus  '>
             <h3 className='font-Plus font-bold text-[#000112]'>
               Research pricing points of various competitors and trial different
               business models
             </h3>
-            <button>
+            <button onClick={() => dispatch(toggleOptions())}>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='5'
@@ -39,7 +52,7 @@ const TaskModal = () => {
             </button>
           </div>
           <div>
-            <p className='text-[#828FA3] text-[14px] font-Plus'>
+            <p className='text-[#828FA3] text-[13px] font-Plus leading-[23px]'>
               We know what we're planning to build for version one. Now we need
               to finalise the first pricing model we'll use. Keep iterating the
               subtasks until we have a coherent proposition.
@@ -85,25 +98,56 @@ const TaskModal = () => {
               </div>
             </div>
           </div>
-          <div className='relative flex flex-col mt-2 text-left'>
-            <select
-              value={selectedStatus}
-              onChange={handleStatusChange}
-              className='block appearance-none w-full bg-white border border-[#828FA340] font-normal  focus:outline-none px-4 py-2 pr-8 rounded leading-tight '
-            >
-              <option value='todo'>Todo</option>
-              <option value='doing'>Doing</option>
-              <option value='done'>Done</option>
-            </select>
-            <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
-              <svg
-                className='fill-current h-4 w-4'
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 20 20'
-              >
-                <path d='M10 12l-6-6 1.41-1.41L10 9.17l4.59-4.58L16 6z' />
-              </svg>
+          <div className='relative w-full inline-block text-left'>
+            <div>
+              <span className='rounded-md shadow-sm'>
+                <button
+                  type='button'
+                  className='inline-flex justify-between w-full rounded-md border border-gray-300 p-2 bg-white text-sm leading-5 font-medium text-[#000112] capitalize border-[#828FA340] font-Plus focus:border-[#635FC7] focus:outline-none transition ease-in-out duration-150'
+                  id='options-menu'
+                  aria-haspopup='true'
+                  aria-expanded='true'
+                  onClick={toggleDropdown}
+                >
+                  {selectedOption}
+                  <svg
+                    className='-mr-1 ml-2 h-5 w-5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                </button>
+              </span>
             </div>
+
+            {dropdownOpen && (
+              <div className='origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg'>
+                <div className='rounded-md bg-white shadow-xs'>
+                  <div
+                    className='py-1'
+                    role='menu'
+                    aria-orientation='vertical'
+                    aria-labelledby='options-menu'
+                  >
+                    {options.map((option) => (
+                      <div
+                        key={option}
+                        onClick={() => selectOption(option)}
+                        className='block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer'
+                        role='menuitem'
+                      >
+                        {option}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
