@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { FaEye } from 'react-icons/fa6'
 import { toggleSidebar } from '../features/modal/modalSlice'
 import DeleteModal from '../components/DeleteModal'
+import TaskModal from '../components/TaskModal'
 
 const Board = () => {
   const {
@@ -21,6 +22,7 @@ const Board = () => {
     smallSidebar,
     addTask,
     deleteBoard,
+    taskModal,
   } = useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
 
@@ -61,6 +63,13 @@ const Board = () => {
             : 'h-[0px] transition-all duration-500'
         } `}
       ></div>
+      <div
+        className={`flex  ${
+          taskModal
+            ? 'bg-[#000] backdrop-blur-[1px]  fixed left-0 top-0 h-full z-20  w-full opacity-50'
+            : 'h-[0px] transition-all duration-500'
+        } `}
+      ></div>
       <div>
         <AddBoardModal />
       </div>
@@ -72,6 +81,9 @@ const Board = () => {
       </div>
       <div>
         <SmallSidebar />
+      </div>
+      <div>
+        <TaskModal />
       </div>
       <div className={`flex`}>
         <DropDownModal />

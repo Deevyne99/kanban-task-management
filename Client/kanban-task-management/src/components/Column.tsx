@@ -1,8 +1,11 @@
 import { FC, useState } from 'react'
 import { ColumnProps } from '../interface/interface'
 import Task from './Task'
+import { useAppDispatch, useAppSelector } from '../hooks/hook'
+import { toggleTask } from '../features/modal/modalSlice'
 
 const Column: FC<ColumnProps> = ({ name }) => {
+  const dispatch = useAppDispatch()
   const colors: string[] = [
     'red-500',
     'orange-500',
@@ -17,7 +20,7 @@ const Column: FC<ColumnProps> = ({ name }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [color, setColor] = useState(colors[5])
   // console.log(color[0])
-
+  const num = [1, 2, 3, 4, 5, 6]
   return (
     <section className='flex flex-col gap-4'>
       <div
@@ -28,16 +31,13 @@ const Column: FC<ColumnProps> = ({ name }) => {
           {name} <span>(14)</span>
         </p>
       </div>
-      <Task />
-      <Task />
-      <Task />
-      <Task />
-      <Task />
-      <Task />
-
-      <Task />
-
-      <Task />
+      {num.map((item, index) => {
+        return (
+          <div key={index} onClick={() => dispatch(toggleTask())}>
+            <Task />
+          </div>
+        )
+      })}
     </section>
   )
 }
