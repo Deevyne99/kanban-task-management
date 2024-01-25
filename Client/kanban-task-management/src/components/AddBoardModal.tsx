@@ -23,7 +23,9 @@ const initialState = {
 export const AddBoardModal = () => {
   // const { boardName, ...columns } = useAppSelector((state) => state.board)
 
-  const { createBoardModal } = useAppSelector((state) => state.modal)
+  const { createBoardModal, boardHeader } = useAppSelector(
+    (state) => state.modal
+  )
   const [addboard, setAddBoard] = useState(initialState)
   const addColumn = () => {
     setAddBoard((prev) => ({
@@ -44,11 +46,12 @@ export const AddBoardModal = () => {
     <div
       className={` bg-white transition-all duration-500 ${
         createBoardModal ? 'md:top-20 top-8' : ' top-[-500px]'
-      }  w-[320px] sm:w-[400px]  md:w-[450px] gap-4 flex flex-col fixed z-30 ${
+      }  w-[320px] sm:w-[400px]  md:w-[450px] gap-2 flex flex-col fixed z-30 ${
         addboard.columns.length > 3 ? 'top-8' : 'top-24'
       }  left-0 right-0 mx-auto p-6 my-auto rounded-md overflow-hidden`}
     >
-      <p className='capitalize text-[#828FA3]'>board name</p>
+      <h2 className='font-Plus font-semibold capitalize'>{boardHeader}</h2>
+      <p className='capitalize text-[#828FA3]'>name</p>
       <BoardInput
         type='text'
         value={addboard.boardName}
@@ -56,7 +59,7 @@ export const AddBoardModal = () => {
         handleChange={() => console.log('hello')}
       />
       <div>
-        <p className='capitalize text-[#828FA3]'>board columns</p>
+        <p className='capitalize text-[#828FA3] mt-4'>columns</p>
         <div className={`flex flex-col gap-4 mt-2`}>
           {addboard.columns.map((item, index) => {
             const { name } = item

@@ -1,6 +1,10 @@
-import { SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
-import { toggleOptions } from '../features/modal/modalSlice'
+import {
+  toggleOptions,
+  toggleDeleteTask,
+  toggleEditTask,
+} from '../features/modal/modalSlice'
 
 const TaskModal = () => {
   const { taskModal, taskOptions } = useAppSelector((store) => store.modal)
@@ -27,8 +31,15 @@ const TaskModal = () => {
         <div className='flex flex-col gap-4'>
           {taskOptions && (
             <div className='flex flex-col w-[150px] rounded-md shadow- absolute top-20 bg-white p-4 gap-3 items-start sm:right-[-50px] right-0'>
-              <button>Edit task</button>
-              <button className='text-[#EA5555]'>Delete task</button>
+              <button onClick={() => dispatch(toggleEditTask())}>
+                Edit task
+              </button>
+              <button
+                onClick={() => dispatch(toggleDeleteTask())}
+                className='text-[#EA5555]'
+              >
+                Delete task
+              </button>
             </div>
           )}
 

@@ -6,10 +6,12 @@ interface ModalProps {
   dropDown: boolean
   smallSidebar: boolean
   addTask: boolean
-  deleteTask: boolean
   deleteBoard: boolean
   taskModal: boolean
   taskOptions: boolean
+  deleteCategory: string
+  boardHeader: string
+  taskHeader: string
 }
 const initialState: ModalProps = {
   isSidebarOpen: true,
@@ -17,10 +19,12 @@ const initialState: ModalProps = {
   dropDown: false,
   smallSidebar: false,
   addTask: false,
-  deleteTask: false,
   deleteBoard: false,
   taskModal: false,
   taskOptions: false,
+  deleteCategory: 'board',
+  boardHeader: 'Add new board',
+  taskHeader: 'Add new task',
 }
 const modalSlice = createSlice({
   name: 'modals',
@@ -34,6 +38,14 @@ const modalSlice = createSlice({
       state.dropDown = false
       state.smallSidebar = false
       state.addTask = false
+      state.boardHeader = 'Add new board'
+    },
+    toggleEditBoard: (state) => {
+      state.createBoardModal = !state.createBoardModal
+      state.dropDown = false
+      state.smallSidebar = false
+      state.addTask = false
+      state.boardHeader = 'Edit board'
     },
     toggleDropDown: (state) => {
       state.addTask = false
@@ -50,28 +62,41 @@ const modalSlice = createSlice({
       state.smallSidebar = false
       state.dropDown = false
       state.createBoardModal = false
+      state.taskHeader = 'Add new task'
+    },
+    toggleEditTask: (state) => {
+      state.addTask = !state.addTask
+      state.smallSidebar = false
+      state.dropDown = false
+      state.createBoardModal = false
+      state.taskHeader = 'Edit task'
+      state.taskModal = false
+      state.taskOptions = false
     },
     toggleDeleteTask: (state) => {
       state.addTask = false
       state.smallSidebar = false
       state.dropDown = false
       state.createBoardModal = false
-      state.deleteTask = !state.deleteTask
+      state.deleteBoard = !state.deleteBoard
+      state.deleteCategory = 'task'
+      state.taskModal = false
+      state.taskOptions = false
     },
     toggleDeleteBoard: (state) => {
       state.addTask = false
       state.smallSidebar = false
       state.dropDown = false
       state.createBoardModal = false
-      state.deleteTask = false
       state.deleteBoard = !state.deleteBoard
+      state.taskModal = false
+      state.deleteCategory = 'board'
     },
     toggleTask: (state) => {
       state.addTask = false
       state.smallSidebar = false
       state.dropDown = false
       state.createBoardModal = false
-      state.deleteTask = false
       state.deleteBoard = false
       state.taskModal = !state.taskModal
     },
@@ -92,4 +117,6 @@ export const {
   toggleDeleteBoard,
   toggleTask,
   toggleOptions,
+  toggleEditBoard,
+  toggleEditTask,
 } = modalSlice.actions

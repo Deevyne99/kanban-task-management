@@ -26,7 +26,7 @@ type taskProps = {
 }
 
 const AddTask = () => {
-  const { addTask } = useAppSelector((state) => state.modal)
+  const { addTask, taskHeader } = useAppSelector((state) => state.modal)
   const [task, setTask] = useState<taskProps>(initialState)
   const dispatch = useAppDispatch()
   return (
@@ -34,10 +34,12 @@ const AddTask = () => {
       <div
         className={`transition-all duration-500 ${
           addTask ? 'top-20 z-30 ' : 'top-[-500px]'
-        } fixed bg-white rounded-md  right-0 mx-auto w-[300px] sm:w-[350px] md:w-[450px] left-0 p-4  flex flex-col`}
+        } fixed bg-white rounded-md  right-0 mx-auto w-[320px] sm:w-[400px]  md:w-[450px] left-0 p-4  flex flex-col`}
       >
-        <h3>Add New Task</h3>
-        <div className='flex flex-col  gap-4 mt-2'>
+        <h2 className='font-Plus font-semibold capitalize ml-2'>
+          {taskHeader}
+        </h2>
+        <div className='flex ml-2 flex-col  gap-4 mt-2'>
           <div className=''>
             <p className='gap-2 mb-[3px] capitalize'>title</p>
             <BoardInput
@@ -151,7 +153,9 @@ const AddTask = () => {
           <ButtonComponent
             onClick={() => dispatch(toggleAddTask())}
             type='button'
-            title='create task'
+            title={
+              taskHeader === 'Add new task' ? 'create task' : 'save changes'
+            }
           />
         </div>
       </div>

@@ -1,9 +1,11 @@
 import { toggleDeleteBoard } from '../features/modal/modalSlice'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
-
+// interface DeleteProp {
+//   category: string
+// }
 const DeleteModal = () => {
   const dispatch = useAppDispatch()
-  const { deleteBoard } = useAppSelector((store) => store.modal)
+  const { deleteBoard, deleteCategory } = useAppSelector((store) => store.modal)
   return (
     <div
       className={` bg-white transition-all duration-500 ${
@@ -12,7 +14,7 @@ const DeleteModal = () => {
     >
       <div className='flex flex-col gap-4'>
         <h3 className='capitalize text-[#EA5555] font-bold'>
-          Delete this board?
+          Delete this {deleteCategory}?
         </h3>
         <p className='text-[13px] text-[#828FA3]'>
           Are you sure you want to delete the ‘Platform Launch’ board? This

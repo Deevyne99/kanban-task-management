@@ -1,4 +1,7 @@
-import { toggleDeleteBoard } from '../features/modal/modalSlice'
+import {
+  toggleDeleteBoard,
+  toggleEditBoard,
+} from '../features/modal/modalSlice'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
 
 const DropDownModal = () => {
@@ -11,7 +14,10 @@ const DropDownModal = () => {
       }  flex transition-all duration-500 h-[150px]   fixed right-4 w-[180px] bg-white p-4 rounded-xl shadow-md`}
     >
       <div className={`flex flex-col items-start   gap-4 font-Plus`}>
-        <button className='capitalize font-Plus text-textLabel text-sm font-medium'>
+        <button
+          onClick={() => dispatch(toggleEditBoard())}
+          className='capitalize font-Plus text-textLabel text-sm font-medium'
+        >
           edit board
         </button>
         <button
