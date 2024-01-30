@@ -4,8 +4,8 @@
 @tailwind utilities;
 
 .dark {
-  @apply bg-[#20212C] text-[#FFF];
+  @apply bg-[#20212C] text-[#FFF] transition-all duration-300;
 }
 .light {
-  @apply bg-[#F4F7FD] text-[#000112];
+  @apply bg-[#F4F7FD] text-[#000112] transition-all duration-300;
 }

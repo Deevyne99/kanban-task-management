@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
+  removeUserFromLocalStorage,
 } from '../../utils/localStorage'
 
 interface UserState {
@@ -84,6 +85,13 @@ const userSlice = createSlice({
       addUserToLocalStorage(user)
     })
   },
-  reducers: {},
+  reducers: {
+    logoutUser: (state) => {
+      removeUserFromLocalStorage()
+      state.user = false
+    },
+  },
 })
 export default userSlice.reducer
+
+export const { logoutUser } = userSlice.actions

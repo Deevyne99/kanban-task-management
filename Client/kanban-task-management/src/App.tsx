@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useEffect } from 'react'
 import { useAppSelector } from './hooks/hook'
+import ProtectedRoute from './pages/ProtectedRoute'
 
 function App() {
   const { darkMode } = useAppSelector((state) => state.modal)
@@ -17,7 +18,15 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Register />} />
-          <Route path='/board' element={<Board />} />
+
+          <Route
+            path='/board'
+            element={
+              <ProtectedRoute>
+                <Board />
+              </ProtectedRoute>
+            }
+          />
           <Route path='*' element={<Error />} />
         </Routes>
         <ToastContainer />

@@ -18,9 +18,9 @@ const Sidebar = () => {
   return (
     <section className={` flex flex-col `}>
       <aside
-        className={`transition-all  sticky  hidden  duration-500   h-full  left-0 mt-[70px]  flex-col gap-4  ${
+        className={`transition-all  sticky  hidden  duration-300   h-full  left-0 mt-[70px]  flex-col gap-4  ${
           isSidebarOpen
-            ? 'translate-x-0 xl:w-[290px] md:flex lg:w-[275px] pr-4 md:w-[260px]'
+            ? 'translate-x-0 xl:w-[300px] md:flex lg:w-[300px] pr-4 md:w-[260px]'
             : '-translate-x-full w-0'
         }  ${darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'} `}
       >
@@ -41,7 +41,11 @@ const Sidebar = () => {
             type='button'
           />
         </div>
-        <div className='w-[220px] absolute bottom-48 flex justify-between p-4 px-6 ml-6 bg-[#F4F7FD] rounded-md'>
+        <div
+          className={`w-[220px] absolute bottom-48 flex justify-between p-4 px-6 ml-6  rounded-md ${
+            darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
+          }`}
+        >
           <BsBrightnessHigh />
           <button onClick={() => dispatch(toggleDarkMode())}>change</button>
           <BsMoonStars />

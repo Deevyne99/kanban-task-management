@@ -5,10 +5,14 @@ import { useAppSelector, useAppDispatch } from '../hooks/hook'
 // }
 const DeleteModal = () => {
   const dispatch = useAppDispatch()
-  const { deleteBoard, deleteCategory } = useAppSelector((store) => store.modal)
+  const { deleteBoard, deleteCategory, darkMode } = useAppSelector(
+    (store) => store.modal
+  )
   return (
     <div
-      className={` bg-white transition-all duration-500 ${
+      className={` ${
+        darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
+      } transition-all duration-500 ${
         deleteBoard ? ' md:top-[250px] top-[150px] z-30 ' : ' top-[-500px]'
       }  w-[320px] sm:w-[400px]  md:w-[450px] gap-4 flex flex-col fixed  left-0 right-0 mx-auto p-6 my-auto rounded-md overflow-hidden`}
     >
