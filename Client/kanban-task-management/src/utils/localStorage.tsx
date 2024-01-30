@@ -14,3 +14,11 @@ export const getUserFromLocalStorage = () => {
   const user = result ? JSON.parse(result) : null
   return user
 }
+
+export const getThemeFromLocalStorage = () => {
+  let darkMode: string | null = 'light'
+  if (localStorage.getItem('darkMode')) {
+    darkMode = localStorage.getItem('darkMode')
+  }
+  return darkMode
+}

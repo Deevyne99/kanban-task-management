@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { InputProps } from '../interface/interface'
+import { useAppSelector } from '../hooks/hook'
 
 const BoardInput: FC<InputProps> = ({
   type,
@@ -9,6 +10,8 @@ const BoardInput: FC<InputProps> = ({
   error,
   title,
 }) => {
+  const { darkMode } = useAppSelector((state) => state.modal)
+
   return (
     <input
       placeholder={error ? `can't be empty` : `Please enter your ${name}`}
@@ -21,7 +24,7 @@ const BoardInput: FC<InputProps> = ({
           ? 'placeholder:text-error placeholder:font-medium placeholder:text-right'
           : 'text-normal border-[#828FA340] '
       } ${error && !value ? 'border-error' : 'border-normal'}
-      `}
+       ${darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'} `}
       type={type}
       value={value}
       name={name}

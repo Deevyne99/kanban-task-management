@@ -23,13 +23,16 @@ const Board = () => {
     addTask,
     deleteBoard,
     taskModal,
+    darkMode,
   } = useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
 
   // const [createInput, setCreateInput] = useState(false)
 
   return (
-    <main className={`flex flex-col bg-screen h-full relative w-full `}>
+    <main
+      className={`flex flex-col  h-full relative w-full &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] `}
+    >
       {/* <div className=' justify-center items-center border border-[#F4F7FD] border-l-[1px]'>
         <div className='px-4 py-6 '>
           <img src={logo} alt='' />
@@ -91,23 +94,22 @@ const Board = () => {
       <div>
         <DeleteModal />
       </div>
-      <div className={`flex overflow-x-scroll `}>
-        <div className='flex   '>
+      <div className={` flex  `}>
+        <div className='flex  '>
           <Sidebar />
         </div>
         <div
-          className={`bg-screen   mt-16 px-4 md:py-8 py-4   flex gap-4 min-h-screen w-full h-full  mr-[4px] ${
-            isSidebarOpen ? 'overflow-x-scroll ' : 'mr-[4px]'
-          } `}
+          className={` mt-16  px-4 md:py-8 py-4 w-full  flex gap-4 min-h-screen  h-full  mr-[4px] ${
+            isSidebarOpen ? 'overflow-x-scroll' : ' mr-[4px]'
+          } &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] `}
         >
           <Column name={'todo'} />
           <Column name={'todo'} />
           <Column name={'todo'} />
-          <Column name={'todo'} />
-          <Column name={'todo'} />
-          <Column name={'todo'} />
 
-          {/* <Column name={'todo'} /> */}
+          <Column name={'todo'} />
+          <Column name={'todo'} />
+          <Column name={'todo'} />
           <AddColumn />
         </div>
         {!isSidebarOpen && (

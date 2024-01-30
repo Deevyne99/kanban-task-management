@@ -20,7 +20,7 @@ const Column: FC<ColumnProps> = ({ name }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [color, setColor] = useState(colors[5])
   // console.log(color[0])
-  const num = [1, 2, 3, 4, 5, 6]
+  const num = [1, 2, 3, 4, 5]
   return (
     <section className='flex flex-col gap-4'>
       <div

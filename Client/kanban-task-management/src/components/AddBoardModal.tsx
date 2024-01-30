@@ -23,7 +23,7 @@ const initialState = {
 export const AddBoardModal = () => {
   // const { boardName, ...columns } = useAppSelector((state) => state.board)
 
-  const { createBoardModal, boardHeader } = useAppSelector(
+  const { createBoardModal, boardHeader, darkMode } = useAppSelector(
     (state) => state.modal
   )
   const [addboard, setAddBoard] = useState(initialState)
@@ -44,8 +44,10 @@ export const AddBoardModal = () => {
 
   return (
     <div
-      className={` bg-white transition-all duration-500 ${
-        createBoardModal ? 'md:top-20 top-8' : ' top-[-500px]'
+      className={` ${
+        darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
+      } transition-all duration-500 ${
+        createBoardModal ? 'md:top-28 top-8' : ' top-[-600px]'
       }  w-[320px] sm:w-[400px]  md:w-[450px] gap-2 flex flex-col fixed z-30 ${
         addboard.columns.length > 3 ? 'top-8' : 'top-24'
       }  left-0 right-0 mx-auto p-6 my-auto rounded-md overflow-hidden`}

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import { getThemeFromLocalStorage } from '../../utils/localStorage'
 interface ModalProps {
   isSidebarOpen: boolean
   createBoardModal: boolean
@@ -12,6 +12,7 @@ interface ModalProps {
   deleteCategory: string
   boardHeader: string
   taskHeader: string
+  darkMode: string
 }
 const initialState: ModalProps = {
   isSidebarOpen: true,
@@ -25,6 +26,7 @@ const initialState: ModalProps = {
   deleteCategory: 'board',
   boardHeader: 'Add new board',
   taskHeader: 'Add new task',
+  darkMode: getThemeFromLocalStorage() || '',
 }
 const modalSlice = createSlice({
   name: 'modals',
@@ -103,6 +105,16 @@ const modalSlice = createSlice({
     toggleOptions: (state) => {
       state.taskOptions = !state.taskOptions
     },
+    toggleDarkMode: (state) => {
+      let darkMode
+      if (state.darkMode === 'dark') {
+        darkMode = 'light'
+        state.darkMode = darkMode
+      } else if (state.darkMode === 'light') {
+        darkMode = 'dark'
+        state.darkMode = darkMode
+      }
+    },
   },
 })
 
@@ -119,4 +131,5 @@ export const {
   toggleOptions,
   toggleEditBoard,
   toggleEditTask,
+  toggleDarkMode,
 } = modalSlice.actions

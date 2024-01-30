@@ -26,15 +26,19 @@ type taskProps = {
 }
 
 const AddTask = () => {
-  const { addTask, taskHeader } = useAppSelector((state) => state.modal)
+  const { addTask, taskHeader, darkMode } = useAppSelector(
+    (state) => state.modal
+  )
   const [task, setTask] = useState<taskProps>(initialState)
   const dispatch = useAppDispatch()
   return (
     <aside className='relative'>
       <div
         className={`transition-all duration-500 ${
-          addTask ? 'top-20 z-30 ' : 'top-[-500px]'
-        } fixed bg-white rounded-md  right-0 mx-auto w-[320px] sm:w-[400px]  md:w-[450px] left-0 p-4  flex flex-col`}
+          addTask ? 'top-28 z-30 ' : 'top-[-600px]'
+        } fixed  ${
+          darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
+        } rounded-md  right-0 mx-auto w-[320px] sm:w-[400px]  md:w-[450px] left-0 p-4  flex flex-col`}
       >
         <h2 className='font-Plus font-semibold capitalize ml-2'>
           {taskHeader}
@@ -52,7 +56,9 @@ const AddTask = () => {
           <div className=' flex flex-col'>
             <p className='mb-[3px] capitalize'>description</p>
             <textarea
-              className='md:w-[380px] p-2 sm:w-[300px] w-[270px] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md '
+              className={`md:w-[380px] p-2 sm:w-[300px] w-[270px] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md  ${
+                darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
+              } `}
               name='description'
               id=''
               cols={30}

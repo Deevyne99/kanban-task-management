@@ -6,19 +6,20 @@ import {
   toggleDropDown,
   toggleSmallSidebar,
   toggleAddTask,
-  
 } from '../features/modal/modalSlice'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 // import React from 'react'
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
-  const { smallSidebar } = useAppSelector((store) => store.modal)
+  const { smallSidebar, darkMode } = useAppSelector((store) => store.modal)
   return (
     <header
       className={`${
         smallSidebar ? 'z-40' : ''
-      } flex shadow-sm z-10 fixed  bg-white  top-0 left-0 items-center   border-b-[1px]   border-[#F4F7FD]  w-full  `}
+      } flex shadow-sm z-10 fixed   top-0 left-0 items-center   border-b-[1px]   border-[#F4F7FD]  w-full ${
+        darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
+      } `}
     >
       <div className='flex   md:border-r-[1px] border-r-[0pc] border-[#F4F7FD] items-center md:w-[300px] '>
         <div className=' md:px-4 px-2 py-6'>
