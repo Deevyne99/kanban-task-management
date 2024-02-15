@@ -11,9 +11,11 @@ import {
 } from '../components'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { FaEye } from 'react-icons/fa6'
-import { toggleSidebar } from '../features/modal/modalSlice'
+import { toggleSidebar, toggleDarkMode } from '../features/modal/modalSlice'
 import DeleteModal from '../components/DeleteModal'
 import TaskModal from '../components/TaskModal'
+import ReactSwitch from 'react-switch'
+import { useState } from 'react'
 
 const Board = () => {
   const {
@@ -27,7 +29,7 @@ const Board = () => {
   } = useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
 
-  // const [createInput, setCreateInput] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(darkMode ? true : false)
 
   return (
     <main

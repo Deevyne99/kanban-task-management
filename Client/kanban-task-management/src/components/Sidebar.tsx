@@ -7,11 +7,15 @@ import {
   toggleDarkMode,
 } from '../features/modal/modalSlice'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
+import { useState } from 'react'
+import ReactSwitch from 'react-switch'
 
 // import { Switch } from '@headlessui/react'
 
 const Sidebar = () => {
   const { isSidebarOpen, darkMode } = useAppSelector((state) => state.modal)
+
+  const [isDarkMode, setIsDarkMode] = useState(darkMode ? true : false)
 
   const dispatch = useAppDispatch()
 
@@ -47,7 +51,17 @@ const Sidebar = () => {
           }`}
         >
           <BsBrightnessHigh />
-          <button onClick={() => dispatch(toggleDarkMode())}>change</button>
+          <ReactSwitch
+            checked={darkMode === 'dark' ? true : false}
+            onChange={() => dispatch(toggleDarkMode())}
+            className='custom-switch'
+            onHandleColor='#fff'
+            checkedIcon={false}
+            uncheckedIcon={false}
+            offHandleColor='#fff'
+            onColor='#635FC7'
+            offColor='#635FC7'
+          />
           <BsMoonStars />
         </div>
         <div className='absolute bottom-28'>

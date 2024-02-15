@@ -7,7 +7,9 @@ import {
 } from '../features/modal/modalSlice'
 
 const TaskModal = () => {
-  const { taskModal, taskOptions } = useAppSelector((store) => store.modal)
+  const { taskModal, taskOptions, darkMode } = useAppSelector(
+    (store) => store.modal
+  )
   const options = ['todo', 'doing', 'done']
   const [selectedOption, setSelectedOption] = useState('Select Status')
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -26,11 +28,17 @@ const TaskModal = () => {
       <div
         className={`transition-all duration-500 ${
           taskModal ? 'top-8 sm:top-32 z-30 ' : 'top-[-500px]'
-        } fixed bg-white rounded-md  right-0 mx-auto w-[300px] sm:w-[350px] md:w-[450px] left-0 px-4 py-6 flex flex-col`}
+        } fixed ${
+          darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
+        }  rounded-md  right-0 mx-auto w-[300px] sm:w-[350px] md:w-[450px] left-0 px-4 py-6 flex flex-col`}
       >
         <div className='flex flex-col gap-4'>
           {taskOptions && (
-            <div className='flex flex-col w-[150px] rounded-md shadow- absolute top-20 bg-white p-4 gap-3 items-start sm:right-[-50px] right-0'>
+            <div
+              className={`flex flex-col w-[150px] rounded-md shadow- absolute top-20  p-4 gap-3 items-start sm:right-[-50px] right-0 ${
+                darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
+              }`}
+            >
               <button onClick={() => dispatch(toggleEditTask())}>
                 Edit task
               </button>
@@ -44,7 +52,7 @@ const TaskModal = () => {
           )}
 
           <div className='flex items-center font-Plus  '>
-            <h3 className='font-Plus font-bold text-[#000112]'>
+            <h3 className='font-Plus font-bold '>
               Research pricing points of various competitors and trial different
               business models
             </h3>
@@ -63,7 +71,7 @@ const TaskModal = () => {
             </button>
           </div>
           <div>
-            <p className='text-[#828FA3] text-[13px] font-Plus leading-[23px]'>
+            <p className=' text-[13px] font-Plus leading-[23px]'>
               We know what we're planning to build for version one. Now we need
               to finalise the first pricing model we'll use. Keep iterating the
               subtasks until we have a coherent proposition.
@@ -72,37 +80,49 @@ const TaskModal = () => {
           <div className='flex flex-col'>
             <p>Subtasks (2 of 3)</p>
             <div>
-              <div className='flex flex-col gap-2 mt-2'>
-                <div className='flex gap-2 p-2 bg-[#F4F7FD] rounded-[4px]'>
+              <div className={` flex flex-col gap-2 mt-2`}>
+                <div
+                  className={` ${
+                    darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
+                  } flex gap-2 p-2  rounded-[4px]`}
+                >
                   <input
                     className='accent-purple border border-[#828FA340]'
                     type='checkbox'
                     name=''
                     id=''
                   />
-                  <label htmlFor='' className='text-[14px] text-[#000112]'>
+                  <label htmlFor='' className='text-[14px] '>
                     Research competitor pricing and business models
                   </label>
                 </div>
-                <div className='flex gap-2 p-2 bg-[#F4F7FD] rounded-[4px]'>
+                <div
+                  className={` ${
+                    darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
+                  } flex gap-2 p-2  rounded-[4px]`}
+                >
                   <input
+                    className='accent-purple border border-[#828FA340]'
                     type='checkbox'
                     name=''
                     id=''
-                    className='accent-purple'
                   />
-                  <label htmlFor='' className='text-[14px] text-[#000112]'>
+                  <label htmlFor='' className='text-[14px] '>
                     Research competitor pricing and business models
                   </label>
                 </div>
-                <div className='flex gap-2 p-2 bg-[#F4F7FD] rounded-[4px]'>
+                <div
+                  className={` ${
+                    darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
+                  } flex gap-2 p-2  rounded-[4px]`}
+                >
                   <input
+                    className='accent-purple border border-[#828FA340]'
                     type='checkbox'
                     name=''
                     id=''
-                    className='accent-purple'
                   />
-                  <label htmlFor='' className='text-[14px] text-[#000112]'>
+                  <label htmlFor='' className='text-[14px] '>
                     Research competitor pricing and business models
                   </label>
                 </div>
@@ -111,10 +131,10 @@ const TaskModal = () => {
           </div>
           <div className='relative w-full inline-block text-left'>
             <div>
-              <span className='rounded-md shadow-sm'>
+              <span className='rounded-md '>
                 <button
                   type='button'
-                  className='inline-flex justify-between w-full rounded-md border border-gray-300 p-2 bg-white text-sm leading-5 font-medium text-[#000112] capitalize border-[#828FA340] font-Plus focus:border-[#635FC7] focus:outline-none transition ease-in-out duration-150'
+                  className='inline-flex justify-between w-full rounded-md border border-gray-300 p-2  text-sm leading-5 font-medium  capitalize border-[#828FA340] font-Plus focus:border-[#635FC7] focus:outline-none transition ease-in-out duration-150'
                   id='options-menu'
                   aria-haspopup='true'
                   aria-expanded='true'
@@ -138,7 +158,11 @@ const TaskModal = () => {
 
             {dropdownOpen && (
               <div className='origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg'>
-                <div className='rounded-md bg-white shadow-xs'>
+                <div
+                  className={`rounded-md  shadow-xs ${
+                    darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#20212C]'
+                  }`}
+                >
                   <div
                     className='py-1'
                     role='menu'
@@ -149,7 +173,7 @@ const TaskModal = () => {
                       <div
                         key={option}
                         onClick={() => selectOption(option)}
-                        className='block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer'
+                        className='block px-4 py-2 text-sm leading-5  hover:bg-gray-100 hover:text-gray-900 cursor-pointer'
                         role='menuitem'
                       >
                         {option}
