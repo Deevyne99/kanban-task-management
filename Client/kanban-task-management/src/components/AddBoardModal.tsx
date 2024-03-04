@@ -1,10 +1,11 @@
 // import React from 'reac
 // import { useState } from "react"
-import { useState } from 'react'
-import { useAppSelector } from '../hooks/hook'
+import { useState, ChangeEvent, useRef, useEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../hooks/hook'
 // import InputComponent from './Input'
 import ButtonComponent from './FormButton'
 import BoardInput from './BoardInput'
+import { toggleCreateBoard } from '../features/modal/modalSlice'
 
 const initialState = {
   boardName: '',
@@ -19,6 +20,7 @@ const initialState = {
       name: '',
     },
   ],
+  isError: false,
 }
 export const AddBoardModal = () => {
   // const { boardName, ...columns } = useAppSelector((state) => state.board)
@@ -26,7 +28,39 @@ export const AddBoardModal = () => {
   const { createBoardModal, boardHeader, darkMode } = useAppSelector(
     (state) => state.modal
   )
+  const dispatch = useAppDispatch()
+  const modalRef = useRef(null)
   const [addboard, setAddBoard] = useState(initialState)
+
+  const handleBoardName = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setAddBoard((prev) => {
+      return { ...prev, boardName: value }
+    })
+  }
+
+  const handleColumnChange = (
+    index: number,
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = e.target
+    setAddBoard((prev) => {
+      const updatedColumns = [...prev.columns]
+      updatedColumns[index].name = value
+      return { ...prev, columns: updatedColumns }
+    })
+  }
+
+  const handleSubmit = () => {
+    const { boardName, columns } = addboard
+    if (!boardName || !columns) {
+      setAddBoard((prev) => {
+        return { ...prev, isError: true }
+      })
+    }
+    // console.log('hello')
+  }
+
   const addColumn = () => {
     setAddBoard((prev) => ({
       ...prev,
@@ -37,13 +71,45 @@ export const AddBoardModal = () => {
   const deleteColumn = (index: number) => {
     setAddBoard((prev) => {
       const updatedColumns = [...prev.columns]
+      if (updatedColumns.length === 1) {
+        return { ...prev }
+      }
       updatedColumns.splice(index, 1)
       return { ...prev, columns: updatedColumns }
     })
   }
 
+  useEffect(() => {
+    const handleBackdropClick = (e: MouseEvent) => {
+      // Check if the click event target is outside the modal
+      if (
+        createBoardModal &&
+        modalRef.current &&
+        !modalRef.current.contains(e.target as Node)
+      ) {
+        // Close all modals here
+        // For example, you can dispatch an action to close the modal
+        console.log(createBoardModal)
+
+        dispatch(toggleCreateBoard())
+        console.log(createBoardModal)
+      }
+    }
+
+    // Attach event listener when modal is open
+    if (createBoardModal) {
+      document.addEventListener('click', handleBackdropClick)
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleBackdropClick)
+    }
+  }, [createBoardModal, dispatch])
+
   return (
     <div
+      ref={modalRef}
       className={` ${
         darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
       } transition-all duration-500 ${
@@ -58,7 +124,8 @@ export const AddBoardModal = () => {
         type='text'
         value={addboard.boardName}
         name='boardName'
-        handleChange={() => console.log('hello')}
+        error={addboard.isError}
+        handleChange={handleBoardName}
       />
       <div>
         <p className='capitalize text-[#828FA3] mt-4'>columns</p>
@@ -66,13 +133,17 @@ export const AddBoardModal = () => {
           {addboard.columns.map((item, index) => {
             const { name } = item
             return (
-              <div className='flex gap-y-2 items-center justify-between  gap-4 '>
+              <div
+                key={index}
+                className='flex gap-y-2 items-center justify-between  gap-4 '
+              >
                 <BoardInput
                   value={name}
                   type='text'
                   name='name'
                   title='columns'
-                  handleChange={() => console.log('helloe')}
+                  error={addboard.isError}
+                  handleChange={(e) => handleColumnChange(index, e)}
                 />
                 <button
                   className='flex items-center mt-1'
@@ -113,7 +184,11 @@ export const AddBoardModal = () => {
           />
         </div>
         <div className='mt-4 flex justify-center'>
-          <ButtonComponent type='button' title='create new board' />
+          <ButtonComponent
+            onClick={() => handleSubmit()}
+            type='button'
+            title='create new board'
+          />
         </div>
       </div>
     </div>

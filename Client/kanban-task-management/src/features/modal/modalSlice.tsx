@@ -115,6 +115,14 @@ const modalSlice = createSlice({
         state.darkMode = darkMode
       }
     },
+    closeModals: (state) => {
+      state.addTask = false
+      state.deleteBoard = false
+      // state.smallSidebar = false
+      state.taskModal = false
+      state.dropDown = false
+      state.createBoardModal = false
+    },
   },
 })
 
@@ -132,4 +140,5 @@ export const {
   toggleEditBoard,
   toggleEditTask,
   toggleDarkMode,
+  closeModals,
 } = modalSlice.actions
