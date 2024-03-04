@@ -5,13 +5,14 @@ import {
   toggleDeleteTask,
   toggleEditTask,
 } from '../features/modal/modalSlice'
+import CustomDropDown from './ReusableComponents/CustomDrop'
 
 const TaskModal = () => {
   const { taskModal, taskOptions, darkMode } = useAppSelector(
     (store) => store.modal
   )
   const options = ['todo', 'doing', 'done']
-  const [selectedOption, setSelectedOption] = useState('Select Status')
+
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -19,10 +20,6 @@ const TaskModal = () => {
     setDropdownOpen(!dropdownOpen)
   }
 
-  const selectOption = (option: string) => {
-    setSelectedOption(option)
-    setDropdownOpen(false)
-  }
   return (
     <div className='relative'>
       <div
@@ -140,7 +137,7 @@ const TaskModal = () => {
                   aria-expanded='true'
                   onClick={toggleDropdown}
                 >
-                  {selectedOption}
+                  {options[0]}
                   <svg
                     className='-mr-1 ml-2 h-5 w-5'
                     fill='currentColor'
@@ -157,31 +154,10 @@ const TaskModal = () => {
             </div>
 
             {dropdownOpen && (
-              <div className='origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg'>
-                <div
-                  className={`rounded-md  shadow-xs ${
-                    darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#20212C]'
-                  }`}
-                >
-                  <div
-                    className='py-1'
-                    role='menu'
-                    aria-orientation='vertical'
-                    aria-labelledby='options-menu'
-                  >
-                    {options.map((option) => (
-                      <div
-                        key={option}
-                        onClick={() => selectOption(option)}
-                        className='block px-4 py-2 text-sm leading-5  hover:bg-gray-100 hover:text-gray-900 cursor-pointer'
-                        role='menuitem'
-                      >
-                        {option}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <CustomDropDown
+                options={options}
+                closeDropDown={() => setDropdownOpen(false)}
+              />
             )}
           </div>
         </div>

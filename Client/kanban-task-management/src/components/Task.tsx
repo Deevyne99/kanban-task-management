@@ -4,7 +4,7 @@ const Task = () => {
   const { darkMode } = useAppSelector((state) => state.modal)
   return (
     <div
-      className={`  w-[300px] p-4 flex flex-col gap-2 shadow-lg rounded-md  ${
+      className={`  w-[300px] p-4 flex flex-col gap-2 cursor-pointer shadow-lg rounded-md  ${
         darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
       }`}
       onClick={() => console.log('hello world')}

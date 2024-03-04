@@ -19,7 +19,7 @@ const BoardInput: FC<InputProps> = ({
         title === 'columns' || title === 'subtasks'
           ? 'md:w-[350px] w-[270px] sm:w-[320px]'
           : 'w-[270px]'
-      } md:w-[380px] sm:w-[300px] w-[270px]   p-[8px] border rounded-md border-solid border-[#828FA340] font-normal focus:border-[#635FC7] focus:outline-none  ${
+      } md:w-full sm:w-[300px] w-[270px]   p-[8px] border rounded-md border-solid border-[#828FA340] font-normal focus:border-[#635FC7] focus:outline-none  ${
         error
           ? 'placeholder:text-error placeholder:font-medium placeholder:text-right'
           : 'text-normal border-[#828FA340] '

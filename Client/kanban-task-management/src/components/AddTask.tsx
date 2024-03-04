@@ -3,6 +3,7 @@ import { BoardInput, ButtonComponent } from '.'
 import { subtasksProps } from '../interface/interface'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
 import { toggleAddTask } from '../features/modal/modalSlice'
+import CustomDropDown from './ReusableComponents/CustomDrop'
 
 const initialState = {
   title: '',
@@ -30,6 +31,12 @@ const AddTask = () => {
     (state) => state.modal
   )
   const [task, setTask] = useState<taskProps>(initialState)
+  const options = ['todo', 'doing', 'done']
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen)
+  }
+
   const dispatch = useAppDispatch()
   return (
     <aside className='relative'>
@@ -56,7 +63,7 @@ const AddTask = () => {
           <div className=' flex flex-col'>
             <p className='mb-[3px] capitalize'>description</p>
             <textarea
-              className={`md:w-[380px] p-2 sm:w-[300px] w-[270px] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md  ${
+              className={`md:w-full p-2 sm:w-[300px] w-[270px] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md  ${
                 darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
               } `}
               name='description'
@@ -145,16 +152,39 @@ const AddTask = () => {
             type='button'
             title='+ add new task'
           />
-          <div className=''>
-            <select
-              className='md:w-[380px] p-2 sm:w-[300px] w-[270px] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md '
-              name='status'
-              id='status'
-            >
-              <option value='todo'>todo</option>
-              <option value='doing'>doing</option>
-              <option value='done'>done</option>
-            </select>
+          <div className='relative w-full inline-block text-left'>
+            <div>
+              <span className='rounded-md '>
+                <button
+                  type='button'
+                  className='inline-flex justify-between w-full rounded-md border border-gray-300 p-2  text-sm leading-5 font-medium  capitalize border-[#828FA340] font-Plus focus:border-[#635FC7] focus:outline-none transition ease-in-out duration-150'
+                  id='options-menu'
+                  aria-haspopup='true'
+                  aria-expanded='true'
+                  onClick={toggleDropdown}
+                >
+                  {options[0]}
+                  <svg
+                    className='-mr-1 ml-2 h-5 w-5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                </button>
+              </span>
+            </div>
+
+            {dropdownOpen && (
+              <CustomDropDown
+                options={options}
+                closeDropDown={() => setDropdownOpen(false)}
+              />
+            )}
           </div>
           <ButtonComponent
             onClick={() => dispatch(toggleAddTask())}

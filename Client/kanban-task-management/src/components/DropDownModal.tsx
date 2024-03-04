@@ -20,7 +20,7 @@ const DropDownModal = () => {
       className={`${
         dropDown ? 'top-24' : 'top-[-300px] '
       }  flex transition-all duration-500 h-[150px]   fixed right-4 w-[180px]  ${
-        darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
+        darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37] text'
       } p-4 rounded-xl shadow-md`}
     >
       <div className={`flex flex-col items-start   gap-4 font-Plus`}>
