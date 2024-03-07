@@ -5,7 +5,10 @@ import { useAppSelector, useAppDispatch } from '../hooks/hook'
 // import InputComponent from './Input'
 import ButtonComponent from './FormButton'
 import BoardInput from './BoardInput'
-import { toggleCreateBoard } from '../features/modal/modalSlice'
+import {
+  toggleCreateBoard,
+  closeCreateBoardModal,
+} from '../features/modal/modalSlice'
 
 const initialState = {
   boardName: '',
@@ -82,23 +85,14 @@ export const AddBoardModal = () => {
   useEffect(() => {
     const handleBackdropClick = (e: MouseEvent) => {
       // Check if the click event target is outside the modal
-      if (
-        createBoardModal &&
-        modalRef.current &&
-        !modalRef.current.contains(e.target as Node)
-      ) {
-        // Close all modals here
-        // For example, you can dispatch an action to close the modal
-        console.log(createBoardModal)
-
-        dispatch(toggleCreateBoard())
-        console.log(createBoardModal)
+      if (!modalRef.current.contains(e.target)) {
+        dispatch(closeCreateBoardModal())
       }
     }
 
     // Attach event listener when modal is open
     if (createBoardModal) {
-      document.addEventListener('click', handleBackdropClick)
+      document.addEventListener('mousedown', handleBackdropClick)
     }
 
     // Clean up the event listener when the component unmounts

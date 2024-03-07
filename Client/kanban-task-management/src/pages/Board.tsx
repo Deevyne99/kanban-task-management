@@ -16,6 +16,7 @@ import DeleteModal from '../components/DeleteModal'
 import TaskModal from '../components/TaskModal'
 import ReactSwitch from 'react-switch'
 import { useState } from 'react'
+import { toggleSidebar } from '../features/modal/modalSlice'
 
 const Board = () => {
   const {

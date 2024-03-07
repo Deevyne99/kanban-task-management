@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
 import {
   toggleOptions,
   toggleDeleteTask,
   toggleEditTask,
+  closeTaskModal,
 } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
 
@@ -15,10 +16,31 @@ const TaskModal = () => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
+  const modalRef = useRef(null)
+
   const dispatch = useAppDispatch()
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
+  useEffect(() => {
+    const handleBackdropClick = (e: MouseEvent) => {
+      // Check if the click event target is outside the modal
+      if (!modalRef.current.contains(e.target)) {
+        dispatch(closeTaskModal())
+        setDropdownOpen(false)
+      }
+    }
+
+    // Attach event listener when modal is open
+    if (taskModal) {
+      document.addEventListener('mousedown', handleBackdropClick)
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleBackdropClick)
+    }
+  }, [taskModal, dispatch])
 
   return (
     <div className='relative'>
@@ -28,6 +50,7 @@ const TaskModal = () => {
         } fixed ${
           darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
         }  rounded-md  right-0 mx-auto w-[300px] sm:w-[350px] md:w-[450px] left-0 px-4 py-6 flex flex-col`}
+        ref={modalRef}
       >
         <div className='flex flex-col gap-4'>
           {taskOptions && (
