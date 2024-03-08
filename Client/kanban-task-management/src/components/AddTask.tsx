@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { BoardInput, ButtonComponent } from '.'
 import { subtasksProps } from '../interface/interface'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
-import { toggleAddTask } from '../features/modal/modalSlice'
+import { toggleAddTask, closeAddTaskModal } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
 
 const initialState = {
@@ -38,6 +38,28 @@ const AddTask = () => {
   }
 
   const dispatch = useAppDispatch()
+
+  const modalRef = useRef(null)
+
+  useEffect(() => {
+    const handleBackdropClick = (e: MouseEvent) => {
+      // Check if the click event target is outside the modal
+      if (!modalRef.current.contains(e.target)) {
+        dispatch(closeAddTaskModal())
+      }
+    }
+
+    // Attach event listener when modal is open
+    if (addTask) {
+      document.addEventListener('mousedown', handleBackdropClick)
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleBackdropClick)
+    }
+  }, [addTask, dispatch])
+
   return (
     <aside className='relative'>
       <div
@@ -45,7 +67,8 @@ const AddTask = () => {
           addTask ? 'top-28 z-30 ' : 'top-[-600px]'
         } fixed  ${
           darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
-        } rounded-md  right-0 mx-auto w-[320px] sm:w-[400px]  md:w-[450px] left-0 p-4  flex flex-col`}
+        } rounded-md  right-0 mx-auto w-[80%]  md:w-[450px] left-0 p-4  flex flex-col`}
+        ref={modalRef}
       >
         <h2 className='font-Plus font-semibold capitalize ml-2'>
           {taskHeader}
@@ -60,10 +83,10 @@ const AddTask = () => {
               handleChange={() => console.log('hello')}
             />
           </div>
-          <div className=' flex flex-col'>
+          <div className=' flex flex-col w-full'>
             <p className='mb-[3px] capitalize'>description</p>
             <textarea
-              className={`md:w-full p-2 sm:w-[300px] w-[270px] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md  ${
+              className={`md:w-full p-2 w-[100%] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md  ${
                 darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
               } `}
               name='description'
@@ -75,7 +98,7 @@ const AddTask = () => {
             ></textarea>
           </div>
 
-          <div className='flex sm:w-[300px] w-[270px] md:w-[410px] gap-y-2 items-center justify-between  gap-4 '>
+          <div className='flex w-full gap-y-2 items-center justify-between  gap-4 '>
             <BoardInput
               value={task.description}
               type='text'
@@ -111,7 +134,7 @@ const AddTask = () => {
               </svg>
             </button>
           </div>
-          <div className='flex sm:w-[300px] w-[270px] md:w-[410px] gap-y-2 items-center justify-between  gap-4 '>
+          <div className='flex w-full gap-y-2 items-center justify-between  gap-4 '>
             <BoardInput
               value={task.description}
               type='text'

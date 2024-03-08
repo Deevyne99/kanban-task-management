@@ -108,22 +108,24 @@ export const AddBoardModal = () => {
         darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
       } transition-all duration-500 ${
         createBoardModal ? 'md:top-28 top-8' : ' top-[-600px]'
-      }  w-[320px] sm:w-[400px]  md:w-[450px] gap-2 flex flex-col fixed z-30 ${
+      }  w-[80%]  md:w-[450px] gap-2 flex flex-col fixed z-30 ${
         addboard.columns.length > 3 ? 'top-8' : 'top-24'
-      }  left-0 right-0 mx-auto p-6 my-auto rounded-md overflow-hidden`}
+      }  left-0 right-0 mx-auto py-6 px-3 my-auto rounded-md overflow-hidden`}
     >
       <h2 className='font-Plus font-semibold capitalize'>{boardHeader}</h2>
-      <p className='capitalize text-[#828FA3]'>name</p>
-      <BoardInput
-        type='text'
-        value={addboard.boardName}
-        name='boardName'
-        error={addboard.isError}
-        handleChange={handleBoardName}
-      />
+      <div className='w-full'>
+        <p className='capitalize text-[#828FA3]'>name</p>
+        <BoardInput
+          type='text'
+          value={addboard.boardName}
+          name='boardName'
+          error={addboard.isError}
+          handleChange={handleBoardName}
+        />
+      </div>
       <div>
         <p className='capitalize text-[#828FA3] mt-4'>columns</p>
-        <div className={`flex flex-col gap-4 mt-2`}>
+        <div className={`flex flex-col gap-4 mt-1`}>
           {addboard.columns.map((item, index) => {
             const { name } = item
             return (

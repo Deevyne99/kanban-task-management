@@ -49,7 +49,7 @@ const TaskModal = () => {
           taskModal ? 'top-8 sm:top-32 z-30 ' : 'top-[-500px]'
         } fixed ${
           darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
-        }  rounded-md  right-0 mx-auto w-[300px] sm:w-[350px] md:w-[450px] left-0 px-4 py-6 flex flex-col`}
+        }  rounded-md  right-0 mx-auto w-[80%] sm:w-[400px] md:w-[450px] left-0 px-4 py-6 flex flex-col`}
         ref={modalRef}
       >
         <div className='flex flex-col gap-4'>
@@ -71,7 +71,7 @@ const TaskModal = () => {
             </div>
           )}
 
-          <div className='flex items-center font-Plus  '>
+          <div className='flex  items-center font-Plus  '>
             <h3 className='font-Plus font-bold '>
               Research pricing points of various competitors and trial different
               business models
@@ -104,7 +104,7 @@ const TaskModal = () => {
                 <div
                   className={` ${
                     darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
-                  } flex gap-2 p-2  rounded-[4px]`}
+                  } flex gap-2 p-2  rounded-[4px] md:items-center  itmes-start `}
                 >
                   <input
                     className='accent-purple border border-[#828FA340]'
