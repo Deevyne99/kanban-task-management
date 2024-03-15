@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { ButtonProps } from '../interface/interface'
+
 const BoardButton: FC<ButtonProps> = ({ title, type, onClick }) => {
   return (
     <button

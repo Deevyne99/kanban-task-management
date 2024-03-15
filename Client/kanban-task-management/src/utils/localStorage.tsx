@@ -1,6 +1,7 @@
 interface UserDetails {
-  user: { username: string; token: string }
+  user: { username: string; token: string | boolean }
 }
+
 export const addUserToLocalStorage = (user: UserDetails) => {
   localStorage.setItem('user', JSON.stringify(user))
 }

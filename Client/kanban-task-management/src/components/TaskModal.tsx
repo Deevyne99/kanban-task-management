@@ -49,7 +49,7 @@ const TaskModal = () => {
           taskModal ? 'top-8 sm:top-32 z-30 ' : 'top-[-500px]'
         } fixed ${
           darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
-        }  rounded-md  right-0 mx-auto w-[80%] sm:w-[400px] md:w-[450px] left-0 px-4 py-6 flex flex-col`}
+        }  rounded-md  right-0 mx-auto w-[90%] sm:w-[400px] md:w-[450px] left-0 px-4 py-6 flex flex-col`}
         ref={modalRef}
       >
         <div className='flex flex-col gap-4'>
@@ -104,7 +104,7 @@ const TaskModal = () => {
                 <div
                   className={` ${
                     darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
-                  } flex gap-2 p-2  rounded-[4px] md:items-center  itmes-start `}
+                  } flex gap-2 p-2  rounded-[4px] md:items-center    items-baseline`}
                 >
                   <input
                     className='accent-purple border border-[#828FA340]'
@@ -119,7 +119,7 @@ const TaskModal = () => {
                 <div
                   className={` ${
                     darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
-                  } flex gap-2 p-2  rounded-[4px]`}
+                  } flex gap-2 p-2 items-baseline rounded-[4px]`}
                 >
                   <input
                     className='accent-purple border border-[#828FA340]'
@@ -134,7 +134,7 @@ const TaskModal = () => {
                 <div
                   className={` ${
                     darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
-                  } flex gap-2 p-2  rounded-[4px]`}
+                  } flex gap-2 p-2  rounded-[4px] items-baseline`}
                 >
                   <input
                     className='accent-purple border border-[#828FA340]'

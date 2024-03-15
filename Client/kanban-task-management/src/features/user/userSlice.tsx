@@ -45,6 +45,8 @@ export const loginUser = createAsyncThunk(
   async (user: LoginUser, thunkAPI) => {
     try {
       const response = await customFetch.post('/auth/login', user)
+      console.log(response)
+
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg)
@@ -79,10 +81,13 @@ const userSlice = createSlice({
     })
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
       const { user } = payload
+      console.log(payload)
+
       state.isLoading = false
-      state.user = user
+      state.user = payload
+
       toast.success(`welcome ${user.username}`)
-      addUserToLocalStorage(user)
+      addUserToLocalStorage(payload)
     })
   },
   reducers: {

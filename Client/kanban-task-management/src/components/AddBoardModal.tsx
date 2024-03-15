@@ -9,28 +9,31 @@ import {
   toggleCreateBoard,
   closeCreateBoardModal,
 } from '../features/modal/modalSlice'
+import { createBoard } from '../features/Boards/BoardSlice'
+import { HashLoader } from 'react-spinners'
 
 const initialState = {
   boardName: '',
   columns: [
     {
       name: '',
+      tasks: [],
     },
     {
       name: '',
-    },
-    {
-      name: '',
+      tasks: [],
     },
   ],
   isError: false,
 }
+
 export const AddBoardModal = () => {
   // const { boardName, ...columns } = useAppSelector((state) => state.board)
 
   const { createBoardModal, boardHeader, darkMode } = useAppSelector(
     (state) => state.modal
   )
+  const { loading } = useAppSelector((state) => state.board)
   const dispatch = useAppDispatch()
   const modalRef = useRef(null)
   const [addboard, setAddBoard] = useState(initialState)
@@ -60,14 +63,17 @@ export const AddBoardModal = () => {
       setAddBoard((prev) => {
         return { ...prev, isError: true }
       })
+    } else {
+      dispatch(createBoard(addboard))
     }
+
     // console.log('hello')
   }
 
   const addColumn = () => {
     setAddBoard((prev) => ({
       ...prev,
-      columns: [...prev.columns, { name: '', id: Date.now() }],
+      columns: [...prev.columns, { name: '', id: Date.now(), tasks: [] }],
     }))
   }
 
@@ -107,10 +113,10 @@ export const AddBoardModal = () => {
       className={` ${
         darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
       } transition-all duration-500 ${
-        createBoardModal ? 'md:top-28 top-8' : ' top-[-600px]'
-      }  w-[80%]  md:w-[450px] gap-2 flex flex-col fixed z-30 ${
+        createBoardModal ? 'md:top-28 top-8 z-20' : ' top-[-600px]'
+      }  w-[90%]  md:w-[450px] gap-2 flex flex-col fixed  ${
         addboard.columns.length > 3 ? 'top-8' : 'top-24'
-      }  left-0 right-0 mx-auto py-6 px-3 my-auto rounded-md overflow-hidden`}
+      }  left-0 right-0 mx-auto py-6 px-4 my-auto rounded-md overflow-hidden`}
     >
       <h2 className='font-Plus font-semibold capitalize'>{boardHeader}</h2>
       <div className='w-full'>
@@ -180,11 +186,18 @@ export const AddBoardModal = () => {
           />
         </div>
         <div className='mt-4 flex justify-center'>
-          <ButtonComponent
-            onClick={() => handleSubmit()}
-            type='button'
-            title='create new board'
-          />
+          {loading ? (
+            <HashLoader
+              color='#635FC7'
+              className='justify-center items-center mx-auto'
+            />
+          ) : (
+            <ButtonComponent
+              onClick={() => handleSubmit()}
+              type='button'
+              title={'create new board'}
+            />
+          )}
         </div>
       </div>
     </div>
