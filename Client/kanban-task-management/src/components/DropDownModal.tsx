@@ -12,7 +12,7 @@ const DropDownModal = () => {
   const dispatch = useAppDispatch()
   const { dropDown, darkMode } = useAppSelector((store) => store.modal)
 
-  const modalRef = useRef(null)
+  const modalRef = useRef<HTMLDivElement>(null)
 
   const handleSignOut = () => {
     dispatch(logoutUser())
@@ -22,7 +22,7 @@ const DropDownModal = () => {
   useEffect(() => {
     const handleBackdropClick = (e: MouseEvent) => {
       // Check if the click event target is outside the modal
-      if (!modalRef.current.contains(e.target)) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         dispatch(closeDropDownModal())
       }
     }

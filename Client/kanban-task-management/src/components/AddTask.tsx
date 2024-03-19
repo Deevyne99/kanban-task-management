@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { BoardInput, ButtonComponent } from '.'
-import { subtasksProps } from '../interface/interface'
+// import { subtasksProps } from '../interface/interface'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
 import { toggleAddTask, closeAddTaskModal } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
@@ -39,12 +39,12 @@ const AddTask = () => {
 
   const dispatch = useAppDispatch()
 
-  const modalRef = useRef(null)
+  const modalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleBackdropClick = (e: MouseEvent) => {
       // Check if the click event target is outside the modal
-      if (!modalRef.current.contains(e.target)) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         dispatch(closeAddTaskModal())
       }
     }

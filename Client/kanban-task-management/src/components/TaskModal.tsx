@@ -16,7 +16,7 @@ const TaskModal = () => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
-  const modalRef = useRef(null)
+  const modalRef = useRef<HTMLDivElement>(null)
 
   const dispatch = useAppDispatch()
   const toggleDropdown = () => {
@@ -25,7 +25,7 @@ const TaskModal = () => {
   useEffect(() => {
     const handleBackdropClick = (e: MouseEvent) => {
       // Check if the click event target is outside the modal
-      if (!modalRef.current.contains(e.target)) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         dispatch(closeTaskModal())
         setDropdownOpen(false)
       }

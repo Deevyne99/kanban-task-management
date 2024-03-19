@@ -5,10 +5,7 @@ import { useAppSelector, useAppDispatch } from '../hooks/hook'
 // import InputComponent from './Input'
 import ButtonComponent from './FormButton'
 import BoardInput from './BoardInput'
-import {
-  toggleCreateBoard,
-  closeCreateBoardModal,
-} from '../features/modal/modalSlice'
+import { closeCreateBoardModal } from '../features/modal/modalSlice'
 import { createBoard } from '../features/Boards/BoardSlice'
 import { HashLoader } from 'react-spinners'
 
@@ -35,7 +32,7 @@ export const AddBoardModal = () => {
   )
   const { loading } = useAppSelector((state) => state.board)
   const dispatch = useAppDispatch()
-  const modalRef = useRef(null)
+  const modalRef = useRef<HTMLDivElement>(null)
   const [addboard, setAddBoard] = useState(initialState)
 
   const handleBoardName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -91,7 +88,7 @@ export const AddBoardModal = () => {
   useEffect(() => {
     const handleBackdropClick = (e: MouseEvent) => {
       // Check if the click event target is outside the modal
-      if (!modalRef.current.contains(e.target)) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         dispatch(closeCreateBoardModal())
       }
     }
