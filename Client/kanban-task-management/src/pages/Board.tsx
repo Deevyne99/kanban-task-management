@@ -15,8 +15,10 @@ import { FaEye } from 'react-icons/fa6'
 import DeleteModal from '../components/DeleteModal'
 import TaskModal from '../components/TaskModal'
 import ReactSwitch from 'react-switch'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toggleSidebar } from '../features/modal/modalSlice'
+import { getAllBoard } from '../features/Boards/allBoards/allBoardSlice'
+import { HashLoader } from 'react-spinners'
 
 const Board = () => {
   const {
@@ -26,10 +28,24 @@ const Board = () => {
     addTask,
     deleteBoard,
     taskModal,
-    darkMode,
   } = useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
+  const { isLoading } = useAppSelector((store) => store.allboard)
 
+  useEffect(() => {
+    dispatch(getAllBoard())
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <HashLoader
+          color='#635FC7'
+          className='justify-center items-center mx-auto'
+        />
+      </div>
+    )
+  }
   return (
     <main
       className={`flex flex-col  h-full relative w-full &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] `}
@@ -96,7 +112,7 @@ const Board = () => {
         <DeleteModal />
       </div>
       <div className={` flex  `}>
-        <div className='flex  '>
+        <div className='flex w-[25%] '>
           <Sidebar />
         </div>
         <div

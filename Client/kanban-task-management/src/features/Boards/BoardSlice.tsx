@@ -4,7 +4,7 @@ import customFetch from '../../utils/axios'
 import { RootState } from '../../store/store'
 import { toast } from 'react-toastify'
 import { toggleCreateBoard } from '../modal/modalSlice'
-import { useAppDispatch } from '../../hooks/hook'
+// import { useAppDispatch } from '../../hooks/hook'
 
 //import { ThunkAPI } from '@reduxjs/toolkit'
 

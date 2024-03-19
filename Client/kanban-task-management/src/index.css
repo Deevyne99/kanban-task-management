@@ -9,3 +9,11 @@
 .light {
   @apply bg-[#F4F7FD] text-[#000112] transition-all duration-300;
 }
+
+::-webkit-scrollbar {
+  width: 5px; /* Adjust this value to make the scrollbar thinner or thicker */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0; /* Adjust the color as needed */
+}
