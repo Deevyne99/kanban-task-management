@@ -68,6 +68,7 @@ const allBoardSlice = createSlice({
       state.isLoading = false
       console.log(payload)
       state.boards = payload.boards
+      state.board = payload.boards[0]
       console.log(state.boards)
     })
     builder.addCase(getAllBoard.rejected, (state) => {

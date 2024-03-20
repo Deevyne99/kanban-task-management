@@ -17,7 +17,10 @@ import TaskModal from '../components/TaskModal'
 
 import { useEffect } from 'react'
 import { toggleSidebar } from '../features/modal/modalSlice'
-import { getAllBoard } from '../features/Boards/allBoards/allBoardSlice'
+import {
+  getAllBoard,
+  getSingleBoard,
+} from '../features/Boards/allBoards/allBoardSlice'
 import { HashLoader } from 'react-spinners'
 
 const Board = () => {
@@ -37,6 +40,10 @@ const Board = () => {
   useEffect(() => {
     dispatch(getAllBoard())
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getSingleBoard(board._id))
+  }, [board._id, dispatch])
 
   if (isLoading) {
     return (

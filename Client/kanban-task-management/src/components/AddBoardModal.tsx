@@ -16,21 +16,17 @@ const initialState = {
       name: '',
       tasks: [],
     },
-    {
-      name: '',
-      tasks: [],
-    },
   ],
   isError: false,
 }
 
 export const AddBoardModal = () => {
-  // const { boardName, ...columns } = useAppSelector((state) => state.board)
+  const { loading } = useAppSelector((state) => state.board)
 
   const { createBoardModal, boardHeader, darkMode } = useAppSelector(
     (state) => state.modal
   )
-  const { loading } = useAppSelector((state) => state.board)
+
   const dispatch = useAppDispatch()
   const modalRef = useRef<HTMLDivElement>(null)
   const [addboard, setAddBoard] = useState(initialState)
@@ -62,6 +58,9 @@ export const AddBoardModal = () => {
       })
     } else {
       dispatch(createBoard(addboard))
+      if (!loading) {
+        setAddBoard(initialState)
+      }
     }
 
     // console.log('hello')
@@ -103,6 +102,19 @@ export const AddBoardModal = () => {
       document.removeEventListener('click', handleBackdropClick)
     }
   }, [createBoardModal, dispatch])
+
+  useEffect(() => {
+    setAddBoard({
+      boardName: '',
+      columns: [
+        {
+          name: '',
+          tasks: [],
+        },
+      ],
+      isError: false,
+    })
+  }, [loading])
 
   return (
     <div

@@ -62,7 +62,22 @@ const BoardSlice = createSlice({
         toast.error(`${payload}`)
       })
   },
-  reducers: {},
+  reducers: {
+    addColumn: (state) => {
+      state.columns.push({
+        name: '',
+        tasks: [
+          {
+            title: '',
+            description: '',
+            subtasks: [{ title: '', isCompleted: false }],
+            status: '',
+          },
+        ],
+      })
+    },
+  },
 })
 
 export default BoardSlice.reducer
+export const { addColumn } = BoardSlice.actions
