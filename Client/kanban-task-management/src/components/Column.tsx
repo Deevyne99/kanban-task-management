@@ -1,11 +1,12 @@
 import { FC, useState } from 'react'
 import { ColumnProps } from '../interface/interface'
 import Task from './Task'
-import { useAppDispatch, useAppSelector } from '../hooks/hook'
+import { useAppDispatch } from '../hooks/hook'
 import { toggleTask } from '../features/modal/modalSlice'
 
-const Column: FC<ColumnProps> = ({ name }) => {
+const Column: FC<ColumnProps> = ({ name, tasks }) => {
   const dispatch = useAppDispatch()
+
   const colors: string[] = [
     'red-500',
     'orange-500',
@@ -28,7 +29,7 @@ const Column: FC<ColumnProps> = ({ name }) => {
       >
         <div className={`h-[15px] w-[15px] rounded-full bg-${color}`}></div>
         <p className='flex gap-2 tracking-[2.4px]'>
-          {name} <span>(14)</span>
+          {name} <span>({tasks.length})</span>
         </p>
       </div>
       {num.map((item, index) => {

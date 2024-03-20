@@ -7,16 +7,15 @@ import {
   toggleDarkMode,
 } from '../features/modal/modalSlice'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
-import { useState } from 'react'
+
 import ReactSwitch from 'react-switch'
+import { getSingleBoard } from '../features/Boards/allBoards/allBoardSlice'
 
 // import { Switch } from '@headlessui/react'
 
 const Sidebar = () => {
   const { isSidebarOpen, darkMode } = useAppSelector((state) => state.modal)
   const { boards } = useAppSelector((state) => state.allboard)
-
-  const [isDarkMode, setIsDarkMode] = useState(darkMode ? true : false)
 
   const dispatch = useAppDispatch()
 
@@ -34,13 +33,14 @@ const Sidebar = () => {
           {`All Boards (${boards.length})`}
         </p>
 
-        <div className='flex flex-col gap-2 h-[380px] overflow-x-hidden overflow-y-scroll scrollbar-thin scroll-purple'>
+        <div className='flex flex-col gap-2 h-[300px] overflow-x-hidden overflow-y-scroll scrollbar-thin scroll-purple'>
           {boards.map((item) => {
             return (
               <BoardButton
-                onClick={() => console.log('hello world')}
+                onClick={() => dispatch(getSingleBoard(item._id))}
                 title={`${item.boardName}`}
                 type='button'
+                key={item._id}
               />
             )
           })}

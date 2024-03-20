@@ -13,6 +13,9 @@ import { useAppDispatch, useAppSelector } from '../hooks/hook'
 const Navbar = () => {
   const dispatch = useAppDispatch()
   const { smallSidebar, darkMode } = useAppSelector((store) => store.modal)
+  const { board } = useAppSelector((state) => state.allboard)
+  console.log(board)
+
   return (
     <header
       className={`${
@@ -71,13 +74,13 @@ const Navbar = () => {
       </div>
       <nav className='flex   md:px-4 px-2 items-center md:w-[80%] w-full justify-between '>
         <h1 className='capitalize md:flex hidden md:text-2xl lg:text-4xl font-Plus font-bold'>
-          platform launch
+          {board.boardName}
         </h1>
         <button
           onClick={() => dispatch(toggleSmallSidebar())}
           className='md:hidden flex justify-center items-center gap-2 capitalize font-Plus font-bold'
         >
-          platform launch{' '}
+          {board.boardName}{' '}
           {smallSidebar ? (
             <FaAngleUp className='text-purple' />
           ) : (

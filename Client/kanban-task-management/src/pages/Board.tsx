@@ -14,8 +14,8 @@ import { FaEye } from 'react-icons/fa6'
 
 import DeleteModal from '../components/DeleteModal'
 import TaskModal from '../components/TaskModal'
-import ReactSwitch from 'react-switch'
-import { useEffect, useState } from 'react'
+
+import { useEffect } from 'react'
 import { toggleSidebar } from '../features/modal/modalSlice'
 import { getAllBoard } from '../features/Boards/allBoards/allBoardSlice'
 import { HashLoader } from 'react-spinners'
@@ -30,7 +30,9 @@ const Board = () => {
     taskModal,
   } = useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector((store) => store.allboard)
+  const { isLoading, loading, board } = useAppSelector(
+    (store) => store.allboard
+  )
 
   useEffect(() => {
     dispatch(getAllBoard())
@@ -94,7 +96,7 @@ const Board = () => {
         <AddBoardModal />
       </div>
       <div>
-        <Navbar />
+        <Navbar boardName={board.boardName} />
       </div>
       <div>
         <AddTask />
@@ -112,23 +114,30 @@ const Board = () => {
         <DeleteModal />
       </div>
       <div className={` flex  `}>
-        <div className='flex w-[25%] '>
+        <div className='flex  '>
           <Sidebar />
         </div>
-        <div
-          className={` mt-16  px-4 md:py-8 py-4 w-full  flex gap-4 min-h-screen  h-full  mr-[4px] ${
-            isSidebarOpen ? 'overflow-x-scroll' : ' mr-[4px]'
-          } &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] `}
-        >
-          <Column name={'todo'} />
-          <Column name={'todo'} />
-          <Column name={'todo'} />
+        {loading ? (
+          <div className='flex justify-center items-center w-full h-screen'>
+            <HashLoader
+              color='#635FC7'
+              className='justify-center items-center mx-auto'
+            />
+          </div>
+        ) : (
+          <div
+            className={` mt-16  px-4 md:py-8 py-4 w-full  flex gap-4 min-h-screen  h-full  mr-[4px] ${
+              isSidebarOpen ? 'overflow-x-scroll' : ' mr-[4px]'
+            } &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] `}
+          >
+            {board?.columns?.map((item) => {
+              return <Column {...item} />
+            })}
 
-          <Column name={'todo'} />
-          <Column name={'todo'} />
-          <Column name={'todo'} />
-          <AddColumn />
-        </div>
+            <AddColumn />
+          </div>
+        )}
+
         {!isSidebarOpen && (
           <button
             onClick={() => dispatch(toggleSidebar())}

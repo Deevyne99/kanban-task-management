@@ -7,8 +7,13 @@ import {
   removeUserFromLocalStorage,
 } from '../../utils/localStorage'
 
+interface UserProp {
+  username: string
+  token: string
+}
+
 interface UserState {
-  user: boolean
+  user: UserProp
   isLoading: boolean
 }
 
@@ -93,7 +98,7 @@ const userSlice = createSlice({
   reducers: {
     logoutUser: (state) => {
       removeUserFromLocalStorage()
-      state.user = false
+      state.user = { username: '', token: '' }
     },
   },
 })

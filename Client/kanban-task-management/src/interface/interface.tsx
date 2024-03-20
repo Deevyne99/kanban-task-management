@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, Key } from 'react'
 
 export interface InputProps {
   type: 'text' | 'number' | 'email' | 'password'
@@ -41,6 +41,7 @@ export interface ColumnProps {
 }
 
 export interface BoardsProps {
+  _id?: Key | null | undefined
   boardName: string
   columns: ColumnProps[]
 }
