@@ -15,12 +15,12 @@ const SmallSidebar = () => {
   const { smallSidebar, darkMode } = useAppSelector((store) => store.modal)
   const dispatch = useAppDispatch()
 
-  const modalRef = useRef(null)
+  const modalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleBackdropClick = (e: MouseEvent) => {
       // Check if the click event target is outside the modal
-      if (!modalRef.current.contains(e.target)) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         dispatch(closeSmallSidebar())
       }
     }

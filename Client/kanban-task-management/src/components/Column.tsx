@@ -27,7 +27,7 @@ const Column: FC<ColumnProps> = ({ name, tasks }) => {
       <div
         className={`text-[#828FA3] flex items-center gap-2 font-Plus capitalize w-[300px]`}
       >
-        <div className={`h-[15px] w-[15px] rounded-full bg-${color}`}></div>
+        {/* <div className={`h-[15px] w-[15px] rounded-full bg-${color}`}></div> */}
         <p className='flex gap-2 tracking-[2.4px]'>
           {name} <span>({tasks.length})</span>
         </p>

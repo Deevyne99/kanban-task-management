@@ -4,17 +4,9 @@ import customFetch from '../../utils/axios'
 import { RootState } from '../../store/store'
 import { toast } from 'react-toastify'
 import { toggleCreateBoard } from '../modal/modalSlice'
-// import { useAppDispatch } from '../../hooks/hook'
+import { getAllBoard } from './allBoards/allBoardSlice'
 
-//import { ThunkAPI } from '@reduxjs/toolkit'
-
-interface State extends BoardsProps {
-  loading: boolean
-}
-// type ThunkAPI = unknown
-// type ThunkAPI = unknown
-
-const initialState: State = {
+const initialState: BoardsProps & { loading: boolean } = {
   boardName: '',
   columns: [
     {
@@ -32,19 +24,21 @@ const initialState: State = {
   loading: false,
 }
 
-export const createBoard = createAsyncThunk<unknown, BoardsProps>(
+export const createBoard = createAsyncThunk(
   'Board/createBoard',
-  async (board: BoardsProps, thunkAPI: ThunkAPI<RootState>) => {
+  async (board: BoardsProps, { getState, dispatch, rejectWithValue }) => {
     try {
+      const { token } = (getState() as RootState).user.user
       const resp = await customFetch.post('/board', board, {
         headers: {
-          authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
+          authorization: `Bearer ${token}`,
         },
       })
-      thunkAPI.dispatch(toggleCreateBoard())
+      dispatch(toggleCreateBoard())
+      dispatch(getAllBoard())
       return resp.data
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg)
+      return rejectWithValue(error.response.data.msg)
     }
   }
 )
@@ -58,10 +52,8 @@ const BoardSlice = createSlice({
         state.loading = true
       })
       .addCase(createBoard.fulfilled, (state, { payload }) => {
-        // const dispatch = useAppDispatch()
         state.loading = false
         console.log(payload)
-
         toast.success('board created successfully')
       })
       .addCase(createBoard.rejected, (state, { payload }) => {

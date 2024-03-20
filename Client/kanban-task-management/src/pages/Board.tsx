@@ -36,7 +36,7 @@ const Board = () => {
 
   useEffect(() => {
     dispatch(getAllBoard())
-  }, [])
+  }, [dispatch])
 
   if (isLoading) {
     return (
@@ -96,7 +96,7 @@ const Board = () => {
         <AddBoardModal />
       </div>
       <div>
-        <Navbar boardName={board.boardName} />
+        <Navbar />
       </div>
       <div>
         <AddTask />

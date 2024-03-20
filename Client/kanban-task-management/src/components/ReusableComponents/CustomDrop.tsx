@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAppSelector, useAppDispatch } from '../../hooks/hook'
+import { useAppSelector } from '../../hooks/hook'
 
 type OptionsType = { options: string[]; closeDropDown: () => void }
 
