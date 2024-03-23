@@ -31,6 +31,7 @@ const Board = () => {
     addTask,
     deleteBoard,
     taskModal,
+    dropDown,
   } = useAppSelector((state) => state.modal)
   const dispatch = useAppDispatch()
   const { isLoading, loading, board } = useAppSelector(
@@ -81,6 +82,13 @@ const Board = () => {
       <div
         className={`flex  ${
           addTask
+            ? 'bg-[#000] backdrop-blur-[1px]  fixed left-0 top-0 h-full z-20  w-full opacity-50'
+            : 'h-[0px] transition-all duration-500'
+        } `}
+      ></div>
+      <div
+        className={`flex  ${
+          dropDown
             ? 'bg-[#000] backdrop-blur-[1px]  fixed left-0 top-0 h-full z-20  w-full opacity-50'
             : 'h-[0px] transition-all duration-500'
         } `}
@@ -138,7 +146,7 @@ const Board = () => {
             } &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] `}
           >
             {board?.columns?.map((item) => {
-              return <Column {...item} />
+              return <Column {...item} key={item.name} />
             })}
 
             <AddColumn />

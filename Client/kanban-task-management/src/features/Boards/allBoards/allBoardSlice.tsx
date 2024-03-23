@@ -4,11 +4,24 @@ import customFetch from '../../../utils/axios'
 import { RootState } from '../../../store/store'
 import { BoardsProps } from '../../../interface/interface'
 import { Key } from 'react'
+
+interface SubtasksProps {
+  title: string
+  isCompleted?: boolean
+}
+
+interface TaskProps {
+  title: string
+  description: string
+  status: string
+  subTasks: SubtasksProps[]
+}
 interface AllBoardsProps {
   board: BoardsProps
   isLoading: boolean
   boards: BoardsProps[]
   loading: boolean
+  tasks: TaskProps[]
 }
 
 const initialState: AllBoardsProps = {
@@ -16,7 +29,16 @@ const initialState: AllBoardsProps = {
   boards: [],
   board: { boardName: '', columns: [] },
   loading: false,
+  tasks: [
+    {
+      title: '',
+      description: '',
+      status: '',
+      subTasks: [{ title: '', isCompleted: false }],
+    },
+  ],
 }
+type boardId = Key | null | undefined
 
 export const getAllBoard = createAsyncThunk(
   'boards/getAllBoard',
@@ -57,6 +79,29 @@ export const getSingleBoard = createAsyncThunk(
   }
 )
 
+export const editBoard = createAsyncThunk(
+  'boards/editBoard',
+  async (
+    { boardId, board }: { boardId: boardId; board: BoardsProps },
+    thunkAPI
+  ) => {
+    try {
+      const { data } = await customFetch.patch(`/board/${boardId}`, board, {
+        headers: {
+          authorization: `Bearer ${
+            (thunkAPI.getState() as RootState).user.user.token
+          }`,
+        },
+      })
+      console.log(data)
+      return data
+    } catch (error) {
+      console.log(error)
+      // toast.error(error)
+    }
+  }
+)
+
 const allBoardSlice = createSlice({
   name: 'allBoardSlice',
   initialState,
@@ -82,12 +127,24 @@ const allBoardSlice = createSlice({
     builder.addCase(getSingleBoard.fulfilled, (state, { payload }) => {
       state.loading = false
       console.log(payload)
-      state.board = payload.board
+      state.board = payload?.board
       // console.log(state.boards)
     })
     builder.addCase(getSingleBoard.rejected, (state) => {
       state.loading = false
       toast.error('something went wrong')
+    })
+    builder.addCase(editBoard.pending, (state) => {
+      state.loading = true
+      toast.loading('updating')
+    })
+    builder.addCase(editBoard.fulfilled, (state) => {
+      state.loading = false
+      toast.success('updated successfully')
+    })
+    builder.addCase(editBoard.fulfilled, (state, { payload }) => {
+      state.loading = false
+      toast.error(`${payload}`)
     })
   },
   reducers: {},

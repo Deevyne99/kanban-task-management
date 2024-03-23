@@ -6,15 +6,24 @@ import {
   toggleDropDown,
   toggleSmallSidebar,
   toggleAddTask,
+  closeDropDownModal,
 } from '../features/modal/modalSlice'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
-// import React from 'react'
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
-  const { smallSidebar, darkMode } = useAppSelector((store) => store.modal)
+  const { smallSidebar, darkMode, dropDown } = useAppSelector(
+    (store) => store.modal
+  )
   const { board } = useAppSelector((state) => state.allboard)
-  console.log(board)
+  // console.log(board)
+
+  const handleToggleDropDown = () => {
+    if (dropDown) {
+      dispatch(closeDropDownModal())
+    }
+    dispatch(toggleDropDown())
+  }
 
   return (
     <header
@@ -98,7 +107,7 @@ const Navbar = () => {
           <button className='md:hidden w-[50px] hover:bg-hover h-[30px] bg-purple rounded-2xl font-bold text-xl justify-center items-center text-white '>
             +
           </button>
-          <button onClick={() => dispatch(toggleDropDown())}>
+          <button onClick={() => handleToggleDropDown()}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='5'

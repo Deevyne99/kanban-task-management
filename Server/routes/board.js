@@ -5,6 +5,7 @@ const {
   deleteBoard,
   createBoardColumns,
   createBoard,
+  updateBoard,
 } = require('../controllers/board/board')
 
 const router = express.Router()
@@ -14,6 +15,7 @@ router
   .route('/:id')
   .get(getSingleBoard)
   .patch(createBoardColumns)
+  .patch(updateBoard)
   .delete(deleteBoard)
 
 module.exports = router

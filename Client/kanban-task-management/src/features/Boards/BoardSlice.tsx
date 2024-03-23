@@ -63,21 +63,28 @@ const BoardSlice = createSlice({
       })
   },
   reducers: {
-    addColumn: (state) => {
-      state.columns.push({
-        name: '',
-        tasks: [
-          {
-            title: '',
-            description: '',
-            subtasks: [{ title: '', isCompleted: false }],
-            status: '',
-          },
-        ],
-      })
-    },
+    // handleAddColumns: (state) => {
+    //   state.columns.push({
+    //     name: '',
+    //     tasks: [
+    //       {
+    //         title: '',
+    //         description: '',
+    //         subtasks: [{ title: '', isCompleted: false }],
+    //         status: '',
+    //       },
+    //     ],
+    //   })
+    // },
+    // handleDeleteColumns: (state, action) => {
+    //   state.columns.splice(action.payload.index, 1)
+    // },
+    // handleChange: (state, { payload }) => {
+    //   state.boardName = payload.value
+    // },
   },
 })
 
 export default BoardSlice.reducer
-export const { addColumn } = BoardSlice.actions
+// export const { handleAddColumns, handleDeleteColumns, handleChange } =
+//   BoardSlice.actions

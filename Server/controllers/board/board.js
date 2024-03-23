@@ -69,6 +69,24 @@ const deleteBoard = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ msg: `board with id ${boardId} was deleted successful` })
 }
+const updateBoard = async (req, res) => {
+  const {
+    user: { userId },
+    body,
+    params: { id: boardId },
+  } = req
+  const board = await Board.findOneAndUpdate(
+    { _id: boardId, createdBy: userId },
+    body,
+    { new: true, runValidators: true }
+  )
+  if (!board) {
+    throw new NotFoundError(`no board with id ${boardId}`)
+  }
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: `board with id ${boardId} was deleted successful` })
+}
 
 module.exports = {
   createBoard,
@@ -76,4 +94,5 @@ module.exports = {
   getSingleBoard,
   createBoardColumns,
   deleteBoard,
+  updateBoard,
 }

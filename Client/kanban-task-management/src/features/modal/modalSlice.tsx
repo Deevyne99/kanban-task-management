@@ -13,6 +13,7 @@ interface ModalProps {
   boardHeader: string
   taskHeader: string
   darkMode: string
+  editBoard: boolean
 }
 const initialState: ModalProps = {
   isSidebarOpen: true,
@@ -27,6 +28,7 @@ const initialState: ModalProps = {
   boardHeader: 'Add new board',
   taskHeader: 'Add new task',
   darkMode: getThemeFromLocalStorage() || '',
+  editBoard: false,
 }
 const modalSlice = createSlice({
   name: 'modals',
@@ -48,10 +50,16 @@ const modalSlice = createSlice({
       state.smallSidebar = false
       state.addTask = false
       state.boardHeader = 'Edit board'
+      state.editBoard = true
+    },
+    closeDropDownModal: (state) => {
+      if (state.dropDown === true) {
+        state.dropDown = false
+      }
     },
     toggleDropDown: (state) => {
       state.addTask = false
-      state.dropDown = !state.dropDown
+      state.dropDown = true
       state.smallSidebar = false
     },
     toggleSmallSidebar: (state) => {
@@ -117,13 +125,12 @@ const modalSlice = createSlice({
     },
     closeCreateBoardModal: (state) => {
       state.createBoardModal = false
+      state.editBoard = false
     },
     closeTaskModal: (state) => {
       state.taskModal = false
     },
-    closeDropDownModal: (state) => {
-      state.dropDown = false
-    },
+
     closeAddTaskModal: (state) => {
       state.addTask = false
     },
@@ -134,6 +141,7 @@ const modalSlice = createSlice({
 })
 
 export default modalSlice.reducer
+
 export const {
   toggleSidebar,
   toggleCreateBoard,

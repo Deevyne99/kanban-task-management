@@ -34,15 +34,15 @@ const DropDownModal = () => {
 
     // Clean up the event listener when the component unmounts
     return () => {
-      document.removeEventListener('click', handleBackdropClick)
+      document.removeEventListener('mousedown', handleBackdropClick)
     }
   }, [dropDown, dispatch])
 
   return (
     <div
       className={`${
-        dropDown ? 'top-24' : 'top-[-300px] '
-      }  flex transition-all duration-500 h-[150px]   fixed right-4 w-[180px]  ${
+        dropDown ? 'top-24 z-30' : 'top-[-300px] z-5'
+      }  flex transition-all duration-500 h-[150px]   fixed right-4 w-[180px]   ${
         darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37] text'
       } p-4 rounded-xl shadow-md`}
       ref={modalRef}
