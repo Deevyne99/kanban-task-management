@@ -102,6 +102,26 @@ export const updateBoard = createAsyncThunk(
     }
   }
 )
+export const handleDeleteBoard = createAsyncThunk(
+  'boards/deleteBoard',
+  async (boardId: boardId, thunkAPI) => {
+    // console.log(board)
+    try {
+      const { data } = await customFetch.delete(`/board/${boardId}`, {
+        headers: {
+          authorization: `Bearer ${
+            (thunkAPI.getState() as RootState).user.user.token
+          }`,
+        },
+      })
+      console.log(data)
+      return data
+    } catch (error) {
+      console.log(error)
+      // toast.error(error)
+    }
+  }
+)
 
 const allBoardSlice = createSlice({
   name: 'allBoardSlice',
@@ -141,12 +161,29 @@ const allBoardSlice = createSlice({
     })
     builder.addCase(updateBoard.fulfilled, (state, { payload }) => {
       state.loading = false
+      state.board = payload.board
       console.log(payload)
 
       toast.dismiss()
       toast.success('updated successfully')
     })
     builder.addCase(updateBoard.rejected, (state, { payload }) => {
+      toast.dismiss()
+      state.loading = false
+      toast.error(`${payload}`)
+    })
+    builder.addCase(handleDeleteBoard.pending, (state) => {
+      state.loading = true
+      toast.loading('Deleting')
+    })
+    builder.addCase(handleDeleteBoard.fulfilled, (state, { payload }) => {
+      state.loading = false
+      console.log(payload)
+
+      toast.dismiss()
+      toast.success('updated successfully')
+    })
+    builder.addCase(handleDeleteBoard.rejected, (state, { payload }) => {
       toast.dismiss()
       state.loading = false
       toast.error(`${payload}`)

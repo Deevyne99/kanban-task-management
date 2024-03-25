@@ -84,7 +84,6 @@ const updateBoard = async (req, res) => {
   board.boardName = boardName
   board.columns = columns
   await board.save()
-
   res
     .status(StatusCodes.OK)
     .json({ msg: `board with id ${boardId} was deleted successful`, board })

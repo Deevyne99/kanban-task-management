@@ -56,6 +56,7 @@ export const AddBoardModal = () => {
       dispatch(
         updateBoard({ board: { boardName, columns }, boardId: board._id })
       )
+
       return
     }
     dispatch(createBoard({ boardName, columns }))
