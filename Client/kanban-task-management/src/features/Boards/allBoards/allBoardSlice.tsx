@@ -79,8 +79,8 @@ export const getSingleBoard = createAsyncThunk(
   }
 )
 
-export const editBoard = createAsyncThunk(
-  'boards/editBoard',
+export const updateBoard = createAsyncThunk(
+  'boards/updateBoard',
   async (
     { boardId, board }: { boardId: boardId; board: BoardsProps },
     thunkAPI
@@ -134,15 +134,17 @@ const allBoardSlice = createSlice({
       state.loading = false
       toast.error('something went wrong')
     })
-    builder.addCase(editBoard.pending, (state) => {
+    builder.addCase(updateBoard.pending, (state) => {
       state.loading = true
       toast.loading('updating')
     })
-    builder.addCase(editBoard.fulfilled, (state) => {
+    builder.addCase(updateBoard.fulfilled, (state) => {
       state.loading = false
+      toast.dismiss()
       toast.success('updated successfully')
     })
-    builder.addCase(editBoard.fulfilled, (state, { payload }) => {
+    builder.addCase(updateBoard.rejected, (state, { payload }) => {
+      toast.dismiss()
       state.loading = false
       toast.error(`${payload}`)
     })

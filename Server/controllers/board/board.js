@@ -85,7 +85,7 @@ const updateBoard = async (req, res) => {
   }
   res
     .status(StatusCodes.OK)
-    .json({ msg: `board with id ${boardId} was deleted successful` })
+    .json({ msg: `board with id ${boardId} was deleted successful`, board })
 }
 
 module.exports = {

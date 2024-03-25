@@ -10,6 +10,7 @@ import { closeCreateBoardModal } from '../features/modal/modalSlice'
 import { HashLoader } from 'react-spinners'
 import { createBoard } from '../features/Boards/BoardSlice'
 import { ColumnProps } from '../interface/interface'
+import { updateBoard } from '../features/Boards/allBoards/allBoardSlice'
 
 export const AddBoardModal = () => {
   const { loading } = useAppSelector((state) => state.board)
@@ -52,7 +53,9 @@ export const AddBoardModal = () => {
     }
 
     if (editBoard) {
-      console.log('editing board')
+      dispatch(
+        updateBoard({ board: { boardName, columns }, boardId: board._id })
+      )
       return
     }
     dispatch(createBoard({ boardName, columns }))

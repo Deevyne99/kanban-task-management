@@ -42,9 +42,9 @@ const Board = () => {
     dispatch(getAllBoard())
   }, [dispatch])
 
-  useEffect(() => {
-    dispatch(getSingleBoard(board._id))
-  }, [board._id, dispatch])
+  // useEffect(() => {
+  //   dispatch(getSingleBoard(board._id))
+  // }, [board._id, dispatch])
 
   if (isLoading) {
     return (
