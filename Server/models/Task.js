@@ -11,7 +11,6 @@ const TaskSchema = new mongoose.Schema(
       {
         name: {
           type: String,
-          required: [true, 'must provide column'],
           trim: true,
         },
 

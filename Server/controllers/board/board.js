@@ -17,6 +17,7 @@ const createBoard = async (req, res) => {
   const board = await Board.create(req.body)
   res.status(StatusCodes.CREATED).json({ board })
 }
+
 const getAllBoard = async (req, res) => {
   const boards = await Board.find({ createdBy: req.user.userId })
   res.status(200).json({ boards, nbHits: boards.length })
@@ -33,6 +34,7 @@ const getSingleBoard = async (req, res) => {
   }
   res.status(StatusCodes.OK).json({ board })
 }
+
 const createBoardColumns = async (req, res) => {
   const {
     user: { userId },
@@ -82,6 +84,7 @@ const updateBoard = async (req, res) => {
   board.boardName = boardName
   board.columns = columns
   await board.save()
+
   res
     .status(StatusCodes.OK)
     .json({ msg: `board with id ${boardId} was deleted successful`, board })

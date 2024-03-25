@@ -85,6 +85,7 @@ export const updateBoard = createAsyncThunk(
     { boardId, board }: { boardId: boardId; board: BoardsProps },
     thunkAPI
   ) => {
+    console.log(board)
     try {
       const { data } = await customFetch.patch(`/board/${boardId}`, board, {
         headers: {
