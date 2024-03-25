@@ -138,8 +138,10 @@ const allBoardSlice = createSlice({
       state.loading = true
       toast.loading('updating')
     })
-    builder.addCase(updateBoard.fulfilled, (state) => {
+    builder.addCase(updateBoard.fulfilled, (state, { payload }) => {
       state.loading = false
+      console.log(payload)
+
       toast.dismiss()
       toast.success('updated successfully')
     })

@@ -72,17 +72,16 @@ const deleteBoard = async (req, res) => {
 const updateBoard = async (req, res) => {
   const {
     user: { userId },
-    body,
+    body: { boardName, columns },
     params: { id: boardId },
   } = req
-  const board = await Board.findOneAndUpdate(
-    { _id: boardId, createdBy: userId },
-    body,
-    { new: true, runValidators: true }
-  )
+  const board = await Board.findOne({ _id: boardId, createdBy: userId })
   if (!board) {
     throw new NotFoundError(`no board with id ${boardId}`)
   }
+  board.boardName = boardName
+  board.columns = columns
+  await board.save()
   res
     .status(StatusCodes.OK)
     .json({ msg: `board with id ${boardId} was deleted successful`, board })
