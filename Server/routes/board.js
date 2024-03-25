@@ -11,11 +11,6 @@ const {
 const router = express.Router()
 
 router.route('/').get(getAllBoard).post(createBoard)
-router
-  .route('/:id')
-  .get(getSingleBoard)
-  .patch(createBoardColumns)
-  .patch(updateBoard)
-  .delete(deleteBoard)
+router.route('/:id').get(getSingleBoard).patch(updateBoard).delete(deleteBoard)
 
 module.exports = router
