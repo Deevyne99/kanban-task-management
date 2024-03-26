@@ -5,17 +5,6 @@ import { useAppSelector, useAppDispatch } from '../hooks/hook'
 import { toggleAddTask, closeAddTaskModal } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
 
-const initialState = {
-  title: '',
-  description: '',
-  subtasks: [
-    {
-      title: '',
-      isCompleted: false,
-    },
-  ],
-}
-
 interface SubtasksProp {
   title: string
   isCompleted: boolean
@@ -24,12 +13,24 @@ type taskProps = {
   title: string
   description: string
   subtasks: SubtasksProp[]
+  status: string
 }
 
 const AddTask = () => {
   const { addTask, taskHeader, darkMode } = useAppSelector(
     (state) => state.modal
   )
+  const initialState = {
+    title: '',
+    description: '',
+    subtasks: [
+      {
+        title: '',
+        isCompleted: false,
+      },
+    ],
+    status: '',
+  }
   const [task, setTask] = useState<taskProps>(initialState)
 
   const dispatch = useAppDispatch()
@@ -44,6 +45,10 @@ const AddTask = () => {
       ...prevTask,
       [name]: value,
     }))
+  }
+
+  const handleSelected = (selected: string) => {
+    setTask((prev) => ({ ...prev, status: selected }))
   }
 
   const addSubtask = () => {
@@ -86,6 +91,7 @@ const AddTask = () => {
       document.removeEventListener('click', handleBackdropClick)
     }
   }, [addTask, dispatch])
+  console.log(task)
 
   const handleSubtaskChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -187,7 +193,7 @@ const AddTask = () => {
             title='+ add new task'
           />
           <div className='relative w-full inline-block text-left'>
-            <CustomDropDown />
+            <CustomDropDown handleSelected={handleSelected} />
           </div>
           <ButtonComponent
             onClick={() => dispatch(toggleAddTask())}

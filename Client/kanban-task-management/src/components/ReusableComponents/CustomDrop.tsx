@@ -2,7 +2,10 @@ import { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../hooks/hook'
 import { toggleCustomDrop } from '../../features/modal/modalSlice'
 
-const CustomDropDown = () => {
+interface CustomDropDownProps {
+  handleSelected: (selected: string) => void // Define prop type
+}
+const CustomDropDown = ({ handleSelected }: CustomDropDownProps) => {
   const { darkMode, dropdownOpen } = useAppSelector((state) => state.modal)
   const { board } = useAppSelector((state) => state.allboard)
   const [selectedOption, setSelectedOption] = useState(board.columns[0]?.name)
@@ -11,6 +14,7 @@ const CustomDropDown = () => {
 
   const selectOption = (option: string) => {
     setSelectedOption(option)
+    handleSelected(option)
     dispatch(toggleCustomDrop())
   }
 
