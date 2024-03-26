@@ -31,15 +31,42 @@ const AddTask = () => {
     (state) => state.modal
   )
   const [task, setTask] = useState<taskProps>(initialState)
-  const options = ['todo', 'doing', 'done']
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen)
-  }
 
   const dispatch = useAppDispatch()
 
   const modalRef = useRef<HTMLDivElement>(null)
+
+  const handleTaskChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target
+    setTask((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }))
+  }
+
+  const addSubtask = () => {
+    setTask((prevTask) => ({
+      ...prevTask,
+      subtasks: [
+        ...prevTask.subtasks,
+        {
+          title: '',
+          isCompleted: false,
+        },
+      ],
+    }))
+  }
+
+  const deleteSubtask = (index: number) => {
+    if (task.subtasks.length > 1) {
+      setTask((prevTask) => ({
+        ...prevTask,
+        subtasks: prevTask.subtasks.filter((_, i) => i !== index),
+      }))
+    }
+  }
 
   useEffect(() => {
     const handleBackdropClick = (e: MouseEvent) => {
@@ -60,11 +87,24 @@ const AddTask = () => {
     }
   }, [addTask, dispatch])
 
+  const handleSubtaskChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number
+  ) => {
+    const { name, value } = e.target
+    setTask((prevTask) => ({
+      ...prevTask,
+      subtasks: prevTask.subtasks.map((subtask, i) =>
+        i === index ? { ...subtask, [name]: value } : subtask
+      ),
+    }))
+  }
+
   return (
     <aside className='relative'>
       <div
         className={`transition-all duration-500 ${
-          addTask ? 'top-28 z-30 ' : 'top-[-600px]'
+          addTask ? 'top-16 z-30 ' : 'top-[-600px]'
         } fixed  ${
           darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
         } rounded-md  right-0 mx-auto w-[80%]  md:w-[450px] left-0 p-4  flex flex-col`}
@@ -80,7 +120,7 @@ const AddTask = () => {
               type='text'
               value={task.title}
               name='title'
-              handleChange={() => console.log('hello')}
+              handleChange={(e) => handleTaskChange(e)}
             />
           </div>
           <div className=' flex flex-col w-full'>
@@ -93,121 +133,61 @@ const AddTask = () => {
               id=''
               cols={30}
               rows={2}
-              onChange={() => console.log('hello world')}
+              onChange={handleTaskChange}
               value={task.description}
             ></textarea>
           </div>
+          {task.subtasks?.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className='flex w-full gap-y-2 items-center justify-between  gap-4 '
+              >
+                <BoardInput
+                  value={item.title}
+                  type='text'
+                  name='title'
+                  title='subtasks'
+                  handleChange={(e) => handleSubtaskChange(e, index)}
+                />
+                <button
+                  className='flex items-center mt-1'
+                  onClick={() => deleteSubtask(index)}
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='15'
+                    height='15'
+                    viewBox='0 0 15 15'
+                    fill='none'
+                  >
+                    <rect
+                      x='12.728'
+                      width='3'
+                      height='18'
+                      transform='rotate(45 12.728 0)'
+                      fill='#828FA3'
+                    />
+                    <rect
+                      y='2.12109'
+                      width='3'
+                      height='18'
+                      transform='rotate(-45 0 2.12109)'
+                      fill='#828FA3'
+                    />
+                  </svg>
+                </button>
+              </div>
+            )
+          })}
 
-          <div className='flex w-full gap-y-2 items-center justify-between  gap-4 '>
-            <BoardInput
-              value={task.description}
-              type='text'
-              name='name'
-              title='subtasks'
-              handleChange={() => console.log('helloe')}
-            />
-            <button
-              className='flex items-center mt-1'
-              onClick={() => console.log('hello world')}
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='15'
-                height='15'
-                viewBox='0 0 15 15'
-                fill='none'
-              >
-                <rect
-                  x='12.728'
-                  width='3'
-                  height='18'
-                  transform='rotate(45 12.728 0)'
-                  fill='#828FA3'
-                />
-                <rect
-                  y='2.12109'
-                  width='3'
-                  height='18'
-                  transform='rotate(-45 0 2.12109)'
-                  fill='#828FA3'
-                />
-              </svg>
-            </button>
-          </div>
-          <div className='flex w-full gap-y-2 items-center justify-between  gap-4 '>
-            <BoardInput
-              value={task.description}
-              type='text'
-              name='name'
-              title='subtasks'
-              handleChange={() => console.log('helloe')}
-            />
-            <button
-              className='flex items-center mt-1'
-              onClick={() => console.log('hello world')}
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='15'
-                height='15'
-                viewBox='0 0 15 15'
-                fill='none'
-              >
-                <rect
-                  x='12.728'
-                  width='3'
-                  height='18'
-                  transform='rotate(45 12.728 0)'
-                  fill='#828FA3'
-                />
-                <rect
-                  y='2.12109'
-                  width='3'
-                  height='18'
-                  transform='rotate(-45 0 2.12109)'
-                  fill='#828FA3'
-                />
-              </svg>
-            </button>
-          </div>
           <ButtonComponent
-            onClick={() => console.log('hello world')}
+            onClick={() => addSubtask()}
             type='button'
             title='+ add new task'
           />
           <div className='relative w-full inline-block text-left'>
-            <div>
-              <span className='rounded-md '>
-                <button
-                  type='button'
-                  className='inline-flex justify-between w-full rounded-md border border-gray-300 p-2  text-sm leading-5 font-medium  capitalize border-[#828FA340] font-Plus focus:border-[#635FC7] focus:outline-none transition ease-in-out duration-150'
-                  id='options-menu'
-                  aria-haspopup='true'
-                  aria-expanded='true'
-                  onClick={toggleDropdown}
-                >
-                  {options[0]}
-                  <svg
-                    className='-mr-1 ml-2 h-5 w-5'
-                    fill='currentColor'
-                    viewBox='0 0 20 20'
-                  >
-                    <path
-                      fillRule='evenodd'
-                      d='M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
-                      clipRule='evenodd'
-                    />
-                  </svg>
-                </button>
-              </span>
-            </div>
-
-            {dropdownOpen && (
-              <CustomDropDown
-                options={options}
-                closeDropDown={() => setDropdownOpen(false)}
-              />
-            )}
+            <CustomDropDown />
           </div>
           <ButtonComponent
             onClick={() => dispatch(toggleAddTask())}

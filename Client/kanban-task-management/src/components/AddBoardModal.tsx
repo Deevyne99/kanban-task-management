@@ -194,7 +194,7 @@ export const AddBoardModal = () => {
             <ButtonComponent
               onClick={() => handleSubmit()}
               type='button'
-              title={'create new board'}
+              title={`${editBoard ? 'edit board' : 'create new board'}`}
             />
           )}
         </div>

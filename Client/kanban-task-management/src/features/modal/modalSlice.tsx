@@ -14,6 +14,7 @@ interface ModalProps {
   taskHeader: string
   darkMode: string
   editBoard: boolean
+  dropdownOpen: boolean
 }
 const initialState: ModalProps = {
   isSidebarOpen: true,
@@ -29,6 +30,7 @@ const initialState: ModalProps = {
   taskHeader: 'Add new task',
   darkMode: getThemeFromLocalStorage() || '',
   editBoard: false,
+  dropdownOpen: false,
 }
 const modalSlice = createSlice({
   name: 'modals',
@@ -137,6 +139,12 @@ const modalSlice = createSlice({
     closeSmallSidebar: (state) => {
       state.smallSidebar = false
     },
+    toggleCustomDrop: (state) => {
+      state.dropdownOpen = !state.dropdownOpen
+    },
+    closeCustomDrop: (state) => {
+      state.dropdownOpen = false
+    },
   },
 })
 
@@ -160,4 +168,5 @@ export const {
   closeDropDownModal,
   closeAddTaskModal,
   closeSmallSidebar,
+  toggleCustomDrop,
 } = modalSlice.actions
