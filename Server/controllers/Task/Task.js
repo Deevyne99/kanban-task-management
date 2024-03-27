@@ -11,7 +11,7 @@ const createTask = async (req, res) => {
   const {
     params: { boardId },
     user: { userId },
-    body: { title, description, subtasks, status },
+    body: { title, description, subTasks: subtasks, status },
   } = req
 
   const board = await Board.findOne({

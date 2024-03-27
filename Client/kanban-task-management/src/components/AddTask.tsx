@@ -115,7 +115,8 @@ const AddTask = () => {
       return
     }
     dispatch(createTask({ boardId: board._id, task: task }))
-    dispatch(toggleAddTask())
+    setTask(initialState)
+    setIsError(false)
   }
 
   return (
