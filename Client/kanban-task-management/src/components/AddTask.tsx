@@ -4,6 +4,7 @@ import { BoardInput, ButtonComponent } from '.'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
 import { toggleAddTask, closeAddTaskModal } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
+import { createTask } from '../features/Boards/allBoards/allBoardSlice'
 
 interface SubtasksProp {
   title: string
@@ -12,7 +13,7 @@ interface SubtasksProp {
 type taskProps = {
   title: string
   description: string
-  subtasks: SubtasksProp[]
+  subTasks: SubtasksProp[]
   status: string
 }
 
@@ -20,10 +21,11 @@ const AddTask = () => {
   const { addTask, taskHeader, darkMode } = useAppSelector(
     (state) => state.modal
   )
+  const { board } = useAppSelector((state) => state.allboard)
   const initialState = {
     title: '',
     description: '',
-    subtasks: [
+    subTasks: [
       {
         title: '',
         isCompleted: false,
@@ -32,6 +34,7 @@ const AddTask = () => {
     status: '',
   }
   const [task, setTask] = useState<taskProps>(initialState)
+  const [isError, setIsError] = useState(false)
 
   const dispatch = useAppDispatch()
 
@@ -54,8 +57,8 @@ const AddTask = () => {
   const addSubtask = () => {
     setTask((prevTask) => ({
       ...prevTask,
-      subtasks: [
-        ...prevTask.subtasks,
+      subTasks: [
+        ...prevTask.subTasks,
         {
           title: '',
           isCompleted: false,
@@ -65,10 +68,10 @@ const AddTask = () => {
   }
 
   const deleteSubtask = (index: number) => {
-    if (task.subtasks.length > 1) {
+    if (task.subTasks.length > 1) {
       setTask((prevTask) => ({
         ...prevTask,
-        subtasks: prevTask.subtasks.filter((_, i) => i !== index),
+        subTasks: prevTask.subTasks.filter((_, i) => i !== index),
       }))
     }
   }
@@ -100,10 +103,19 @@ const AddTask = () => {
     const { name, value } = e.target
     setTask((prevTask) => ({
       ...prevTask,
-      subtasks: prevTask.subtasks.map((subtask, i) =>
+      subTasks: prevTask.subTasks?.map((subtask: SubtasksProp, i: number) =>
         i === index ? { ...subtask, [name]: value } : subtask
       ),
     }))
+  }
+
+  const handleSubmit = () => {
+    if (!task.title || !task.status || !task.description || !task.subTasks) {
+      setIsError(true)
+      return
+    }
+    dispatch(createTask({ boardId: board._id, task: task }))
+    dispatch(toggleAddTask())
   }
 
   return (
@@ -127,6 +139,7 @@ const AddTask = () => {
               value={task.title}
               name='title'
               handleChange={(e) => handleTaskChange(e)}
+              error={isError}
             />
           </div>
           <div className=' flex flex-col w-full'>
@@ -143,7 +156,7 @@ const AddTask = () => {
               value={task.description}
             ></textarea>
           </div>
-          {task.subtasks?.map((item, index) => {
+          {task.subTasks?.map((item: { title: string }, index: number) => {
             return (
               <div
                 key={index}
@@ -155,6 +168,7 @@ const AddTask = () => {
                   name='title'
                   title='subtasks'
                   handleChange={(e) => handleSubtaskChange(e, index)}
+                  error={isError}
                 />
                 <button
                   className='flex items-center mt-1'
@@ -196,7 +210,7 @@ const AddTask = () => {
             <CustomDropDown handleSelected={handleSelected} />
           </div>
           <ButtonComponent
-            onClick={() => dispatch(toggleAddTask())}
+            onClick={() => handleSubmit()}
             type='button'
             title={
               taskHeader === 'Add new task' ? 'create task' : 'save changes'

@@ -33,7 +33,7 @@ const updateTask = async (req, res) => {
   const {
     params: { boardId, columnId, taskId },
     user: { userId },
-    body: { title, description, subtasks, status },
+    body: { title, description, subTasks: subtasks, status },
   } = req
   if (title === '' || description === '' || status === '' || !subtasks) {
     throw new BadRequestError(
