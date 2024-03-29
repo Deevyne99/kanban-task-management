@@ -43,6 +43,18 @@ const Board = () => {
   //   dispatch(getSingleBoard(board._id))
   // }, [board._id, dispatch])
 
+  const colors: string[] = [
+    'blue-500',
+    'red-500',
+    'orange-500',
+    'purple-500',
+    'green-500',
+    'indigo-500',
+    'yellow-500',
+    'pink-500',
+    'sky-500',
+  ]
+
   if (isLoading) {
     return (
       <div className='flex justify-center items-center h-screen'>
@@ -142,8 +154,11 @@ const Board = () => {
               isSidebarOpen ? 'overflow-x-scroll' : ' mr-[4px]'
             } &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] `}
           >
-            {board?.columns?.map((item) => {
-              return <Column {...item} key={item.name} />
+            {board?.columns?.map((item, index) => {
+              const columnColor = colors[index]
+              console.log(columnColor)
+
+              return <Column {...item} key={item.name} color={columnColor} />
             })}
 
             <AddColumn />

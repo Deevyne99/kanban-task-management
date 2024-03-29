@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { BoardInput, ButtonComponent } from '.'
 // import { subtasksProps } from '../interface/interface'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
-import { toggleAddTask, closeAddTaskModal } from '../features/modal/modalSlice'
+import { closeAddTaskModal } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
 import { createTask } from '../features/Boards/allBoards/allBoardSlice'
 
@@ -22,6 +22,7 @@ const AddTask = () => {
     (state) => state.modal
   )
   const { board } = useAppSelector((state) => state.allboard)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const initialState = {
     title: '',
     description: '',
@@ -81,6 +82,7 @@ const AddTask = () => {
       // Check if the click event target is outside the modal
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         dispatch(closeAddTaskModal())
+        setTask(initialState)
       }
     }
 
@@ -93,7 +95,7 @@ const AddTask = () => {
     return () => {
       document.removeEventListener('click', handleBackdropClick)
     }
-  }, [addTask, dispatch])
+  }, [addTask, dispatch, initialState])
   console.log(task)
 
   const handleSubtaskChange = (
@@ -117,6 +119,7 @@ const AddTask = () => {
     dispatch(createTask({ boardId: board._id, task: task }))
     setTask(initialState)
     setIsError(false)
+    // dispatch(getSingleBoard(board._id))
   }
 
   return (

@@ -4,11 +4,15 @@ import { toggleCustomDrop } from '../../features/modal/modalSlice'
 
 interface CustomDropDownProps {
   handleSelected: (selected: string) => void // Define prop type
+  currentStatus?: string
 }
-const CustomDropDown = ({ handleSelected }: CustomDropDownProps) => {
+const CustomDropDown = ({
+  handleSelected,
+  currentStatus,
+}: CustomDropDownProps) => {
   const { darkMode, dropdownOpen } = useAppSelector((state) => state.modal)
   const { board } = useAppSelector((state) => state.allboard)
-  const [selectedOption, setSelectedOption] = useState(board.columns[0]?.name)
+  const [selectedOption, setSelectedOption] = useState(currentStatus)
 
   const dispatch = useAppDispatch()
 
@@ -17,6 +21,13 @@ const CustomDropDown = ({ handleSelected }: CustomDropDownProps) => {
     handleSelected(option)
     dispatch(toggleCustomDrop())
   }
+
+  // useEffect(() => {
+  //   if (addTask === false) {
+  //     setSelectedOption('')
+  //     return
+  //   }
+  // }, [addTask, taskModal])
 
   return (
     <div className=''>
@@ -30,7 +41,7 @@ const CustomDropDown = ({ handleSelected }: CustomDropDownProps) => {
             aria-expanded='true'
             onClick={() => dispatch(toggleCustomDrop())}
           >
-            {selectedOption}
+            {selectedOption ? selectedOption : 'Select Status'}
             <svg
               className='-mr-1 ml-2 h-5 w-5'
               fill='currentColor'

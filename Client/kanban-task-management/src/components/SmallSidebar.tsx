@@ -9,10 +9,13 @@ import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { BoardButton } from '.'
 import { useEffect, useRef } from 'react'
 import ReactSwitch from 'react-switch'
+import { getSingleBoard } from '../features/Boards/allBoards/allBoardSlice'
+
 // import React from 'react'
 
 const SmallSidebar = () => {
   const { smallSidebar, darkMode } = useAppSelector((store) => store.modal)
+  const { boards } = useAppSelector((state) => state.allboard)
   const dispatch = useAppDispatch()
 
   const modalRef = useRef<HTMLDivElement>(null)
@@ -41,26 +44,28 @@ const SmallSidebar = () => {
       <div
         className={`fixed transition-all duration-500  ${
           smallSidebar ? 'top-24 z-30' : 'top-[-400px] '
-        } left-8 py-4 pr-4 rounded-lg shadow-md w-[80%] max-w-[280px] min-h-[300px] ${
+        } left-8 py-4 pr-2 rounded-lg shadow-md w-[80%] max-w-[280px] min-h-[300px] ${
           darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
         }`}
         ref={modalRef}
       >
         <p className='text-textLabel flex  mt-4 ml-6 tracking-[2.4px] leading-6 font-Plus'>
-          All Boards (3)
+          All Boards ({boards.length})
         </p>
 
         <div className={`flex flex-col gap-2 mt-3 `}>
-          <BoardButton
-            onClick={() => console.log('hello world')}
-            title={'Ecommerce'}
-            type='button'
-          />
-          <BoardButton
-            onClick={() => console.log('hello world')}
-            title={'Ecommerce'}
-            type='button'
-          />
+          <div className='flex flex-col h-[200px] w-full scrollbar-thin scroll-purple  overflow-y-scroll gap-2'>
+            {boards.map((item) => {
+              return (
+                <BoardButton
+                  onClick={() => dispatch(getSingleBoard(item._id))}
+                  title={`${item.boardName}`}
+                  type='button'
+                  key={item._id}
+                />
+              )
+            })}
+          </div>
           <BoardButton
             onClick={() => dispatch(toggleCreateBoard())}
             title={'+ create new board'}

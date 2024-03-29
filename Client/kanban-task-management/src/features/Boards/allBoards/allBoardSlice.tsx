@@ -215,8 +215,10 @@ const allBoardSlice = createSlice({
       state.loading = true
     })
     builder.addCase(createTask.fulfilled, (state, { payload }) => {
-      console.log(payload)
+      console.log(payload.board)
+      toast.success('Task created successfully')
       state.loading = false
+      state.board = payload.board
     })
     builder.addCase(createTask.rejected, (state, { payload }) => {
       console.log(payload)
