@@ -43,48 +43,44 @@ const updateTask = async (req, res) => {
     )
   }
 
-  const board = await Board.findById({ _id: boardId, createdBy: userId })
+  const board = await Board.findOne({ _id: boardId, createdBy: userId })
 
   if (!board) {
     throw new NotFoundError(`No board with the id ${boardId}`)
   }
 
-  const column = board.columns.find((col) => col._id.toString() === columnId)
+  const currentColumn = board.columns.find((col) =>
+    col.tasks.some((task) => task._id.toString() === taskId)
+  )
 
-  if (!column) {
-    throw new NotFoundError(`No column with the id ${columnId}`)
+  if (!currentColumn) {
+    throw new NotFoundError(`No column with a task with the id ${taskId}`)
   }
 
-  const taskIndex = column.tasks.findIndex(
+  const destinationColumn = board.columns.find((col) => col.name === status)
+
+  if (!destinationColumn) {
+    throw new NotFoundError(`No column with the name ${status}`)
+  }
+
+  const task = currentColumn.tasks.find(
     (task) => task._id.toString() === taskId
   )
 
-  if (taskIndex === -1) {
-    throw new NotFoundError(`No task with the id ${taskId}`)
-  }
-
-  const task = column.tasks[taskIndex]
-
-  // Check if status has changed
+  // Check if status has changed and move task to the appropriate column
   if (task.status !== status) {
-    // Find the destination column based on the new status
-    const destinationColumn = board.columns.find((col) => col.name === status)
-
-    if (!destinationColumn) {
-      throw new NotFoundError(`No column with the name ${status}`)
-    }
-
-    // Move the task to the destination column
-    board.columns.forEach((col) => {
-      col.tasks = col.tasks.filter((t) => t._id.toString() !== taskId)
-    })
+    // Remove task from current column
+    currentColumn.tasks = currentColumn.tasks.filter(
+      (task) => task._id.toString() !== taskId
+    )
+    // Add task to the destination column
     destinationColumn.tasks.push(task)
   }
 
   // Update the task's properties
   task.title = title
   task.description = description
-  task.subtasks = subtasks
+  task.subTasks = subtasks
   task.status = status
 
   await board.save()

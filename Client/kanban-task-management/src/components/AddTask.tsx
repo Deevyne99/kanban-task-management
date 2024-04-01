@@ -241,7 +241,7 @@ const AddTask = () => {
           <div className='relative w-full inline-block text-left'>
             <CustomDropDown
               handleSelected={handleSelected}
-              options={board.columns}
+              options={board?.columns}
               currentStatus={status}
             />
           </div>
