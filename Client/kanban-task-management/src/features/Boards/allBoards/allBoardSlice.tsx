@@ -268,7 +268,7 @@ const allBoardSlice = createSlice({
     })
     builder.addCase(updateTask.fulfilled, (state, { payload }) => {
       state.loading = false
-      // state.board = payload
+      state.board = payload
       console.log(payload)
 
       toast.success('Updated successfully')

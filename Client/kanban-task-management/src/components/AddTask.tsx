@@ -29,7 +29,7 @@ const AddTask = () => {
     editTask,
   } = useAppSelector((state) => state.modal)
   const { board } = useAppSelector((state) => state.allboard)
-  const col = board.columns.find((item) => item.name === taskValues.status)
+  const col = board?.columns?.find((item) => item.name === taskValues.status)
   console.log(col?._id)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
