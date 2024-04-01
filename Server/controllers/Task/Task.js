@@ -35,34 +35,42 @@ const updateTask = async (req, res) => {
     user: { userId },
     body: { title, description, subTasks: subtasks, status },
   } = req
+
   if (title === '' || description === '' || status === '' || !subtasks) {
     throw new BadRequestError(
-      'Please enter a valid title,descriptin,status,subtasks'
+      'Please enter a valid title, description, status, and subtasks'
     )
   }
+
   const board = await Board.findOneAndUpdate(
     {
       _id: boardId,
       createdBy: userId,
-      'columns._id': new mongoose.Types.ObjectId(columnId),
-      'columns.tasks._id': new mongoose.Types.ObjectId(taskId),
+      'columns._id': columnId, // No need to convert to ObjectId, assuming columnId is already a string
+      'columns.tasks._id': taskId, // No need to convert to ObjectId
     },
     {
       $set: {
-        'columns.$[].tasks.$[].title': title,
-        'columns.$[].tasks.$[].description': description,
-        'columns.$[].tasks.$[].status': status,
-        'columns.$[].tasks.$[].subtasks': subtasks,
+        'columns.$[col].tasks.$[task].title': title,
+        'columns.$[col].tasks.$[task].description': description,
+        'columns.$[col].tasks.$[task].status': status,
+        'columns.$[col].tasks.$[task].subtasks': subtasks,
       },
     },
-    { upsert: true, new: true }
+    {
+      arrayFilters: [{ 'col._id': columnId }, { 'task._id': taskId }],
+      upsert: true,
+      new: true,
+    }
   )
+
   if (!board) {
-    throw new NotFoundError(`no board with the id ${board}`)
+    throw new NotFoundError(`No board with the id ${board}`)
   }
 
   res.status(StatusCodes.OK).json({ board })
 }
+
 const deleteTask = async (req, res) => {
   const {
     user: { userId },

@@ -1,10 +1,13 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, ChangeEvent } from 'react'
 import { BoardInput, ButtonComponent } from '.'
 // import { subtasksProps } from '../interface/interface'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
 import { closeAddTaskModal } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
-import { createTask } from '../features/Boards/allBoards/allBoardSlice'
+import {
+  createTask,
+  updateTask,
+} from '../features/Boards/allBoards/allBoardSlice'
 
 // interface SubtasksProp {
 //   title: string
@@ -120,17 +123,28 @@ const AddTask = () => {
       setIsError(true)
       return
     }
+    if (editTask) {
+      dispatch(
+        updateTask({
+          boardId: board._id,
+          columnId: col?._id,
+          taskId: taskValues._id,
+          task: { title, description, subTasks, status },
+        })
+      )
+      return
+    }
     dispatch(
       createTask({
         boardId: board._id,
         task: { title, description, subTasks, status },
       })
     )
-    setTitle('')
-    setDescription('')
-    setSubTasks([{ title: '', isCompleted: false }])
-    setStatus('')
-    setIsError(false)
+    // setTitle('')
+    // setDescription('')
+    // setSubTasks([{ title: '', isCompleted: false }])
+    // setStatus('')
+    // setIsError(false)
     // dispatch(getSingleBoard(board._id))
   }
 
@@ -154,7 +168,9 @@ const AddTask = () => {
               type='text'
               value={title}
               name='title'
-              handleChange={(e) => setTitle(e.target.value)}
+              handleChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setTitle(e.target.value)
+              }
               error={isError}
             />
           </div>

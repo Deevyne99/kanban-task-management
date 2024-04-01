@@ -141,7 +141,7 @@ const modalSlice = createSlice({
     },
     closeTaskModal: (state) => {
       state.taskModal = false
-      state.task = { title: '', description: '', subtasks: [], status: '' }
+      // state.task = { title: '', description: '', subtasks: [], status: '' }
     },
 
     closeAddTaskModal: (state) => {

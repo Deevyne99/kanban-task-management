@@ -146,6 +146,44 @@ export const handleDeleteBoard = createAsyncThunk(
   }
 )
 
+export const updateTask = createAsyncThunk(
+  'boards/updateTask',
+  async (
+    {
+      boardId,
+      task,
+      columnId,
+      taskId,
+    }: {
+      boardId: boardId
+      task: TaskProps
+      columnId: boardId
+      taskId: boardId
+    },
+    thunkAPI
+  ) => {
+    console.log(task)
+    try {
+      const { data } = await customFetch.patch(
+        `/board/task/${boardId}/${columnId}/${taskId}`,
+        task,
+        {
+          headers: {
+            authorization: `Bearer ${
+              (thunkAPI.getState() as RootState).user.user.token
+            }`,
+          },
+        }
+      )
+      console.log(data)
+      return data
+    } catch (error) {
+      console.log(error)
+      // toast.error(error)
+    }
+  }
+)
+
 const allBoardSlice = createSlice({
   name: 'allBoardSlice',
   initialState,
@@ -222,6 +260,20 @@ const allBoardSlice = createSlice({
     })
     builder.addCase(createTask.rejected, (state, { payload }) => {
       console.log(payload)
+      state.loading = false
+      toast.error(`${payload}`)
+    })
+    builder.addCase(updateTask.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(updateTask.fulfilled, (state, { payload }) => {
+      state.loading = false
+      // state.board = payload
+      console.log(payload)
+
+      toast.success('Updated successfully')
+    })
+    builder.addCase(updateTask.rejected, (state, { payload }) => {
       state.loading = false
       toast.error(`${payload}`)
     })
