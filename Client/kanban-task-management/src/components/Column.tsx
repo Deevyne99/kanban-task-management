@@ -14,6 +14,8 @@ const Column = ({
   color: string
 }) => {
   const dispatch = useAppDispatch()
+  const taskVar = tasks.filter((item) => item.status === name)
+  console.log(taskVar)
 
   // console.log(tasks)
 
@@ -30,7 +32,7 @@ const Column = ({
           {name} <span>({tasks.length})</span>
         </p>
       </div>
-      {tasks.map((item, index) => {
+      {taskVar.map((item, index) => {
         return (
           <div key={index} onClick={() => dispatch(toggleTask(item))}>
             <Task title={item.title} subtasks={item.subtasks} />

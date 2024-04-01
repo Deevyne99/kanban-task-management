@@ -30,48 +30,6 @@ const createTask = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ board })
 }
 
-// const updateTask = async (req, res) => {
-//   const {
-//     params: { boardId, columnId, taskId },
-//     user: { userId },
-//     body: { title, description, subTasks: subtasks, status },
-//   } = req
-
-//   if (title === '' || description === '' || status === '' || !subtasks) {
-//     throw new BadRequestError(
-//       'Please enter a valid title, description, status, and subtasks'
-//     )
-//   }
-
-//   const board = await Board.findOneAndUpdate(
-//     {
-//       _id: boardId,
-//       createdBy: userId,
-//       'columns._id': columnId, // No need to convert to ObjectId, assuming columnId is already a string
-//       'columns.tasks._id': taskId, // No need to convert to ObjectId
-//     },
-//     {
-//       $set: {
-//         'columns.$[col].tasks.$[task].title': title,
-//         'columns.$[col].tasks.$[task].description': description,
-//         'columns.$[col].tasks.$[task].status': status,
-//         'columns.$[col].tasks.$[task].subtasks': subtasks,
-//       },
-//     },
-//     {
-//       arrayFilters: [{ 'col._id': columnId }, { 'task._id': taskId }],
-//       upsert: true,
-//       new: true,
-//     }
-//   )
-
-//   if (!board) {
-//     throw new NotFoundError(`No board with the id ${board}`)
-//   }
-
-//   res.status(StatusCodes.OK).json({ board })
-// }
-
 const updateTask = async (req, res) => {
   const {
     params: { boardId, columnId, taskId },
@@ -85,54 +43,31 @@ const updateTask = async (req, res) => {
     )
   }
 
-  const board = await Board.findOne({ _id: boardId, createdBy: userId })
-
-  if (!board) {
-    throw new NotFoundError(`No board with the id ${boardId}`)
-  }
-
-  const task = board.columns.reduce((foundTask, column) => {
-    if (!foundTask) {
-      return column.tasks.find((task) => task._id.toString() === taskId)
+  const board = await Board.findOneAndUpdate(
+    {
+      _id: boardId,
+      createdBy: userId,
+      'columns._id': columnId, // No need to convert to ObjectId, assuming columnId is already a string
+      'columns.tasks._id': taskId, // No need to convert to ObjectId
+    },
+    {
+      $set: {
+        'columns.$[col].tasks.$[task].title': title,
+        'columns.$[col].tasks.$[task].description': description,
+        'columns.$[col].tasks.$[task].status': status,
+        'columns.$[col].tasks.$[task].subtasks': subtasks,
+      },
+    },
+    {
+      arrayFilters: [{ 'col._id': columnId }, { 'task._id': taskId }],
+      upsert: true,
+      new: true,
     }
-    return foundTask
-  }, null)
-
-  if (!task) {
-    throw new NotFoundError(`No task with the id ${taskId}`)
-  }
-
-  const currentColumn = board.columns.find((col) =>
-    col.tasks.some((t) => t._id.toString() === taskId)
   )
 
-  if (!currentColumn) {
-    throw new NotFoundError(`No column with a task with the id ${taskId}`)
+  if (!board) {
+    throw new NotFoundError(`No board with the id ${board}`)
   }
-
-  if (task.status !== status) {
-    // If status changed to another column
-    const destinationColumn = board.columns.find((col) => col.name === status)
-
-    if (!destinationColumn) {
-      throw new NotFoundError(`No column with the name ${status}`)
-    }
-
-    // Remove task from current column
-    currentColumn.tasks = currentColumn.tasks.filter(
-      (t) => t._id.toString() !== taskId
-    )
-    // Add task to the destination column
-    destinationColumn.tasks.push(task)
-  }
-
-  // Update the task's properties
-  task.title = title
-  task.description = description
-  task.subtasks = subtasks
-  task.status = status
-
-  await board.save()
 
   res.status(StatusCodes.OK).json({ board })
 }
