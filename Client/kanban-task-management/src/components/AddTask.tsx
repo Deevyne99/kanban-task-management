@@ -6,22 +6,29 @@ import { closeAddTaskModal } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
 import { createTask } from '../features/Boards/allBoards/allBoardSlice'
 
-interface SubtasksProp {
-  title: string
-  isCompleted: boolean
-}
-type taskProps = {
-  title: string
-  description: string
-  subTasks: SubtasksProp[]
-  status: string
-}
+// interface SubtasksProp {
+//   title: string
+//   isCompleted: boolean
+// }
+// type taskProps = {
+//   title: string
+//   description: string
+//   subTasks: SubtasksProp[]
+//   status: string
+// }
 
 const AddTask = () => {
-  const { addTask, taskHeader, darkMode } = useAppSelector(
-    (state) => state.modal
-  )
+  const {
+    addTask,
+    taskHeader,
+    darkMode,
+    task: taskValues,
+    editTask,
+  } = useAppSelector((state) => state.modal)
   const { board } = useAppSelector((state) => state.allboard)
+  const col = board.columns.find((item) => item.name === taskValues.status)
+  console.log(col?._id)
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const initialState = {
     title: '',
@@ -34,46 +41,48 @@ const AddTask = () => {
     ],
     status: '',
   }
-  const [task, setTask] = useState<taskProps>(initialState)
+  const [title, setTitle] = useState('')
+  const [status, setStatus] = useState('')
+  const [description, setDescription] = useState('')
+  const [subTasks, setSubTasks] = useState([
+    {
+      title: '',
+      isCompleted: false,
+    },
+  ])
+
   const [isError, setIsError] = useState(false)
 
+  useEffect(() => {
+    setTitle(editTask ? taskValues?.title : '')
+    setDescription(editTask ? taskValues?.description : '')
+    setStatus(editTask ? taskValues?.status : '')
+    setSubTasks(
+      editTask ? taskValues?.subtasks : [{ title: '', isCompleted: false }]
+    )
+  }, [editTask, taskValues])
+
   const dispatch = useAppDispatch()
+  console.log(editTask)
 
   const modalRef = useRef<HTMLDivElement>(null)
 
-  const handleTaskChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
-    setTask((prevTask) => ({
-      ...prevTask,
-      [name]: value,
-    }))
-  }
-
   const handleSelected = (selected: string) => {
-    setTask((prev) => ({ ...prev, status: selected }))
+    setStatus(selected)
   }
 
   const addSubtask = () => {
-    setTask((prevTask) => ({
-      ...prevTask,
-      subTasks: [
-        ...prevTask.subTasks,
-        {
-          title: '',
-          isCompleted: false,
-        },
-      ],
-    }))
+    const newSubTask = {
+      title: '',
+      isCompleted: false,
+    }
+    setSubTasks([...subTasks, newSubTask])
   }
 
   const deleteSubtask = (index: number) => {
-    if (task.subTasks.length > 1) {
-      setTask((prevTask) => ({
-        ...prevTask,
-        subTasks: prevTask.subTasks.filter((_, i) => i !== index),
-      }))
+    if (subTasks.length > 1) {
+      const updatedSubTask = subTasks.filter((_, i) => i !== index)
+      setSubTasks(updatedSubTask)
     }
   }
 
@@ -82,7 +91,6 @@ const AddTask = () => {
       // Check if the click event target is outside the modal
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         dispatch(closeAddTaskModal())
-        setTask(initialState)
       }
     }
 
@@ -96,28 +104,32 @@ const AddTask = () => {
       document.removeEventListener('click', handleBackdropClick)
     }
   }, [addTask, dispatch, initialState])
-  console.log(task)
 
   const handleSubtaskChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number
   ) => {
     const { name, value } = e.target
-    setTask((prevTask) => ({
-      ...prevTask,
-      subTasks: prevTask.subTasks?.map((subtask: SubtasksProp, i: number) =>
-        i === index ? { ...subtask, [name]: value } : subtask
-      ),
-    }))
+    const updatedSubtasks = [...subTasks]
+    updatedSubtasks[index] = { ...updatedSubtasks[index], [name]: value }
+    setSubTasks(updatedSubtasks)
   }
 
   const handleSubmit = () => {
-    if (!task.title || !task.status || !task.description || !task.subTasks) {
+    if (!title || !status || !description || !subTasks) {
       setIsError(true)
       return
     }
-    dispatch(createTask({ boardId: board._id, task: task }))
-    setTask(initialState)
+    dispatch(
+      createTask({
+        boardId: board._id,
+        task: { title, description, subTasks, status },
+      })
+    )
+    setTitle('')
+    setDescription('')
+    setSubTasks([{ title: '', isCompleted: false }])
+    setStatus('')
     setIsError(false)
     // dispatch(getSingleBoard(board._id))
   }
@@ -140,9 +152,9 @@ const AddTask = () => {
             <p className='gap-2 mb-[3px] capitalize'>title</p>
             <BoardInput
               type='text'
-              value={task.title}
+              value={title}
               name='title'
-              handleChange={(e) => handleTaskChange(e)}
+              handleChange={(e) => setTitle(e.target.value)}
               error={isError}
             />
           </div>
@@ -156,11 +168,11 @@ const AddTask = () => {
               id=''
               cols={30}
               rows={2}
-              onChange={handleTaskChange}
-              value={task.description}
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
             ></textarea>
           </div>
-          {task.subTasks?.map((item: { title: string }, index: number) => {
+          {subTasks?.map((item: { title: string }, index: number) => {
             return (
               <div
                 key={index}
@@ -211,7 +223,11 @@ const AddTask = () => {
             title='+ add new task'
           />
           <div className='relative w-full inline-block text-left'>
-            <CustomDropDown handleSelected={handleSelected} />
+            <CustomDropDown
+              handleSelected={handleSelected}
+              options={board.columns}
+              currentStatus={status}
+            />
           </div>
           <ButtonComponent
             onClick={() => handleSubmit()}

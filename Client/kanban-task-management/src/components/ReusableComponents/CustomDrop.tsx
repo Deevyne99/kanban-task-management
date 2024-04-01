@@ -1,24 +1,28 @@
 import { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../hooks/hook'
 import { toggleCustomDrop } from '../../features/modal/modalSlice'
-
+import { ColumnProps } from '../../interface/interface'
 interface CustomDropDownProps {
   handleSelected: (selected: string) => void // Define prop type
   currentStatus?: string
+  options: ColumnProps[]
 }
 const CustomDropDown = ({
   handleSelected,
   currentStatus,
+  options,
 }: CustomDropDownProps) => {
   const { darkMode, dropdownOpen } = useAppSelector((state) => state.modal)
-  const { board } = useAppSelector((state) => state.allboard)
-  const [selectedOption, setSelectedOption] = useState(currentStatus)
+  // const { board } = useAppSelector((state) => state.allboard)
+  const [selectedOption, setSelectedOption] = useState('')
 
   const dispatch = useAppDispatch()
 
   const selectOption = (option: string) => {
     setSelectedOption(option)
     handleSelected(option)
+    console.log(currentStatus)
+
     dispatch(toggleCustomDrop())
   }
 
@@ -41,7 +45,11 @@ const CustomDropDown = ({
             aria-expanded='true'
             onClick={() => dispatch(toggleCustomDrop())}
           >
-            {selectedOption ? selectedOption : 'Select Status'}
+            {currentStatus
+              ? currentStatus
+              : selectedOption
+              ? selectedOption
+              : 'Select Status'}
             <svg
               className='-mr-1 ml-2 h-5 w-5'
               fill='currentColor'
@@ -69,7 +77,7 @@ const CustomDropDown = ({
               aria-orientation='vertical'
               aria-labelledby='options-menu'
             >
-              {board.columns?.map((option) => (
+              {options?.map((option) => (
                 <div
                   key={option.name}
                   onClick={() => selectOption(option.name)}

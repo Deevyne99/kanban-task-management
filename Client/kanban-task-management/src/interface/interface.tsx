@@ -33,11 +33,13 @@ export interface TasksProps {
   description: string
   subtasks: subtasksProps[]
   status: string
+  _id?: string
 }
 
 export interface ColumnProps {
   name: string
   tasks: TasksProps[]
+  _id?: string
 }
 
 export interface BoardsProps {

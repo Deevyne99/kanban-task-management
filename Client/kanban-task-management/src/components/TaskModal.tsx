@@ -5,6 +5,7 @@ import {
   toggleDeleteTask,
   toggleEditTask,
   closeTaskModal,
+  handleSelectStatus,
 } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
 
@@ -12,12 +13,14 @@ const TaskModal = () => {
   const { taskModal, taskOptions, darkMode, task } = useAppSelector(
     (store) => store.modal
   )
+  const { board } = useAppSelector((state) => state.allboard)
 
   console.log(task)
-  console.log(task?.status)
 
-  const handleSelected = () => {
-    console.log('heelo')
+  // console.log(taskval)
+
+  const handleSelected = (option: string) => {
+    dispatch(handleSelectStatus(option))
   }
 
   const modalRef = useRef<HTMLDivElement>(null)
@@ -123,7 +126,8 @@ const TaskModal = () => {
           <div className='relative w-full inline-block text-left'>
             <CustomDropDown
               handleSelected={handleSelected}
-              currentStatus={task?.status}
+              currentStatus={task.status}
+              options={board?.columns}
             />
           </div>
         </div>
