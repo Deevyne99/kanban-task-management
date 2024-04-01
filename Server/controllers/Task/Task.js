@@ -43,7 +43,7 @@ const updateTask = async (req, res) => {
     )
   }
 
-  const board = await Board.findById(boardId)
+  const board = await Board.findById({ _id: boardId, createdBy: userId })
 
   if (!board) {
     throw new NotFoundError(`No board with the id ${boardId}`)
