@@ -32,7 +32,7 @@ const Column = ({
           {name} <span>({tasks.length})</span>
         </p>
       </div>
-      {taskVar.map((item, index) => {
+      {tasks.map((item, index) => {
         return (
           <div key={index} onClick={() => dispatch(toggleTask(item))}>
             <Task title={item.title} subtasks={item.subtasks} />

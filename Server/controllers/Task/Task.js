@@ -43,31 +43,58 @@ const updateTask = async (req, res) => {
     )
   }
 
-  const board = await Board.findOneAndUpdate(
-    {
-      _id: boardId,
-      createdBy: userId,
-      'columns._id': columnId, // No need to convert to ObjectId, assuming columnId is already a string
-      'columns.tasks._id': taskId, // No need to convert to ObjectId
-    },
-    {
-      $set: {
-        'columns.$[col].tasks.$[task].title': title,
-        'columns.$[col].tasks.$[task].description': description,
-        'columns.$[col].tasks.$[task].status': status,
-        'columns.$[col].tasks.$[task].subtasks': subtasks,
-      },
-    },
-    {
-      arrayFilters: [{ 'col._id': columnId }, { 'task._id': taskId }],
-      upsert: true,
-      new: true,
-    }
-  )
+  const board = await Board.findOne({ _id: boardId, createdBy: userId })
 
   if (!board) {
-    throw new NotFoundError(`No board with the id ${board}`)
+    throw new NotFoundError(`No board with the id ${boardId}`)
   }
+
+  // Find the task in the board
+  const task = board.columns.reduce((foundTask, column) => {
+    if (!foundTask) {
+      return column.tasks.find((t) => t._id.toString() === taskId)
+    }
+    return foundTask
+  }, null)
+
+  if (!task) {
+    throw new NotFoundError(`No task with the id ${taskId}`)
+  }
+
+  // Check if the task's status is changing
+  if (task.status !== status) {
+    // Find the current column of the task
+    const currentColumn = board.columns.find((col) =>
+      col.tasks.some((t) => t._id.toString() === taskId)
+    )
+
+    if (!currentColumn) {
+      throw new NotFoundError(`No column with a task with the id ${taskId}`)
+    }
+
+    // Remove the task from the current column
+    currentColumn.tasks = currentColumn.tasks.filter(
+      (t) => t._id.toString() !== taskId
+    )
+
+    // Find the destination column based on the new status
+    const destinationColumn = board.columns.find((col) => col.name === status)
+
+    if (!destinationColumn) {
+      throw new NotFoundError(`No column with the name ${status}`)
+    }
+
+    // Add the task to the destination column
+    destinationColumn.tasks.push(task)
+  }
+
+  // Update the task's properties
+  task.title = title
+  task.description = description
+  task.subtasks = subtasks
+  task.status = status
+
+  await board.save()
 
   res.status(StatusCodes.OK).json({ board })
 }
