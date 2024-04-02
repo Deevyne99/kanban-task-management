@@ -188,51 +188,52 @@ const AddTask = () => {
               value={description}
             ></textarea>
           </div>
-          {subTasks?.map((item: { title: string }, index: number) => {
-            return (
-              <div
-                key={index}
-                className='flex w-full gap-y-2 items-center justify-between  gap-4 '
-              >
-                <BoardInput
-                  value={item.title}
-                  type='text'
-                  name='title'
-                  title='subtasks'
-                  handleChange={(e) => handleSubtaskChange(e, index)}
-                  error={isError}
-                />
-                <button
-                  className='flex items-center mt-1'
-                  onClick={() => deleteSubtask(index)}
+          <div className='flex flex-col h-[50px] overflow-y-scroll gap-4 mt-4'>
+            {subTasks?.map((item: { title: string }, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className='flex w-full gap-y-2 items-center justify-between  gap-4 '
                 >
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='15'
-                    height='15'
-                    viewBox='0 0 15 15'
-                    fill='none'
+                  <BoardInput
+                    value={item.title}
+                    type='text'
+                    name='title'
+                    title='subtasks'
+                    handleChange={(e) => handleSubtaskChange(e, index)}
+                    error={isError}
+                  />
+                  <button
+                    className='flex items-center mt-1'
+                    onClick={() => deleteSubtask(index)}
                   >
-                    <rect
-                      x='12.728'
-                      width='3'
-                      height='18'
-                      transform='rotate(45 12.728 0)'
-                      fill='#828FA3'
-                    />
-                    <rect
-                      y='2.12109'
-                      width='3'
-                      height='18'
-                      transform='rotate(-45 0 2.12109)'
-                      fill='#828FA3'
-                    />
-                  </svg>
-                </button>
-              </div>
-            )
-          })}
-
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='15'
+                      height='15'
+                      viewBox='0 0 15 15'
+                      fill='none'
+                    >
+                      <rect
+                        x='12.728'
+                        width='3'
+                        height='18'
+                        transform='rotate(45 12.728 0)'
+                        fill='#828FA3'
+                      />
+                      <rect
+                        y='2.12109'
+                        width='3'
+                        height='18'
+                        transform='rotate(-45 0 2.12109)'
+                        fill='#828FA3'
+                      />
+                    </svg>
+                  </button>
+                </div>
+              )
+            })}
+          </div>
           <ButtonComponent
             onClick={() => addSubtask()}
             type='button'
