@@ -32,7 +32,7 @@ const createTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   const {
-    params: { boardId, columnId, taskId },
+    params: { boardId, taskId },
     user: { userId },
     body: { title, description, subTasks: subtasks, status },
   } = req
@@ -43,10 +43,11 @@ const updateTask = async (req, res) => {
     )
   }
 
-  const board = await Board.findOneAndUpdate(
+  const updatedBoard = await Board.findOneAndUpdate(
     {
       _id: boardId,
       createdBy: userId,
+      'columns.tasks._id': taskId,
     },
     {
       $set: {
@@ -57,17 +58,16 @@ const updateTask = async (req, res) => {
       },
     },
     {
-      arrayFilters: [{ 'col._id': columnId }, { 'task._id': taskId }],
-      upsert: true,
-      new: true,
+      arrayFilters: [{ 'col.tasks._id': taskId }, { 'task._id': taskId }],
+      new: true, // return the updated document
     }
   )
 
-  if (!board) {
-    throw new NotFoundError(`No board with the id ${board}`)
+  if (!updatedBoard) {
+    throw new NotFoundError(`No board with the id ${boardId}`)
   }
 
-  res.status(StatusCodes.OK).json({ board })
+  res.status(StatusCodes.OK).json({ board: updatedBoard })
 }
 
 const deleteTask = async (req, res) => {
