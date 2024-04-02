@@ -47,8 +47,6 @@ const updateTask = async (req, res) => {
     {
       _id: boardId,
       createdBy: userId,
-      'columns._id': columnId, // No need to convert to ObjectId, assuming columnId is already a string
-      'columns.tasks._id': taskId, // No need to convert to ObjectId
     },
     {
       $set: {
