@@ -21,7 +21,6 @@ interface AllBoardsProps {
   isLoading: boolean
   boards: BoardsProps[]
   loading: boolean
-  tasks: TaskProps[]
 }
 
 const initialState: AllBoardsProps = {
@@ -29,14 +28,6 @@ const initialState: AllBoardsProps = {
   boards: [],
   board: { boardName: '', columns: [], tasks: [] },
   loading: false,
-  tasks: [
-    {
-      title: '',
-      description: '',
-      status: '',
-      subTasks: [{ title: '', isCompleted: false }],
-    },
-  ],
 }
 type boardId = Key | null | undefined
 
