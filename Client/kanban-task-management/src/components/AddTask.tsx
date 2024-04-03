@@ -36,7 +36,7 @@ const AddTask = () => {
   const initialState = {
     title: '',
     description: '',
-    subTasks: [
+    subtasks: [
       {
         title: '',
         isCompleted: false,
@@ -47,7 +47,7 @@ const AddTask = () => {
   const [title, setTitle] = useState('')
   const [status, setStatus] = useState('')
   const [description, setDescription] = useState('')
-  const [subTasks, setSubTasks] = useState([
+  const [subtasks, setSubTasks] = useState([
     {
       title: '',
       isCompleted: false,
@@ -79,12 +79,12 @@ const AddTask = () => {
       title: '',
       isCompleted: false,
     }
-    setSubTasks([...subTasks, newSubTask])
+    setSubTasks([...subtasks, newSubTask])
   }
 
   const deleteSubtask = (index: number) => {
-    if (subTasks.length > 1) {
-      const updatedSubTask = subTasks.filter((_, i) => i !== index)
+    if (subtasks.length > 1) {
+      const updatedSubTask = subtasks.filter((_, i) => i !== index)
       setSubTasks(updatedSubTask)
     }
   }
@@ -113,13 +113,13 @@ const AddTask = () => {
     index: number
   ) => {
     const { name, value } = e.target
-    const updatedSubtasks = [...subTasks]
+    const updatedSubtasks = [...subtasks]
     updatedSubtasks[index] = { ...updatedSubtasks[index], [name]: value }
     setSubTasks(updatedSubtasks)
   }
 
   const handleSubmit = () => {
-    if (!title || !status || !description || !subTasks) {
+    if (!title || !status || !description || !subtasks) {
       setIsError(true)
       return
     }
@@ -129,7 +129,7 @@ const AddTask = () => {
           boardId: board._id,
           columnId: col?._id,
           taskId: taskValues._id,
-          task: { title, description, subTasks, status },
+          task: { title, description, subtasks, status },
         })
       )
       return
@@ -137,7 +137,7 @@ const AddTask = () => {
     dispatch(
       createTask({
         boardId: board._id,
-        task: { title, description, subTasks, status },
+        task: { title, description, subtasks, status },
       })
     )
     // setTitle('')
@@ -189,7 +189,7 @@ const AddTask = () => {
             ></textarea>
           </div>
           <div className='flex flex-col h-[50px] overflow-y-scroll gap-4 mt-4'>
-            {subTasks?.map((item: { title: string }, index: number) => {
+            {subtasks?.map((item: { title: string }, index: number) => {
               return (
                 <div
                   key={index}

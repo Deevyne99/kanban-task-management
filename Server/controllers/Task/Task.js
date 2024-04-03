@@ -11,7 +11,7 @@ const createTask = async (req, res) => {
   const {
     params: { boardId },
     user: { userId },
-    body: { title, description, subTasks: subtasks, status },
+    body: { title, description, subtasks, status },
   } = req
 
   const board = await Board.findOne({
@@ -34,7 +34,7 @@ const updateTask = async (req, res) => {
   const {
     params: { boardId, taskId },
     user: { userId },
-    body: { title, description, subTasks: subtasks, status },
+    body: { title, description, subtasks, status },
   } = req
 
   if (title === '' || description === '' || status === '' || !subtasks) {

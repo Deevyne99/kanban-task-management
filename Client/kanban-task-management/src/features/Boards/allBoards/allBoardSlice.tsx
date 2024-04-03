@@ -14,7 +14,7 @@ interface TaskProps {
   title: string
   description: string
   status: string
-  subTasks: SubtasksProps[]
+  subtasks: SubtasksProps[]
 }
 interface AllBoardsProps {
   board: BoardsProps
