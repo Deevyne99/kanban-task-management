@@ -25,7 +25,7 @@ const createTask = async (req, res) => {
   if (!name) {
     throw new NotFoundError(`no column with the name ${status}`)
   }
-  name.tasks.push({ title, description, subtasks, status })
+  board.tasks.push({ title, description, subtasks, status })
   await board.save()
   res.status(StatusCodes.CREATED).json({ board })
 }
@@ -43,29 +43,29 @@ const updateTask = async (req, res) => {
     )
   }
 
-  const updatedBoard = await Board.findOneAndUpdate(
-    {
-      _id: boardId,
-      createdBy: userId,
-      'columns.tasks._id': taskId,
-    },
-    {
-      $set: {
-        'columns.$[col].tasks.$[task].title': title,
-        'columns.$[col].tasks.$[task].description': description,
-        'columns.$[col].tasks.$[task].status': status,
-        'columns.$[col].tasks.$[task].subtasks': subtasks,
-      },
-    },
-    {
-      arrayFilters: [{ 'col.tasks._id': taskId }, { 'task._id': taskId }],
-      new: true, // return the updated document
-    }
-  )
+  const findBoard = await Board.findOne({
+    _id: boardId,
+    createdBy: userId,
+  })
 
-  if (!updatedBoard) {
+  if (!findBoard) {
     throw new NotFoundError(`No board with the id ${boardId}`)
   }
+
+  const task = findBoard.tasks.find((task) => task._id.toString() === taskId)
+
+  if (!task) {
+    throw new NotFoundError(`No task with the id ${taskId}`)
+  }
+
+  // Update task properties
+  task.title = title
+  task.description = description
+  task.subtasks = subtasks
+  task.status = status
+
+  // Save the updated board
+  const updatedBoard = await findBoard.save()
 
   res.status(StatusCodes.OK).json({ board: updatedBoard })
 }
@@ -73,28 +73,29 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   const {
     user: { userId },
-    params: { boardId, columnId, taskId },
+    params: { boardId, taskId },
   } = req
+
   const board = await Board.findOne({
     _id: boardId,
     createdBy: userId,
   })
+
   if (!board) {
-    throw new NotFoundError(`no board with the id ${board}`)
+    throw new NotFoundError(`No board with the id ${boardId}`)
   }
 
-  const [column] = board.columns.filter((col) => String(col._id) === columnId)
-  if (!column) {
-    throw new NotFoundError(`no column with the name ${columnId}`)
+  const taskIndex = board.tasks.findIndex((task) => String(task._id) === taskId)
+  if (taskIndex === -1) {
+    throw new NotFoundError(`No task with the id ${taskId}`)
   }
-  const [task] = column.tasks.filter((item) => String(item._id) === taskId)
-  if (!task) {
-    throw new NotFoundError(`no task with the name ${taskId}`)
-  }
-  column.tasks = column.tasks.filter((item) => String(item._id) !== taskId)
+
+  // Remove the task from the board's tasks array
+  board.tasks.splice(taskIndex, 1)
 
   await board.save()
 
   res.status(StatusCodes.OK).json({ msg: 'Deleted successfully' })
 }
+
 module.exports = { createTask, updateTask, deleteTask }

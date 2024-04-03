@@ -1,20 +1,20 @@
 // import { useState } from 'react'
 // import { ColumnProps } from '../interface/interface'
 import Task from './Task'
-import { useAppDispatch } from '../hooks/hook'
+import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { toggleTask } from '../features/modal/modalSlice'
-import { TasksProps } from '../interface/interface'
 const Column = ({
   name,
-  tasks,
+
   color,
 }: {
   name: string
-  tasks: TasksProps[]
+
   color: string
 }) => {
   const dispatch = useAppDispatch()
-  const taskVar = tasks.filter((item) => item.status === name)
+  const { board } = useAppSelector((state) => state.allboard)
+  const taskVar = board?.tasks.filter((item) => item.status === name)
   console.log(taskVar)
 
   // console.log(tasks)
@@ -29,10 +29,10 @@ const Column = ({
       >
         <div className={`h-[15px] w-[15px] rounded-full bg-${color}`}></div>
         <p className='flex gap-2 tracking-[2.4px]'>
-          {name} <span>({tasks.length})</span>
+          {name} <span>({taskVar.length})</span>
         </p>
       </div>
-      {tasks.map((item, index) => {
+      {taskVar.map((item, index) => {
         return (
           <div key={index} onClick={() => dispatch(toggleTask(item))}>
             <Task title={item.title} subtasks={item.subtasks} />

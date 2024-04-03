@@ -14,37 +14,37 @@ const TaskSchema = new mongoose.Schema(
           trim: true,
         },
 
-        tasks: [
+      },
+    ],
+    tasks: [
+      {
+        title: {
+          type: String,
+          // required: [true, 'must provide title'],
+          trim: true,
+        },
+        description: {
+          type: String,
+          // required: [true, 'must provide title'],
+          trim: true,
+        },
+        subtasks: [
           {
             title: {
               type: String,
               // required: [true, 'must provide title'],
               trim: true,
             },
-            description: {
-              type: String,
-              // required: [true, 'must provide title'],
-              trim: true,
-            },
-            subtasks: [
-              {
-                title: {
-                  type: String,
-                  // required: [true, 'must provide title'],
-                  trim: true,
-                },
-                isCompleted: {
-                  type: Boolean,
-                  default: false,
-                },
-              },
-            ],
-            status: {
-              type: String,
-              required: [true, 'please enter a status'],
+            isCompleted: {
+              type: Boolean,
+              default: false,
             },
           },
         ],
+        status: {
+          type: String,
+          required: [true, 'please enter a status'],
+        },
       },
     ],
     createdBy: {

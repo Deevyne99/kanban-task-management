@@ -27,7 +27,7 @@ interface AllBoardsProps {
 const initialState: AllBoardsProps = {
   isLoading: false,
   boards: [],
-  board: { boardName: '', columns: [] },
+  board: { boardName: '', columns: [], tasks: [] },
   loading: false,
   tasks: [
     {

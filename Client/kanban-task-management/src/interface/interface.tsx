@@ -38,7 +38,7 @@ export interface TasksProps {
 
 export interface ColumnProps {
   name: string
-  tasks: TasksProps[]
+
   _id?: string
 }
 
@@ -46,4 +46,5 @@ export interface BoardsProps {
   _id?: Key | null | undefined
   boardName: string
   columns: ColumnProps[]
+  tasks: TasksProps[]
 }
