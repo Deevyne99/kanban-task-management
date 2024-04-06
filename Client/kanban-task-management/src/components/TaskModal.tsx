@@ -6,16 +6,38 @@ import {
   toggleEditTask,
   closeTaskModal,
   handleSelectStatus,
+  handleCompletedTask,
 } from '../features/modal/modalSlice'
 import CustomDropDown from './ReusableComponents/CustomDrop'
+// import { updateTask } from '../features/Boards/allBoards/allBoardSlice'
 
 const TaskModal = () => {
   const { taskModal, taskOptions, darkMode, task } = useAppSelector(
     (store) => store.modal
   )
   const { board } = useAppSelector((state) => state.allboard)
+  const dispatch = useAppDispatch()
+  // const [isCompleted, setIsCompleted] = useState(false)
 
-  console.log(task)
+  const handleCheck = (id: string | undefined) => {
+    dispatch(handleCompletedTask(id))
+    console.log(task)
+
+    // dispatch(
+    //   updateTask({
+    //     boardId: board._id,
+    //     taskId: task._id,
+    //     task: {
+    //       title: task.title,
+    //       description: task.description,
+    //       subtasks: task.subtasks,
+    //       status: task.status,
+    //     },
+    //   })
+    // )
+  }
+
+  // console.log(isCompleted)
 
   // console.log(taskval)
 
@@ -24,8 +46,6 @@ const TaskModal = () => {
   }
 
   const modalRef = useRef<HTMLDivElement>(null)
-
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const handleBackdropClick = (e: MouseEvent) => {
@@ -106,12 +126,15 @@ const TaskModal = () => {
                       className={` ${
                         darkMode === 'light' ? 'bg-screen' : 'bg-[#20212C]'
                       } flex gap-2 p-2  rounded-[4px] md:items-center    items-baseline`}
+                      key={item._id}
                     >
                       <input
                         className='accent-purple border border-[#828FA340]'
                         type='checkbox'
-                        name=''
-                        id=''
+                        name={`${item.isCompleted}`}
+                        id={item._id}
+                        checked={item.isCompleted}
+                        onChange={() => handleCheck(item._id)}
                       />
                       <label htmlFor='' className='text-[14px] '>
                         {item.title}

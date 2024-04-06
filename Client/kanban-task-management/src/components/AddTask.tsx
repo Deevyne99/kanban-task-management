@@ -56,6 +56,7 @@ const AddTask = () => {
 
   const [isError, setIsError] = useState(false)
 
+  const dispatch = useAppDispatch()
   useEffect(() => {
     setTitle(editTask ? taskValues?.title : '')
     setDescription(editTask ? taskValues?.description : '')
@@ -63,9 +64,8 @@ const AddTask = () => {
     setSubTasks(
       editTask ? taskValues?.subtasks : [{ title: '', isCompleted: false }]
     )
-  }, [editTask, taskValues])
+  }, [editTask, taskValues, dispatch])
 
-  const dispatch = useAppDispatch()
   console.log(editTask)
 
   const modalRef = useRef<HTMLDivElement>(null)
@@ -127,7 +127,6 @@ const AddTask = () => {
       dispatch(
         updateTask({
           boardId: board._id,
-          columnId: col?._id,
           taskId: taskValues._id,
           task: { title, description, subtasks, status },
         })

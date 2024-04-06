@@ -11,14 +11,14 @@ const initialState: BoardsProps & { loading: boolean } = {
   columns: [
     {
       name: '',
-      tasks: [
-        {
-          title: '',
-          description: '',
-          subtasks: [{ title: '', isCompleted: false }],
-          status: '',
-        },
-      ],
+    },
+  ],
+  tasks: [
+    {
+      title: '',
+      description: '',
+      subtasks: [{ title: '', isCompleted: false }],
+      status: '',
     },
   ],
   loading: false,
@@ -43,6 +43,7 @@ export const createBoard = createAsyncThunk(
   }
 )
 
+// eslint-disable-next-line react-refresh/only-export-components
 const BoardSlice = createSlice({
   name: 'Boardslice',
   initialState,

@@ -143,12 +143,12 @@ export const updateTask = createAsyncThunk(
     {
       boardId,
       task,
-      columnId,
+
       taskId,
     }: {
       boardId: boardId
       task: TaskProps
-      columnId: boardId
+
       taskId: boardId
     },
     thunkAPI
@@ -156,7 +156,7 @@ export const updateTask = createAsyncThunk(
     console.log(task)
     try {
       const { data } = await customFetch.patch(
-        `/board/task/${boardId}/${columnId}/${taskId}`,
+        `/board/task/${boardId}/${taskId}`,
         task,
         {
           headers: {
@@ -259,7 +259,7 @@ const allBoardSlice = createSlice({
     })
     builder.addCase(updateTask.fulfilled, (state, { payload }) => {
       state.loading = false
-      state.board = payload
+      state.board = payload.board
       console.log(payload)
 
       toast.success('Updated successfully')

@@ -26,6 +26,7 @@ export interface ButtonProps {
 export interface subtasksProps {
   title: string
   isCompleted: boolean
+  _id?: string
 }
 
 export interface TasksProps {
@@ -38,7 +39,6 @@ export interface TasksProps {
 
 export interface ColumnProps {
   name: string
-
   _id?: string
 }
 

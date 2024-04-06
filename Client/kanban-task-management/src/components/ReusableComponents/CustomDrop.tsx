@@ -39,7 +39,7 @@ const CustomDropDown = ({
         <span className='rounded-md '>
           <button
             type='button'
-            className='inline-flex justify-between w-full rounded-md border border-gray-300 p-2  text-sm leading-5 font-medium  capitalize border-[#828FA340] font-Plus focus:border-[#635FC7] focus:outline-none transition ease-in-out duration-150'
+            className='inline-flex justify-between w-full rounded-md border border-gray-300 p-2  text-sm leading-5 font-medium  capitalize border-[#828FA340] font-Plus focus:border-[#635FC7] focus:outline-none transition ease-in-out duration-150 '
             id='options-menu'
             aria-haspopup='true'
             aria-expanded='true'
@@ -81,7 +81,7 @@ const CustomDropDown = ({
                 <div
                   key={option.name}
                   onClick={() => selectOption(option.name)}
-                  className='block px-4 py-2 text-sm leading-5  hover:bg-gray-100 hover:text-gray-900 cursor-pointer'
+                  className='block px-4 py-2 text-sm leading-5  hover:bg-gray-100 hover:text-gray-900 cursor-pointer capitalize'
                   role='menuitem'
                 >
                   {option.name}

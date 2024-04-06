@@ -33,7 +33,7 @@ export const AddBoardModal = () => {
   )
   useEffect(() => {
     setBoardName(editBoard ? board.boardName : '')
-    setColumns(editBoard ? board.columns : [{ name: '', tasks: [] }])
+    setColumns(editBoard ? board.columns : [{ name: '' }])
   }, [editBoard, board])
 
   const handleInputChange = (
@@ -54,12 +54,25 @@ export const AddBoardModal = () => {
 
     if (editBoard) {
       dispatch(
-        updateBoard({ board: { boardName, columns }, boardId: board._id })
+        updateBoard({
+          board: {
+            boardName,
+            columns,
+            tasks: [],
+          },
+          boardId: board._id,
+        })
       )
 
       return
     }
-    dispatch(createBoard({ boardName, columns }))
+    dispatch(
+      createBoard({
+        boardName,
+        columns,
+        tasks: [],
+      })
+    )
   }
 
   const addColumn = () => {

@@ -18,7 +18,7 @@ const Task = ({
       }`}
       onClick={() => console.log('hello world')}
     >
-      <h4 className='font-bold font-Plus '>{title}</h4>
+      <h4 className='font-bold font-Plus capitalize'>{title}</h4>
       <p className='text-[#828FA3] font-semibold'>
         <span>{completed.length}</span> of <span>{subtasks.length}</span>{' '}
         subtask

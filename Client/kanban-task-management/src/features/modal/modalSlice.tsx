@@ -89,7 +89,7 @@ const modalSlice = createSlice({
       state.taskHeader = 'Edit task'
       state.taskModal = false
       state.taskOptions = false
-      state.editTask = !state.editTask
+      state.editTask = true
     },
     toggleDeleteTask: (state) => {
       state.addTask = false
@@ -122,6 +122,19 @@ const modalSlice = createSlice({
     handleSelectStatus: (state, { payload }) => {
       state.task.status = payload
     },
+    handleCompletedTask: (state, { payload }) => {
+      console.log(payload)
+
+      const subtask = state.task.subtasks.find(
+        (subtask) => subtask._id === payload
+      )
+      console.log(subtask)
+
+      if (subtask) {
+        subtask.isCompleted = !subtask.isCompleted
+      }
+      console.log(state.task.subtasks)
+    },
     toggleOptions: (state) => {
       state.taskOptions = !state.taskOptions
     },
@@ -145,6 +158,7 @@ const modalSlice = createSlice({
     },
 
     closeAddTaskModal: (state) => {
+      state.editTask = false
       state.addTask = false
     },
     closeSmallSidebar: (state) => {
@@ -181,4 +195,5 @@ export const {
   closeSmallSidebar,
   toggleCustomDrop,
   handleSelectStatus,
+  handleCompletedTask,
 } = modalSlice.actions
