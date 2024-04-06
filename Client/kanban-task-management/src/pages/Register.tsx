@@ -54,9 +54,7 @@ const Register = () => {
 
   return (
     <main className=' h-screen   mx-auto h- flex justify-center items-center flex-col gap-6'>
-      {darkMode === 'light' && (
-        <img className='hidden md:flex' src={logo} alt='' />
-      )}
+      {darkMode === 'light' && <img className='flex' src={logo} alt='' />}
 
       {darkMode === 'dark' && (
         <svg
