@@ -1,7 +1,12 @@
 import { Navigate } from 'react-router-dom'
 import { useAppSelector } from '../hooks/hook'
+import { ReactNode } from 'react'
 
-const ProtectedRoute = ({ children }) => {
+interface ProtectedRouteProps {
+  children: ReactNode
+}
+
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user } = useAppSelector((store) => store.user)
   if (!user) {
     return <Navigate to={'/'} />
