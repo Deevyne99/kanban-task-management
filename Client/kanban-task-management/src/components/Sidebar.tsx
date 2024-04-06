@@ -30,11 +30,11 @@ const Sidebar = () => {
       >
         {/* <img src={logo} alt='' /> */}
         <p className='text-textLabel flex  mt-4 ml-6 tracking-[2.4px] leading-6 font-Plus'>
-          {`All Boards (${boards.length})`}
+          {`All Boards (${boards?.length})`}
         </p>
 
         <div className='flex flex-col gap-2 h-[300px] overflow-x-hidden overflow-y-scroll scrollbar-thin scroll-purple'>
-          {boards.map((item) => {
+          {boards?.map((item) => {
             return (
               <BoardButton
                 onClick={() => dispatch(getSingleBoard(item._id))}

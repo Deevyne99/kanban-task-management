@@ -30,6 +30,7 @@ const Board = () => {
     taskModal,
     dropDown,
   } = useAppSelector((state) => state.modal)
+  // const { user } = useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
   const { isLoading, loading, board } = useAppSelector(
     (store) => store.allboard

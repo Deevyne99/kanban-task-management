@@ -143,7 +143,7 @@ export const AddBoardModal = () => {
       </div>
       <div>
         <p className='capitalize text-[#828FA3] mt-4'>columns</p>
-        <div className={`flex flex-col gap-4 mt-1`}>
+        <div className={`flex flex-col gap-4 mt-1 h-[50px] overflow-y-scroll`}>
           {columns.map((item, index) => {
             const { name } = item
             return (

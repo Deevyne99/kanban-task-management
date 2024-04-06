@@ -7,9 +7,11 @@ import {
 } from '../features/modal/modalSlice'
 import { logoutUser } from '../features/user/userSlice'
 import { useAppSelector, useAppDispatch } from '../hooks/hook'
+import { useNavigate } from 'react-router-dom'
 
 const DropDownModal = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { dropDown, darkMode } = useAppSelector((store) => store.modal)
 
   const modalRef = useRef<HTMLDivElement>(null)
@@ -17,6 +19,9 @@ const DropDownModal = () => {
   const handleSignOut = () => {
     dispatch(logoutUser())
     dispatch(toggleDropDown())
+    navigate('/')
+    dispatch(closeDropDownModal())
+    // navigate('/')
   }
 
   useEffect(() => {

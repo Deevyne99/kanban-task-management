@@ -50,12 +50,12 @@ const SmallSidebar = () => {
         ref={modalRef}
       >
         <p className='text-textLabel flex  mt-4 ml-6 tracking-[2.4px] leading-6 font-Plus'>
-          All Boards ({boards.length})
+          All Boards ({boards?.length})
         </p>
 
         <div className={`flex flex-col gap-2 mt-3 `}>
           <div className='flex flex-col h-[200px] w-full scrollbar-thin scroll-purple  overflow-y-scroll gap-2'>
-            {boards.map((item) => {
+            {boards?.map((item) => {
               return (
                 <BoardButton
                   onClick={() => dispatch(getSingleBoard(item._id))}

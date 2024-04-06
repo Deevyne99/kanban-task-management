@@ -9,17 +9,6 @@ import {
   updateTask,
 } from '../features/Boards/allBoards/allBoardSlice'
 
-// interface SubtasksProp {
-//   title: string
-//   isCompleted: boolean
-// }
-// type taskProps = {
-//   title: string
-//   description: string
-//   subTasks: SubtasksProp[]
-//   status: string
-// }
-
 const AddTask = () => {
   const {
     addTask,
@@ -154,7 +143,7 @@ const AddTask = () => {
           addTask ? 'top-16 z-30 ' : 'top-[-600px]'
         } fixed  ${
           darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
-        } rounded-md  right-0 mx-auto w-[80%]  md:w-[450px] left-0 p-4  flex flex-col`}
+        } rounded-md  right-0 mx-auto w-[80%]  md:w-[450px] left-0 px-2 py-4  flex flex-col`}
         ref={modalRef}
       >
         <h2 className='font-Plus font-semibold capitalize ml-2'>
@@ -176,7 +165,7 @@ const AddTask = () => {
           <div className=' flex flex-col w-full'>
             <p className='mb-[3px] capitalize'>description</p>
             <textarea
-              className={`md:w-full p-2 w-[100%] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md  ${
+              className={`md:w-full p-2 w-[98%] border-[#828FA340] border-[1px] focus:border-[#635FC7] focus:outline-none rounded-md  ${
                 darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'
               } `}
               name='description'

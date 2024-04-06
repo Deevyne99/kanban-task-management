@@ -13,7 +13,7 @@ interface UserProp {
 }
 
 interface UserState {
-  user: UserProp
+  user: UserProp | null
   isLoading: boolean
 }
 
@@ -97,8 +97,7 @@ const userSlice = createSlice({
   },
   reducers: {
     logoutUser: (state) => {
-      removeUserFromLocalStorage()
-      state.user = { username: '', token: '' }
+      state.user = removeUserFromLocalStorage()
     },
   },
 })
