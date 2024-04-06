@@ -104,7 +104,10 @@ const Navbar = () => {
               type='button'
             />
           </div>
-          <button className='md:hidden w-[50px] hover:bg-hover h-[30px] bg-purple rounded-2xl font-bold text-xl justify-center items-center text-white '>
+          <button
+            onClick={() => dispatch(toggleAddTask())}
+            className='md:hidden w-[50px] hover:bg-hover h-[30px] bg-purple rounded-2xl font-bold text-xl justify-center items-center text-white '
+          >
             +
           </button>
           <button onClick={() => handleToggleDropDown()}>
