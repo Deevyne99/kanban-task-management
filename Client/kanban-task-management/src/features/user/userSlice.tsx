@@ -8,8 +8,8 @@ import {
 } from '../../utils/localStorage'
 
 interface UserProp {
-  username: string
-  token: string
+  username: string | null
+  token: string | null
 }
 
 interface UserState {

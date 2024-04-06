@@ -38,7 +38,7 @@ export const getAllBoard = createAsyncThunk(
       const { data } = await customFetch.get('/board', {
         headers: {
           authorization: `Bearer ${
-            (thunkAPI.getState() as RootState).user.user.token
+            (thunkAPI.getState() as RootState).user?.user?.token
           }`,
         },
       })
@@ -57,7 +57,7 @@ export const getSingleBoard = createAsyncThunk(
       const { data } = await customFetch.get(`/board/${boardId}`, {
         headers: {
           authorization: `Bearer ${
-            (thunkAPI.getState() as RootState).user.user.token
+            (thunkAPI.getState() as RootState).user?.user?.token
           }`,
         },
       })
@@ -81,7 +81,7 @@ export const updateBoard = createAsyncThunk(
       const { data } = await customFetch.patch(`/board/${boardId}`, board, {
         headers: {
           authorization: `Bearer ${
-            (thunkAPI.getState() as RootState).user.user.token
+            (thunkAPI.getState() as RootState).user?.user?.token
           }`,
         },
       })
@@ -104,7 +104,7 @@ export const createTask = createAsyncThunk(
       const { data } = await customFetch.post(`/board/task/${boardId}`, task, {
         headers: {
           authorization: `Bearer ${
-            (thunkAPI.getState() as RootState).user.user.token
+            (thunkAPI.getState() as RootState).user?.user?.token
           }`,
         },
       })
@@ -124,7 +124,7 @@ export const handleDeleteBoard = createAsyncThunk(
       const { data } = await customFetch.delete(`/board/${boardId}`, {
         headers: {
           authorization: `Bearer ${
-            (thunkAPI.getState() as RootState).user.user.token
+            (thunkAPI.getState() as RootState).user?.user?.token
           }`,
         },
       })
@@ -161,7 +161,7 @@ export const updateTask = createAsyncThunk(
         {
           headers: {
             authorization: `Bearer ${
-              (thunkAPI.getState() as RootState).user.user.token
+              (thunkAPI.getState() as RootState).user?.user?.token
             }`,
           },
         }

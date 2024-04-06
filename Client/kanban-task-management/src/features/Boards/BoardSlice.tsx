@@ -28,10 +28,10 @@ export const createBoard = createAsyncThunk(
   'Board/createBoard',
   async (board: BoardsProps, { getState, dispatch, rejectWithValue }) => {
     try {
-      const { token } = (getState() as RootState).user.user
+      const { user } = (getState() as RootState).user
       const resp = await customFetch.post('/board', board, {
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${user?.token}`,
         },
       })
       dispatch(toggleCreateBoard())
