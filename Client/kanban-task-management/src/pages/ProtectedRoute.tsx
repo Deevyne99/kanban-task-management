@@ -9,7 +9,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user } = useAppSelector((store) => store.user)
-  console.log(user)
+  // console.log(user)
   // if (isLoading) {
   //   return (
   //     <HashLoader

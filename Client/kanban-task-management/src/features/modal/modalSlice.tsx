@@ -118,22 +118,13 @@ const modalSlice = createSlice({
       state.deleteBoard = false
       state.taskModal = !state.taskModal
       state.task = payload
+      state.editTask = true
     },
-    handleSelectStatus: (state, { payload }) => {
-      state.task.status = payload
-    },
+
     handleCompletedTask: (state, { payload }) => {
-      console.log(payload)
-
-      const subtask = state.task.subtasks.find(
-        (subtask) => subtask._id === payload
-      )
-      console.log(subtask)
-
-      if (subtask) {
-        subtask.isCompleted = !subtask.isCompleted
-      }
-      console.log(state.task.subtasks)
+      state.task.subtasks[payload].isCompleted =
+        !state.task.subtasks[payload].isCompleted
+      console.log(state.task.subtasks[payload].isCompleted)
     },
     toggleOptions: (state) => {
       state.taskOptions = !state.taskOptions
@@ -154,6 +145,7 @@ const modalSlice = createSlice({
     },
     closeTaskModal: (state) => {
       state.taskModal = false
+      // state.editTask = false
       // state.task = { title: '', description: '', subtasks: [], status: '' }
     },
 
@@ -169,6 +161,9 @@ const modalSlice = createSlice({
     },
     closeCustomDrop: (state) => {
       state.dropdownOpen = false
+    },
+    handleUpdateStatus: (state, { payload }) => {
+      state.task.status = payload
     },
   },
 })
@@ -194,6 +189,6 @@ export const {
   closeAddTaskModal,
   closeSmallSidebar,
   toggleCustomDrop,
-  handleSelectStatus,
+  handleUpdateStatus,
   handleCompletedTask,
 } = modalSlice.actions

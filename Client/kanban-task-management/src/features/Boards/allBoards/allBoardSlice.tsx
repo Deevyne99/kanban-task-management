@@ -42,7 +42,7 @@ export const getAllBoard = createAsyncThunk(
           }`,
         },
       })
-      console.log(data)
+      // console.log(data)
       return data
     } catch (error) {
       console.log(error)
@@ -184,10 +184,10 @@ const allBoardSlice = createSlice({
     })
     builder.addCase(getAllBoard.fulfilled, (state, { payload }) => {
       state.isLoading = false
-      console.log(payload)
+      // console.log(payload)
       state.boards = payload?.boards
       state.board = payload?.boards[0]
-      console.log(state.boards)
+      // console.log(state.boards)
     })
     builder.addCase(getAllBoard.rejected, (state) => {
       state.isLoading = false
@@ -244,13 +244,13 @@ const allBoardSlice = createSlice({
       state.loading = true
     })
     builder.addCase(createTask.fulfilled, (state, { payload }) => {
-      console.log(payload.board)
+      // console.log(payload.board)
       toast.success('Task created successfully')
       state.loading = false
       state.board = payload.board
     })
     builder.addCase(createTask.rejected, (state, { payload }) => {
-      console.log(payload)
+      // console.log(payload)
       state.loading = false
       toast.error(`${payload}`)
     })

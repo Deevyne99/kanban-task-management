@@ -15,7 +15,7 @@ const Column = ({
   const dispatch = useAppDispatch()
   const { board } = useAppSelector((state) => state.allboard)
   const taskVar = board?.tasks.filter((item) => item.status === name)
-  console.log(taskVar)
+  // console.log(taskVar)
 
   // console.log(tasks)
 
