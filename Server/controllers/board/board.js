@@ -84,21 +84,29 @@ const updateBoard = async (req, res) => {
     throw new NotFoundError(`No board with id ${boardId}`)
   }
 
+  const updatedColumnNames = columns.map((column) => column.name)
+
   // Update column names in the board
-  columns.forEach((updatedColumn) => {
-    const index = board.columns.findIndex(
-      (col) => col._id === updatedColumn._id
-    )
-    if (index !== -1) {
-      // If the name of the column is changed, update tasks with matching status
-      if (board.columns[index].name !== updatedColumn.name) {
-        board.tasks.forEach((task) => {
-          if (task.status === board.columns[index].name) {
-            task.status = updatedColumn.name
-          }
-        })
+  board.columns.forEach((column) => {
+    if (updatedColumnNames.includes(column.name)) {
+      const updatedColumn = columns.find(
+        (updated) => updated.name === column.name
+      )
+      if (updatedColumn) {
+        column.name = updatedColumn.name
       }
-      board.columns[index].name = updatedColumn.name
+    }
+  })
+
+  // Update status of tasks with matching column name
+  board.tasks.forEach((task) => {
+    if (updatedColumnNames.includes(task.status)) {
+      const updatedColumn = columns.find(
+        (column) => column.name === task.status
+      )
+      if (updatedColumn) {
+        task.status = updatedColumn.name
+      }
     }
   })
 
