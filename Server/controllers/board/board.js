@@ -77,16 +77,40 @@ const updateBoard = async (req, res) => {
     body: { boardName, columns },
     params: { id: boardId },
   } = req
+
   const board = await Board.findOne({ _id: boardId, createdBy: userId })
+
   if (!board) {
-    throw new NotFoundError(`no board with id ${boardId}`)
+    throw new NotFoundError(`No board with id ${boardId}`)
   }
+
+  // Update column names in the board
+  columns.forEach((updatedColumn) => {
+    const index = board.columns.findIndex(
+      (col) => col._id === updatedColumn._id
+    )
+    if (index !== -1) {
+      // If the name of the column is changed, update tasks with matching status
+      if (board.columns[index].name !== updatedColumn.name) {
+        board.tasks.forEach((task) => {
+          if (task.status === board.columns[index].name) {
+            task.status = updatedColumn.name
+          }
+        })
+      }
+      board.columns[index].name = updatedColumn.name
+    }
+  })
+
+  // Update other properties of the board
   board.boardName = boardName
-  board.columns = columns
+
+  // Save the updated board
   await board.save()
+
   res
     .status(StatusCodes.OK)
-    .json({ msg: `board with id ${boardId} was deleted successful`, board })
+    .json({ msg: `Board with id ${boardId} was updated successfully`, board })
 }
 
 module.exports = {

@@ -3,6 +3,7 @@
 import Task from './Task'
 import { useAppDispatch, useAppSelector } from '../hooks/hook'
 import { toggleTask } from '../features/modal/modalSlice'
+// import {Droppable} from 'react-beautiful-dnd'
 const Column = ({
   name,
 
@@ -32,13 +33,16 @@ const Column = ({
           {name} <span>({taskVar.length})</span>
         </p>
       </div>
-      {taskVar.map((item, index) => {
-        return (
-          <div key={index} onClick={() => dispatch(toggleTask(item))}>
-            <Task title={item.title} subtasks={item.subtasks} />
-          </div>
-        )
-      })}
+      {/* <Droppable></Droppable> */}
+      <div>
+        {taskVar.map((item, index) => {
+          return (
+            <div key={index} onClick={() => dispatch(toggleTask(item))}>
+              <Task title={item.title} subtasks={item.subtasks} />
+            </div>
+          )
+        })}
+      </div>
     </section>
   )
 }

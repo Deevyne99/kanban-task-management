@@ -158,8 +158,11 @@ const Board = () => {
             {board?.columns?.map((item, index) => {
               const columnColor = colors[index]
               // console.log(columnColor)
-
-              return <Column {...item} key={item.name} color={columnColor} />
+              return (
+                <div key={item.name}>
+                  <Column {...item} color={columnColor} />
+                </div>
+              )
             })}
 
             <AddColumn />
