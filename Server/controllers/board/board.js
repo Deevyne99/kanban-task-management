@@ -71,6 +71,7 @@ const deleteBoard = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ msg: `board with id ${boardId} was deleted successful` })
 }
+
 const updateBoard = async (req, res) => {
   const {
     user: { userId },
@@ -84,29 +85,21 @@ const updateBoard = async (req, res) => {
     throw new NotFoundError(`No board with id ${boardId}`)
   }
 
-  const updatedColumnNames = columns.map((column) => column.name)
-
   // Update column names in the board
   board.columns.forEach((column) => {
-    if (updatedColumnNames.includes(column.name)) {
-      const updatedColumn = columns.find(
-        (updated) => updated.name === column.name
-      )
-      if (updatedColumn) {
-        column.name = updatedColumn.name
-      }
+    const updatedColumn = columns.find(
+      (updated) => updated._id.toString() === column._id.toString()
+    )
+    if (updatedColumn) {
+      column.name = updatedColumn.name
     }
   })
 
   // Update status of tasks with matching column name
   board.tasks.forEach((task) => {
-    if (updatedColumnNames.includes(task.status)) {
-      const updatedColumn = columns.find(
-        (column) => column.name === task.status
-      )
-      if (updatedColumn) {
-        task.status = updatedColumn.name
-      }
+    const updatedColumn = columns.find((column) => column.name === task.status)
+    if (updatedColumn) {
+      task.status = updatedColumn.name
     }
   })
 
