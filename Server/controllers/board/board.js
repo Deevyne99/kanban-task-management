@@ -85,6 +85,9 @@ const updateBoard = async (req, res) => {
     throw new NotFoundError(`No board with id ${boardId}`)
   }
 
+  const originalColumnNames = board.columns.map((column) => column.name)
+  const updatedColumnNames = columns.map((column) => column.name)
+
   // Update column names in the board
   board.columns.forEach((column) => {
     const updatedColumn = columns.find(
@@ -95,11 +98,11 @@ const updateBoard = async (req, res) => {
     }
   })
 
-  // Update status of tasks with matching column name
+  // Update status of tasks with matching original column names
   board.tasks.forEach((task) => {
-    const updatedColumn = columns.find((column) => column.name === task.status)
-    if (updatedColumn) {
-      task.status = updatedColumn.name
+    const index = originalColumnNames.indexOf(task.status)
+    if (index !== -1) {
+      task.status = updatedColumnNames[index]
     }
   })
 
