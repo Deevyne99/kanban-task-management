@@ -97,19 +97,23 @@ const Navbar = () => {
           )}
         </button>
         <div className='flex gap-4 items-center'>
-          <div className='md:flex hidden '>
-            <Button
-              title='+ add task'
+          {board?.columns?.length > 0 && (
+            <div className='md:flex hidden '>
+              <Button
+                title='+ add task'
+                onClick={() => dispatch(toggleAddTask())}
+                type='button'
+              />
+            </div>
+          )}
+          {board?.columns?.length > 0 && (
+            <button
               onClick={() => dispatch(toggleAddTask())}
-              type='button'
-            />
-          </div>
-          <button
-            onClick={() => dispatch(toggleAddTask())}
-            className='md:hidden w-[50px] hover:bg-hover h-[30px] bg-purple rounded-2xl font-bold text-xl justify-center items-center text-white '
-          >
-            +
-          </button>
+              className='md:hidden w-[50px] hover:bg-hover h-[30px] bg-purple rounded-2xl font-bold text-xl justify-center items-center text-white '
+            >
+              +
+            </button>
+          )}
           <button onClick={() => handleToggleDropDown()}>
             <svg
               xmlns='http://www.w3.org/2000/svg'

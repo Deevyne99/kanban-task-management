@@ -126,7 +126,7 @@ const TaskModal = () => {
           )}
 
           <div className='flex  items-center font-Plus justify-between '>
-            <h3 className='font-Plus font-bold '>{title}</h3>
+            <h3 className='font-Plus font-bold capitalize'>{title}</h3>
             <button onClick={() => dispatch(toggleOptions())}>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -142,7 +142,7 @@ const TaskModal = () => {
             </button>
           </div>
           <div>
-            <p className=' text-[13px] font-Plus leading-[23px]'>
+            <p className=' text-[13px] font-Plus leading-[23px] capitalize'>
               {description}
             </p>
           </div>
@@ -169,7 +169,12 @@ const TaskModal = () => {
                           checked={item.isCompleted}
                           onChange={() => handleCheck(index)}
                         />
-                        <label htmlFor='' className='text-[14px] '>
+                        <label
+                          htmlFor=''
+                          className={`text-[14px] ${
+                            item.isCompleted ? 'line-through' : ''
+                          } `}
+                        >
                           {item.title}
                         </label>
                       </div>

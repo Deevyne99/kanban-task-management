@@ -18,6 +18,7 @@ interface ModalProps {
   dropdownOpen: boolean
   task: TasksProps
   editTask: boolean
+  deleteTask: boolean
 }
 const initialState: ModalProps = {
   isSidebarOpen: true,
@@ -26,6 +27,7 @@ const initialState: ModalProps = {
   smallSidebar: false,
   addTask: false,
   deleteBoard: false,
+  deleteTask: false,
   taskModal: false,
   taskOptions: false,
   deleteCategory: 'board',
@@ -96,7 +98,7 @@ const modalSlice = createSlice({
       state.smallSidebar = false
       state.dropDown = false
       state.createBoardModal = false
-      state.deleteBoard = !state.deleteBoard
+      state.deleteTask = true
       state.deleteCategory = 'task'
       state.taskModal = false
       state.taskOptions = false
@@ -145,6 +147,7 @@ const modalSlice = createSlice({
     },
     closeTaskModal: (state) => {
       state.taskModal = false
+      state.taskOptions = false
       // state.editTask = false
       // state.task = { title: '', description: '', subtasks: [], status: '' }
     },
@@ -164,6 +167,10 @@ const modalSlice = createSlice({
     },
     handleUpdateStatus: (state, { payload }) => {
       state.task.status = payload
+    },
+    closeDeleteModal: (state) => {
+      state.deleteTask = false
+      state.deleteBoard = false
     },
   },
 })
@@ -191,4 +198,5 @@ export const {
   toggleCustomDrop,
   handleUpdateStatus,
   handleCompletedTask,
+  closeDeleteModal,
 } = modalSlice.actions

@@ -34,7 +34,7 @@ const Column = ({
         </p>
       </div>
       {/* <Droppable></Droppable> */}
-      <div>
+      <div className='flex flex-col gap-4'>
         {taskVar.map((item, index) => {
           return (
             <div key={index} onClick={() => dispatch(toggleTask(item))}>

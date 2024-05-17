@@ -29,6 +29,7 @@ const Board = () => {
     deleteBoard,
     taskModal,
     dropDown,
+    deleteTask,
   } = useAppSelector((state) => state.modal)
   // const { user } = useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
@@ -105,7 +106,7 @@ const Board = () => {
       ></div>
       <div
         className={`flex  ${
-          deleteBoard
+          deleteBoard || deleteTask
             ? 'bg-[#000] backdrop-blur-[1px]  fixed left-0 top-0 h-full z-20  w-full opacity-50'
             : 'h-[0px] transition-all duration-500'
         } `}
@@ -165,7 +166,7 @@ const Board = () => {
               )
             })}
 
-            <AddColumn />
+            {board?.columns?.length > 0 && <AddColumn />}
           </div>
         )}
 
