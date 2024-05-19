@@ -309,10 +309,8 @@ const allBoardSlice = createSlice({
     builder.addCase(handleDeleteTask.fulfilled, (state, { payload }) => {
       state.loading = false
       console.log(payload)
-
       state.board = payload.board
       console.log(payload)
-
       toast.success('Deleted succesfully successfully')
     })
     builder.addCase(handleDeleteTask.pending, (state, { payload }) => {
