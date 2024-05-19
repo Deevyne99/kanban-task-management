@@ -85,7 +85,9 @@ const deleteTask = async (req, res) => {
     throw new NotFoundError(`No board with the id ${boardId}`)
   }
 
-  const taskIndex = board.tasks.findIndex((task) => String(task._id) === taskId)
+  const taskIndex = board.tasks.findIndex(
+    (task) => String(task._id) === String(taskId)
+  )
   if (taskIndex === -1) {
     throw new NotFoundError(`No task with the id ${taskId}`)
   }
@@ -95,7 +97,7 @@ const deleteTask = async (req, res) => {
 
   await board.save()
 
-  res.status(StatusCodes.OK).json({ msg: 'Deleted successfully' })
+  res.status(StatusCodes.OK).json({ board: findBoard })
 }
 
 module.exports = { createTask, updateTask, deleteTask }

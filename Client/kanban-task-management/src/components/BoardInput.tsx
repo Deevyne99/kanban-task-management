@@ -20,7 +20,7 @@ const BoardInput: FC<InputProps> = ({
       } md:w-full  w-[98%]  p-[8px] border rounded-md border-solid border-[#828FA340] font-normal focus:border-[#635FC7] focus:outline-none  ${
         error
           ? 'placeholder:text-error placeholder:font-medium placeholder:text-right'
-          : 'text-normal border-[#828FA340] '
+          : ' border-[#828FA340] '
       } ${error && !value ? 'border-error' : 'border-normal'}
        ${darkMode === 'light' ? 'bg-[#fff]' : 'bg-[#2B2C37]'} `}
       type={type}
