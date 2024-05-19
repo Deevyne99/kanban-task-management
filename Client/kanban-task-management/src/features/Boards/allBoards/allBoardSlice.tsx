@@ -308,6 +308,8 @@ const allBoardSlice = createSlice({
     })
     builder.addCase(handleDeleteTask.fulfilled, (state, { payload }) => {
       state.loading = false
+      console.log(payload)
+
       state.board = payload.board
       console.log(payload)
 

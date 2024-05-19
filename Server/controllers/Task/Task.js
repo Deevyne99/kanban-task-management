@@ -97,7 +97,7 @@ const deleteTask = async (req, res) => {
 
   await board.save()
 
-  res.status(StatusCodes.OK).json({ board: findBoard })
+  res.status(StatusCodes.OK).json({ board })
 }
 
 module.exports = { createTask, updateTask, deleteTask }
