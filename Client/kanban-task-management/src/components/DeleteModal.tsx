@@ -3,7 +3,6 @@ import {
   getAllBoard,
   handleDeleteBoard,
   handleDeleteTask,
-  getSingleBoard,
 } from '../features/Boards/allBoards/allBoardSlice'
 import {
   toggleDeleteBoard,
@@ -28,7 +27,7 @@ const DeleteModal = () => {
       return
     }
     dispatch(handleDeleteTask({ boardId: board._id, taskId: task._id }))
-    dispatch(getSingleBoard(board._id))
+    // dispatch(getSingleBoard(board._id))
   }
 
   useEffect(() => {
